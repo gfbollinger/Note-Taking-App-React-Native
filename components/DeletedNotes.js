@@ -144,7 +144,7 @@ const DeletedNotes = ({...props}) => {
                 <View key={index} style={styles.note}>
 
                   <View>
-                    <Text>{item}</Text>
+                    <Text>{item.title}</Text>
                   </View>
 
                   <TouchableOpacity onPress={ () => undoNote(index)} >

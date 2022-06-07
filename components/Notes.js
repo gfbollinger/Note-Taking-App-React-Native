@@ -67,30 +67,23 @@ const Notes = ({navigation, ...props}) => {
 
       {/* Heading */}
       <View style={styles.headingContainer}>
-        <Text style={styles.heading} >Your Notes...</Text>
+        <Text style={styles.heading} >My Notes</Text>
 
-        <View style={styles.flexRow}>
+        {/* <View style={styles.flexRow}> */}
 
-          <IconRegistry icons={EvaIconsPack} />
+          {/* <IconRegistry icons={EvaIconsPack} />
           <ApplicationProvider {...eva} theme={eva.light} >
             <Button style={styles.btn} status='danger' accessoryLeft={StarIcon}/>
-          </ApplicationProvider>
+          </ApplicationProvider> */}
 
-          <TouchableOpacity style={[styles.button, {marginLeft:40}]}  onPress={ () => navigation.navigate('DeletedNotes') }>
+          <TouchableOpacity style={[styles.button2, {marginLeft:40}]}  onPress={ () => navigation.navigate('DeletedNotes') }>
             <IconRegistry icons={EvaIconsPack} />
-            <ApplicationProvider {...eva} theme={eva.light} >
-              <Icon name="trash-2-outline" fill="white" style={{width: 25, height: 25 }} />
+            <ApplicationProvider {...eva} theme={eva.dark} >
+              <Icon name="archive-outline" fill="#8F9BB3" style={{width: 40, height: 40 }} />
             </ApplicationProvider>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('AddNote') }>
-            <IconRegistry icons={EvaIconsPack} />
-            <ApplicationProvider {...eva} theme={eva.light} >
-              <Icon name="plus-outline" fill="white" style={{width: 25, height: 25 }} />
-            </ApplicationProvider>
-          </TouchableOpacity>
-
-        </View>
+        {/* </View> */}
 
 
       </View>
@@ -135,8 +128,8 @@ const Notes = ({navigation, ...props}) => {
 
 
       {/* Notes */}
-      <ScrollView style={styles.scrollView} /* showsVerticalScrollIndicator="false" */>
-          <Text>Notes:</Text>
+      <ScrollView style={styles.notesList} /* showsVerticalScrollIndicator="false" */>
+
           {props.notes.length === 0
             ?
             <View>
@@ -150,20 +143,19 @@ const Notes = ({navigation, ...props}) => {
                 style={styles.note}
                 onPress={ () => navigation.navigate("Note", {
                   i: index,
-                  n: item, 
-                  
+                  n: item,
                 })}
               >
 
                 <View>
-                  <Text>{item}</Text>
+                  <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>{item.title}</Text>
                 </View>
+
+                <Text style={{ textAlign: "right"}}>{item.date}</Text>
 
                 {/* <TouchableOpacity onPress={ () => deleteNote(index) } >
                   <Text>X</Text>
                 </TouchableOpacity>
-
-                <Text>{props.date}</Text>
 
                 <TouchableOpacity onPress={ () => navigation.navigate("EditNote", {
                   i: index,
@@ -181,6 +173,13 @@ const Notes = ({navigation, ...props}) => {
 
       </ScrollView>
 
+      <TouchableOpacity style={styles.buttonAdd} onPress={ () => navigation.navigate('AddNote') }>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={eva.light} >
+          <Icon name="plus-outline" fill="white" style={{width: 40, height: 40 }} />
+        </ApplicationProvider>
+      </TouchableOpacity>
+
 
     </View>
   )
@@ -188,10 +187,13 @@ const Notes = ({navigation, ...props}) => {
 
 export const styles = StyleSheet.create({
   notesContainer: {
-    padding: 10
+    padding: 10,
+    height: "100%"
   },
   headingContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "space-between"
+    /* alignContent: "space-between", */
   },
   heading: {
     color: Style.color,
@@ -201,10 +203,21 @@ export const styles = StyleSheet.create({
     flexDirection: "row"
   },
   button: {
+    /* backgroundColor: Style.color, */
+    /* padding: 10,
+    borderRadius: "50%", */
+    marginLeft: 5
+  },
+  notesList: {
+    paddingTop: 20
+  },
+  buttonAdd: {
     backgroundColor: Style.color,
     padding: 10,
     borderRadius: 50,
-    marginLeft: 5
+    position: "absolute",
+    bottom: 20,
+    right: 20
   },
   notesCounterCont: {
     flexDirection: "row",
@@ -245,7 +258,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center"
   },
   note: {
-    padding: 10,
+    padding: 20,
     backgroundColor: "#FFF495",
     marginBottom: 10
   }

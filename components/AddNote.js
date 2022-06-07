@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text, Alert } from "react-native"
 import * as Style from "./../assets/styles"
 
 const AddNote = ({navigation, ...props}) => {
+
+
   return (
     <>
       <ScrollView>
@@ -13,12 +15,27 @@ const AddNote = ({navigation, ...props}) => {
           <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
             <View style={{padding: 20, justifyContent: "space-around"}}>
 
-              <TextInput
+              {/* <TextInput
                 style={styles.textInput}
                 placeholder="Type Here"
                 multiline={true}
                 value={props.note}
                 onChangeText={(text) => props.setNote(text)}
+              /> */}
+
+              <TextInput
+                style={styles.textInputTitle}
+                placeholder="Title"
+                value={props.noteTitle}
+                onChangeText={(text) => props.setNoteTitle(text)}
+              />
+
+              <TextInput
+                style={styles.textInput}
+                placeholder="Type Here"
+                multiline={true}
+                value={props.noteBody}
+                onChangeText={(text) => props.setNoteBody(text)}
               />
 
               <TouchableOpacity
@@ -33,7 +50,6 @@ const AddNote = ({navigation, ...props}) => {
                   }
                   }
                 }
-
               >
                 <Text style={{ color: "#fff"}} >Add</Text>
               </TouchableOpacity>
@@ -49,6 +65,15 @@ const AddNote = ({navigation, ...props}) => {
 }
 
 export const styles = StyleSheet.create({
+  textInputTitle: {
+    height: 50,
+    padding: 5,
+    borderWidth: 2,
+    borderColor: Style.color,
+    borderRadius: 8,
+    fontSize: 16,
+    marginBottom: 10
+  },
   textInput: {
     height: 200,
     padding: 5,

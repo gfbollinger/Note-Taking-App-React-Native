@@ -18,15 +18,25 @@ const Stack = createStackNavigator();
 export default function App() {
 
   const [note, setNote] = useState()
+
+  /* const [noteData, setNoteData] = useState({ title:"" , body:""}) */
+  const [noteTitle, setNoteTitle] = useState("")
+  const [noteBody, setNoteBody] = useState("")
+
   const [notes, setNotes] = useState([])
   const [date, setDate] = useState(new Date().toUTCString())
   const [archived, setArchived] = useState([])
 
   function handleNote() {
-    let newNote = note
-    let newNotes = [newNote, ...notes]
+    /* setNoteData( {title: noteTitle, body: noteBody} )
+    let newNote = noteData */
+    let newDate= new Date().toUTCString()
+    setDate(newDate)
+    let newNotes = [{ title: noteTitle, body: noteBody, date: date }, ...notes]
     setNotes(newNotes)
-    setNote('')
+    setNoteTitle('')
+    setNoteBody('')
+    console.log(notes)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {
@@ -75,7 +85,7 @@ export default function App() {
         </Stack.Screen>
 
         <Stack.Screen name="AddNote">
-          {props => <AddNote {...props} note={note} setNote={setNote} handleNote={handleNote} />}
+          {props => <AddNote {...props} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} note={note} setNote={setNote} handleNote={handleNote} />}
         </Stack.Screen>
 
         <Stack.Screen name="DeletedNotes">
@@ -83,7 +93,7 @@ export default function App() {
         </Stack.Screen>
 
         <Stack.Screen name="EditNote">
-          {props => <EditNote {...props} notes={notes} setNotes={setNotes} />}
+          {props => <EditNote {...props} notes={notes} setNotes={setNotes} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} />}
         </Stack.Screen>
 
       </Stack.Navigator>

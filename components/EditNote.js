@@ -13,6 +13,8 @@ const EditNote = ({route, navigation, ...props}) => {
 
     let editedNote = [...props.notes]
     editedNote[i] = newEdit
+    editedNote[i].title = newEdit.title
+    editedNote[i].body = newEdit.body
 
     props.setNotes(editedNote)
     navigation.navigate('Notes')
@@ -37,12 +39,27 @@ const EditNote = ({route, navigation, ...props}) => {
 
             <View style={{padding: 20, justifyContent: "space-around"}}>
 
-              <TextInput
+              {/* <TextInput
                 style={styles.textInput}
                 placeholder="Type Here"
                 multiline={true}
                 value={newEdit.toString()}
                 onChangeText={(text) => setNewEdit(text)}
+              /> */}
+
+              <TextInput
+                style={styles.textInputTitle}
+                placeholder="Title"
+                value={newEdit.title}
+                onChangeText={(text) => setNewEdit({ title: text, body: newEdit.body})}
+              />
+
+              <TextInput
+                style={styles.textInput}
+                placeholder="Type Here"
+                multiline={true}
+                value={newEdit.body}
+                onChangeText={(text) => setNewEdit({ title: newEdit.title, body: text })}
               />
 
               <TouchableOpacity
@@ -72,6 +89,15 @@ const EditNote = ({route, navigation, ...props}) => {
 }
 
 export const styles = StyleSheet.create({
+  textInputTitle: {
+    height: 50,
+    padding: 5,
+    borderWidth: 2,
+    borderColor: Style.color,
+    borderRadius: 8,
+    fontSize: 16,
+    marginBottom: 10
+  },
   textInput: {
     height: 200,
     padding: 5,

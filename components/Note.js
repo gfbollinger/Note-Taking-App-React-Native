@@ -1,8 +1,10 @@
-import React from "react"
-import { View, Text, TouchableOpacity } from "react-native"
-import { useState } from "react/cjs/react.development"
+import React, { useState } from "react"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry, Icon } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 const Note = ({route, navigation, ...props}) => {
 
@@ -12,12 +14,12 @@ const Note = ({route, navigation, ...props}) => {
     let newArray = [...props.notes]
     let archivedNote = newArray.splice(index, 1)
     props.setNotes(newArray)
-    props.setArchived(archivedNote)
+    /* props.setArchived(archivedNote) */
 
-    let bin = [archivedNote, ...props.archived]
+    console.log(archivedNote)
+    let bin = [{title: archivedNote[0].title, body: archivedNote[0].body}, ...props.archived]
     props.setArchived(bin)
     navigation.navigate("Notes")
-    /* console.log(bin) */
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newArray))
       .then( () => {
@@ -33,21 +35,26 @@ const Note = ({route, navigation, ...props}) => {
   }
 
   return (
-    <View>
+    <View style={stylesNote.noteContainer}>
 
       {/* <TouchableOpacity onPress={ () => navigation.navigate("Notes")}>
         <Text>Back</Text>
       </TouchableOpacity> */}
 
-      <Text>Note: {n}</Text>
+      <Text style={stylesNote.noteTitle}>{n.title}</Text>
+      <Text>Description: {n.body}</Text>
 
-      <TouchableOpacity onPress={ () => navigation.navigate("EditNote", {
+      <TouchableOpacity style={stylesNote.buttonEdit} onPress={ () => navigation.navigate("EditNote", {
         i: i,
         n: n
       }
 
       )}>
-        <Text>Edit</Text>
+        {/* <Text>Edit</Text> */}
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={eva.light} >
+          <Icon name="edit-outline" fill="white" style={{width: 40, height: 40 }} />
+        </ApplicationProvider>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={ () => deleteNote(i) } >
@@ -56,5 +63,24 @@ const Note = ({route, navigation, ...props}) => {
     </View>
   )
 }
+
+const stylesNote = StyleSheet.create({
+  noteContainer: {
+    padding: 10,
+    height: "100%"
+  },
+  noteTitle: {
+    fontSize: 28,
+    marginBottom: 10
+  },
+  buttonEdit: {
+    backgroundColor: Style.color,
+    padding: 10,
+    borderRadius: 50,
+    position: "absolute",
+    bottom: 20,
+    right: 20
+  },
+})
 
 export default Note
