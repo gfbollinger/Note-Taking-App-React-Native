@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView, Alert, Keyboard } from "react-native"
 import * as Style from "./../assets/styles"
-import * as eva from '@eva-design/eva';
-import { ApplicationProvider, IconRegistry, Layout, Icon, Button, Card } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { Icon } from '@ui-kitten/components';
 import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -69,22 +67,9 @@ const Notes = ({navigation, ...props}) => {
       <View style={styles.headingContainer}>
         <Text style={styles.heading} >My Notes</Text>
 
-        {/* <View style={styles.flexRow}> */}
-
-          {/* <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={eva.light} >
-            <Button style={styles.btn} status='danger' accessoryLeft={StarIcon}/>
-          </ApplicationProvider> */}
-
           <TouchableOpacity style={[styles.button2, {marginLeft:40}]}  onPress={ () => navigation.navigate('DeletedNotes') }>
-            <IconRegistry icons={EvaIconsPack} />
-            <ApplicationProvider {...eva} theme={eva.dark} >
               <Icon name="archive-outline" fill="#8F9BB3" style={{width: 40, height: 40 }} />
-            </ApplicationProvider>
           </TouchableOpacity>
-
-        {/* </View> */}
-
 
       </View>
 
@@ -114,10 +99,7 @@ const Notes = ({navigation, ...props}) => {
         />
 
         <TouchableOpacity style={styles.searchBtn} onPress={ () => handleSearch() }>
-          <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={eva.light} >
-            <Icon name="search" fill="white" style={{width: 25, height: 25 }} />
-          </ApplicationProvider>
+          <Icon name="search" fill="white" style={{width: 25, height: 25 }} />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.clearBtn} onPress={ () => clearAllNotes() }>
@@ -174,10 +156,7 @@ const Notes = ({navigation, ...props}) => {
       </ScrollView>
 
       <TouchableOpacity style={styles.buttonAdd} onPress={ () => navigation.navigate('AddNote') }>
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={eva.light} >
-          <Icon name="plus-outline" fill="white" style={{width: 40, height: 40 }} />
-        </ApplicationProvider>
+        <Icon name="plus-outline" fill="white" style={{width: 40, height: 40 }} />
       </TouchableOpacity>
 
 

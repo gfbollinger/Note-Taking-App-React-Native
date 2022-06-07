@@ -2,9 +2,7 @@ import React, { useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as eva from '@eva-design/eva';
-import { ApplicationProvider, IconRegistry, Icon } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { Icon } from '@ui-kitten/components';
 
 const Note = ({route, navigation, ...props}) => {
 
@@ -37,10 +35,6 @@ const Note = ({route, navigation, ...props}) => {
   return (
     <View style={stylesNote.noteContainer}>
 
-      {/* <TouchableOpacity onPress={ () => navigation.navigate("Notes")}>
-        <Text>Back</Text>
-      </TouchableOpacity> */}
-
       <Text style={stylesNote.noteTitle}>{n.title}</Text>
       <Text>Description: {n.body}</Text>
 
@@ -50,11 +44,7 @@ const Note = ({route, navigation, ...props}) => {
       }
 
       )}>
-        {/* <Text>Edit</Text> */}
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={eva.light} >
           <Icon name="edit-outline" fill="white" style={{width: 40, height: 40 }} />
-        </ApplicationProvider>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={ () => deleteNote(i) } >

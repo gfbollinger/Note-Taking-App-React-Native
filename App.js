@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SafeAreaView from 'react-native-safe-area-view';
+/* import SafeAreaView from 'react-native-safe-area-view'; */
 import AddNote from './components/AddNote';
 import DeletedNotes from './components/DeletedNotes';
 import EditNote from './components/EditNote';
@@ -10,6 +10,9 @@ import Note from './components/Note';
 import React, { useState, useEffect } from "react"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry, Layout, Icon, Button, Card } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 import Notes from './components/Notes';
 
@@ -72,32 +75,41 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
+    <>
 
-      <Stack.Navigator>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
 
-        <Stack.Screen name="Notes">
-          { props => <Notes {...props} notes={notes} setNotes={setNotes} note={note} setNote={setNote} date={date} setDate={setDate} archived={archived} setArchived={setArchived} /> }
-        </Stack.Screen>
+        <NavigationContainer>
 
-        <Stack.Screen name="Note">
-          { props => <Note {...props} notes={notes} setNotes={setNotes} note={note} setNote={setNote} archived={archived} setArchived={setArchived}/> }
-        </Stack.Screen>
+          <Stack.Navigator>
 
-        <Stack.Screen name="AddNote">
-          {props => <AddNote {...props} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} note={note} setNote={setNote} handleNote={handleNote} />}
-        </Stack.Screen>
+            <Stack.Screen name="Notes">
+              { props => <Notes {...props} notes={notes} setNotes={setNotes} note={note} setNote={setNote} date={date} setDate={setDate} archived={archived} setArchived={setArchived} /> }
+            </Stack.Screen>
 
-        <Stack.Screen name="DeletedNotes">
-          {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} notes={notes} setNotes={setNotes} date={date} />}
-        </Stack.Screen>
+            <Stack.Screen name="Note">
+              { props => <Note {...props} notes={notes} setNotes={setNotes} note={note} setNote={setNote} archived={archived} setArchived={setArchived}/> }
+            </Stack.Screen>
 
-        <Stack.Screen name="EditNote">
-          {props => <EditNote {...props} notes={notes} setNotes={setNotes} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} />}
-        </Stack.Screen>
+            <Stack.Screen name="AddNote">
+              {props => <AddNote {...props} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} note={note} setNote={setNote} handleNote={handleNote} />}
+            </Stack.Screen>
 
-      </Stack.Navigator>
-    </NavigationContainer>
+            <Stack.Screen name="DeletedNotes">
+              {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} notes={notes} setNotes={setNotes} date={date} />}
+            </Stack.Screen>
+
+            <Stack.Screen name="EditNote">
+              {props => <EditNote {...props} notes={notes} setNotes={setNotes} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} />}
+            </Stack.Screen>
+
+          </Stack.Navigator>
+
+        </NavigationContainer>
+
+      </ApplicationProvider>
+    </>
   );
 }
 
