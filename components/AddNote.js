@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text, Alert } from "react-native"
 import * as Style from "./../assets/styles"
+import { Button, ButtonGroup } from '@ui-kitten/components';
 
 const AddNote = ({navigation, ...props}) => {
 
@@ -37,6 +38,14 @@ const AddNote = ({navigation, ...props}) => {
                 value={props.noteBody}
                 onChangeText={(text) => props.setNoteBody(text)}
               />
+
+              <Text style={{ marginTop: 15, marginBottom:5 }}>Pick a color:</Text>
+              <View style={styles.colorBtnsContainer}>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => props.setNoteColor('#FFF495')}></TouchableOpacity>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => props.setNoteColor('#FFDBA6')}></TouchableOpacity>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => props.setNoteColor('#AEFFF5')}></TouchableOpacity>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => props.setNoteColor('#FFB7F8')}></TouchableOpacity>
+              </View>
 
               <TouchableOpacity
                 style={styles.button}
@@ -99,6 +108,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10
+  },
+  colorBtnsContainer: {
+    flexDirection: "row"
+  },
+  buttonColor: {
+    height: 40,
+    width: 40,
+    marginRight: 5
   }
 })
 

@@ -25,6 +25,7 @@ export default function App() {
   /* const [noteData, setNoteData] = useState({ title:"" , body:""}) */
   const [noteTitle, setNoteTitle] = useState("")
   const [noteBody, setNoteBody] = useState("")
+  const [noteColor, setNoteColor] = useState("")
 
   const [notes, setNotes] = useState([])
   const [date, setDate] = useState(new Date().toUTCString())
@@ -35,7 +36,7 @@ export default function App() {
     let newNote = noteData */
     let newDate= new Date().toUTCString()
     setDate(newDate)
-    let newNotes = [{ title: noteTitle, body: noteBody, date: date }, ...notes]
+    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor }, ...notes]
     setNotes(newNotes)
     setNoteTitle('')
     setNoteBody('')
@@ -93,7 +94,7 @@ export default function App() {
             </Stack.Screen>
 
             <Stack.Screen name="AddNote">
-              {props => <AddNote {...props} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} note={note} setNote={setNote} handleNote={handleNote} />}
+              {props => <AddNote {...props} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} note={note} setNote={setNote} handleNote={handleNote} noteColor={noteColor} setNoteColor={setNoteColor} />}
             </Stack.Screen>
 
             <Stack.Screen name="DeletedNotes">

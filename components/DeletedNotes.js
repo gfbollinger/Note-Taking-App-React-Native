@@ -141,10 +141,10 @@ const DeletedNotes = ({...props}) => {
             :
               props.archived.map( (item, index) =>
 
-                <View key={index} style={styles.note}>
+                <View key={index} style={[styles.note, {backgroundColor: item.color}]}>
 
                   <View>
-                    <Text>{item.title}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>{item.title}</Text>
                   </View>
 
                   <TouchableOpacity onPress={ () => undoNote(index)} >

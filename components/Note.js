@@ -15,7 +15,13 @@ const Note = ({route, navigation, ...props}) => {
     /* props.setArchived(archivedNote) */
 
     console.log(archivedNote)
-    let bin = [{title: archivedNote[0].title, body: archivedNote[0].body}, ...props.archived]
+    let bin = [ {
+      title: archivedNote[0].title,
+      body: archivedNote[0].body,
+      color: archivedNote[0].color,
+      date: archivedNote[0].date},
+      ...props.archived]
+
     props.setArchived(bin)
     navigation.navigate("Notes")
 
@@ -36,7 +42,8 @@ const Note = ({route, navigation, ...props}) => {
     <View style={stylesNote.noteContainer}>
 
       <Text style={stylesNote.noteTitle}>{n.title}</Text>
-      <Text>Description: {n.body}</Text>
+      <View style={{ backgroundColor: n.color, height: 15, width: "100%", marginBottom: 15}}></View>
+      <Text>{n.body}</Text>
 
       <TouchableOpacity style={stylesNote.buttonEdit} onPress={ () => navigation.navigate("EditNote", {
         i: i,
@@ -47,8 +54,9 @@ const Note = ({route, navigation, ...props}) => {
           <Icon name="edit-outline" fill="white" style={{width: 40, height: 40 }} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={ () => deleteNote(i) } >
-        <Text>Archive</Text>
+      <TouchableOpacity style={stylesNote.buttonArchive} onPress={ () => deleteNote(i) } >
+        {/* <Text>Archive</Text> */}
+        <Icon name="archive-outline" fill="white" style={{width: 30, height: 30 }} />
       </TouchableOpacity>
     </View>
   )
@@ -56,7 +64,7 @@ const Note = ({route, navigation, ...props}) => {
 
 const stylesNote = StyleSheet.create({
   noteContainer: {
-    padding: 10,
+    padding: 15,
     height: "100%"
   },
   noteTitle: {
@@ -70,6 +78,14 @@ const stylesNote = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     right: 20
+  },
+  buttonArchive: {
+    backgroundColor: Style.color,
+    padding: 10,
+    borderRadius: 50,
+    position: "absolute",
+    bottom: 20,
+    left: 20
   },
 })
 

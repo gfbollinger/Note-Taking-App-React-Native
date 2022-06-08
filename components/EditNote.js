@@ -15,6 +15,7 @@ const EditNote = ({route, navigation, ...props}) => {
     editedNote[i] = newEdit
     editedNote[i].title = newEdit.title
     editedNote[i].body = newEdit.body
+    editedNote[i].color = newEdit.color
 
     props.setNotes(editedNote)
     navigation.navigate('Notes')
@@ -61,6 +62,14 @@ const EditNote = ({route, navigation, ...props}) => {
                 value={newEdit.body}
                 onChangeText={(text) => setNewEdit({ title: newEdit.title, body: text })}
               />
+
+              <Text style={{ marginTop: 15, marginBottom:5 }}>Pick a color:</Text>
+              <View style={styles.colorBtnsContainer}>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFF495" })}></TouchableOpacity>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFDBA6" })}></TouchableOpacity>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#AEFFF5" })}></TouchableOpacity>
+                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFB7F8" })}></TouchableOpacity>
+              </View>
 
               <TouchableOpacity
                 style={styles.button}
@@ -123,6 +132,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10
+  },
+  colorBtnsContainer: {
+    flexDirection: "row"
+  },
+  buttonColor: {
+    height: 40,
+    width: 40,
+    marginRight: 5
   }
 })
 

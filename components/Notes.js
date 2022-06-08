@@ -122,7 +122,7 @@ const Notes = ({navigation, ...props}) => {
 
               <TouchableOpacity
                 key={index}
-                style={styles.note}
+                style={[styles.note, {backgroundColor: item.color}]}
                 onPress={ () => navigation.navigate("Note", {
                   i: index,
                   n: item,
@@ -166,7 +166,7 @@ const Notes = ({navigation, ...props}) => {
 
 export const styles = StyleSheet.create({
   notesContainer: {
-    padding: 10,
+    padding: 15,
     height: "100%"
   },
   headingContainer: {
