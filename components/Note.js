@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '@ui-kitten/components';
@@ -15,12 +15,16 @@ const Note = ({route, navigation, ...props}) => {
     /* props.setArchived(archivedNote) */
 
     console.log(archivedNote)
-    let bin = [ {
-      title: archivedNote[0].title,
-      body: archivedNote[0].body,
-      color: archivedNote[0].color,
-      date: archivedNote[0].date},
-      ...props.archived]
+    let bin = [
+      {
+        title: archivedNote[0].title,
+        body: archivedNote[0].body,
+        color: archivedNote[0].color,
+        date: archivedNote[0].date,
+        img: archivedNote[0].img
+      },
+      ...props.archived
+    ]
 
     props.setArchived(bin)
     navigation.navigate("Notes")
@@ -40,24 +44,32 @@ const Note = ({route, navigation, ...props}) => {
 
   return (
     <View style={stylesNote.noteContainer}>
+      {/* <ScrollView> */}
+        <Text style={stylesNote.noteTitle}>{n.title}</Text>
+        <View style={{ backgroundColor: n.color, height: 15, width: "100%", marginBottom: 15}}></View>
+        <Text>{n.body}</Text>
 
-      <Text style={stylesNote.noteTitle}>{n.title}</Text>
-      <View style={{ backgroundColor: n.color, height: 15, width: "100%", marginBottom: 15}}></View>
-      <Text>{n.body}</Text>
-
-      <TouchableOpacity style={stylesNote.buttonEdit} onPress={ () => navigation.navigate("EditNote", {
-        i: i,
-        n: n
+        {
+          n.img ?
+        <Image
+          source={{ uri: n.img }}
+          style={stylesNote.thumbnail}
+        />
+        : <></>
       }
 
-      )}>
-          <Icon name="edit-outline" fill="white" style={{width: 40, height: 40 }} />
-      </TouchableOpacity>
-
-      <TouchableOpacity style={stylesNote.buttonArchive} onPress={ () => deleteNote(i) } >
-        {/* <Text>Archive</Text> */}
-        <Icon name="archive-outline" fill="white" style={{width: 30, height: 30 }} />
-      </TouchableOpacity>
+        <TouchableOpacity style={stylesNote.buttonEdit} onPress={ () => navigation.navigate("EditNote", {
+          i: i,
+          n: n
+        }
+        )}>
+            <Icon name="edit-outline" fill="white" style={{width: 40, height: 40 }} />
+        </TouchableOpacity>
+        <TouchableOpacity style={stylesNote.buttonArchive} onPress={ () => deleteNote(i) } >
+          {/* <Text>Archive</Text> */}
+          <Icon name="archive-outline" fill="white" style={{width: 30, height: 30 }} />
+        </TouchableOpacity>
+      {/* </ScrollView> */}
     </View>
   )
 }
@@ -65,7 +77,8 @@ const Note = ({route, navigation, ...props}) => {
 const stylesNote = StyleSheet.create({
   noteContainer: {
     padding: 15,
-    height: "100%"
+    height: "100%",
+    position: "relative"
   },
   noteTitle: {
     fontSize: 28,
@@ -87,6 +100,12 @@ const stylesNote = StyleSheet.create({
     bottom: 20,
     left: 20
   },
+  thumbnail: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
+    marginBottom: 20,
+  }
 })
 
 export default Note

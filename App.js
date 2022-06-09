@@ -26,6 +26,7 @@ export default function App() {
   const [noteTitle, setNoteTitle] = useState("")
   const [noteBody, setNoteBody] = useState("")
   const [noteColor, setNoteColor] = useState("")
+  const [selectedImage, setSelectedImage] = React.useState(null);
 
   const [notes, setNotes] = useState([])
   const [date, setDate] = useState(new Date().toUTCString())
@@ -36,10 +37,19 @@ export default function App() {
     let newNote = noteData */
     let newDate= new Date().toUTCString()
     setDate(newDate)
-    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor }, ...notes]
+
+    let selectedImgUri = ""
+
+    /* Check if there is an img */
+    if (selectedImage != null && selectedImage != "") {
+      selectedImgUri = selectedImage.localUri
+    }
+
+    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri }, ...notes]
     setNotes(newNotes)
     setNoteTitle('')
     setNoteBody('')
+    setSelectedImage(null)
     console.log(notes)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
@@ -94,7 +104,19 @@ export default function App() {
             </Stack.Screen>
 
             <Stack.Screen name="AddNote">
-              {props => <AddNote {...props} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} note={note} setNote={setNote} handleNote={handleNote} noteColor={noteColor} setNoteColor={setNoteColor} />}
+              {props => <AddNote {...props}
+                noteTitle={noteTitle}
+                setNoteTitle={setNoteTitle}
+                noteBody={noteBody}
+                setNoteBody={setNoteBody}
+                note={note}
+                setNote={setNote}
+                handleNote={handleNote}
+                noteColor={noteColor}
+                setNoteColor={setNoteColor}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />}
             </Stack.Screen>
 
             <Stack.Screen name="DeletedNotes">
@@ -102,7 +124,16 @@ export default function App() {
             </Stack.Screen>
 
             <Stack.Screen name="EditNote">
-              {props => <EditNote {...props} notes={notes} setNotes={setNotes} noteTitle={noteTitle} setNoteTitle={setNoteTitle} noteBody={noteBody} setNoteBody={setNoteBody} />}
+              {props => <EditNote {...props}
+                notes={notes}
+                setNotes={setNotes}
+                noteTitle={noteTitle}
+                setNoteTitle={setNoteTitle}
+                noteBody={noteBody}
+                setNoteBody={setNoteBody}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />}
             </Stack.Screen>
 
           </Stack.Navigator>

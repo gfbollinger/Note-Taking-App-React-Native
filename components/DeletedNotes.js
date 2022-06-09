@@ -228,7 +228,8 @@ export const styles = StyleSheet.create({
   note: {
     padding: 10,
     backgroundColor: "#FFF495",
-    marginBottom: 10
+    marginBottom: 10,
+    borderRadius: 8
   }
 })
 

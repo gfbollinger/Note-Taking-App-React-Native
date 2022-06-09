@@ -2,20 +2,24 @@ import React, { useState } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text  } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ImagePickerComp from "./ImagePicker";
 
 const EditNote = ({route, navigation, ...props}) => {
 
   const { i, n } = route.params
-  const [newEdit, setNewEdit]  = useState(n)
 
+  const [newEdit, setNewEdit]  = useState(n)
+  const [newEditImg, setNewEditImg] = useState(n.img)
+
+  let editedNote = [...props.notes]
+  let thisNoteImg = editedNote[i].img
 
   function updateNote() {
-
-    let editedNote = [...props.notes]
     editedNote[i] = newEdit
     editedNote[i].title = newEdit.title
     editedNote[i].body = newEdit.body
     editedNote[i].color = newEdit.color
+    editedNote[i].img = newEditImg
 
     props.setNotes(editedNote)
     navigation.navigate('Notes')
@@ -70,6 +74,16 @@ const EditNote = ({route, navigation, ...props}) => {
                 <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#AEFFF5" })}></TouchableOpacity>
                 <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFB7F8" })}></TouchableOpacity>
               </View>
+
+              {<ImagePickerComp
+                selectedImage={props.selectedImage}
+                setSelectedImage={props.setSelectedImage}
+                setNewEdit={setNewEdit}
+                thisNoteImg={thisNoteImg}
+                isEdit={true}
+                newEditImg={newEditImg}
+                setNewEditImg={setNewEditImg}
+              />}
 
               <TouchableOpacity
                 style={styles.button}

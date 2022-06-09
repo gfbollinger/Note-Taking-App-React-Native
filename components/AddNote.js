@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text, Alert } from "react-native"
 import * as Style from "./../assets/styles"
 import { Button, ButtonGroup } from '@ui-kitten/components';
+import ImagePickerComp from "./ImagePicker";
 
 const AddNote = ({navigation, ...props}) => {
 
@@ -46,6 +47,11 @@ const AddNote = ({navigation, ...props}) => {
                 <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => props.setNoteColor('#AEFFF5')}></TouchableOpacity>
                 <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => props.setNoteColor('#FFB7F8')}></TouchableOpacity>
               </View>
+
+              <ImagePickerComp
+                selectedImage={props.selectedImage}
+                setSelectedImage={props.setSelectedImage}
+              />
 
               <TouchableOpacity
                 style={styles.button}
