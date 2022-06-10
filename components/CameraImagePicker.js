@@ -1,69 +1,70 @@
-import React from 'react';
+import React from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function ImagePickerComp({...props}) {
+const CameraImagePicker = ({...props}) =>{
 
-  let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  let openCameraImagePickerAsync = async () => {
+    let permissionCameraResult = await ImagePicker.requestCameraPermissionsAsync();
 
-    if (permissionResult.granted === false) {
+    if (permissionCameraResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult);
+    let pickerCameraResult = await ImagePicker.launchCameraAsync();
+    console.log(pickerCameraResult);
 
-    if (pickerResult.cancelled === true) {
+    if (pickerCameraResult.cancelled === true) {
       return;
     }
 
     /* If I am editing: */
     if (props.isEdit){
-      props.setNewEditImg(pickerResult.uri)
+      props.setNewEditCameraImg(pickerCameraResult.uri)
     }
 
     /* If I am not editing */
     if (!props.isEdit){
-      props.setSelectedImage({ localUri: pickerResult.uri });
+      props.setCameraImage({ localUri: pickerCameraResult.uri });
     }
 
   }
 
+
   /* If adding a new note and selected an image */
-  if (props.selectedImage !== null) {
+  if (props.cameraImage !== null) {
     return (
       <View style={styles.container}>
-        <Text style={styles.thumbnailText}>Image:</Text>
+        <Text style={styles.thumbnailText}>Image took with camera:</Text>
         <Image
-          source={{ uri: props.selectedImage.localUri }}
+          source={{ uri: props.cameraImage.localUri }}
           style={styles.thumbnail}
         />
-        <TouchableOpacity onPress={ () => props.setSelectedImage(null)}>
-          <Text>Remove Image</Text>
+        <TouchableOpacity onPress={ () => props.setCameraImage(null)}>
+          <Text>Remove Photo</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
   /* If editing a note with existing image */
-  if (props.newEditImg && props.isEdit){
+  if (props.newEditCameraImg && props.isEdit){
     return (
       <View style={styles.container}>
         <Text style={styles.thumbnailText}>Image:</Text>
         <Image
-          source={{ uri: props.newEditImg }}
+          source={{ uri: props.newEditCameraImg }}
           style={styles.thumbnail}
         />
-        <TouchableOpacity onPress={ () => props.setNewEditImg(null)}>
-          <Text>Remove Image</Text>
+        <TouchableOpacity onPress={ () => props.setNewEditCameraImg(null)}>
+          <Text>Remove Photo</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  /* If editing a note with no image */
+  /* NO VA! If editing a note with no image */
   /* if (props.newEditImg === "" && props.isEdit){
     return (
       <View style={styles.container}>
@@ -76,16 +77,19 @@ export default function ImagePickerComp({...props}) {
   return (
     <View style={styles.container}>
       <Text style={styles.instructions}>
-        Press the button below to select an image!
+        Press the button below to take a picture!
       </Text>
 
-      <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-        <Text style={styles.buttonText}>Pick a photo from Camera Roll</Text>
+      <TouchableOpacity onPress={openCameraImagePickerAsync} style={styles.button}>
+        <Text style={styles.buttonText}>Take a photo with the Camera</Text>
       </TouchableOpacity>
 
     </View>
   );
+
 }
+
+export default CameraImagePicker
 
 const styles = StyleSheet.create({
   container: {},

@@ -50,13 +50,24 @@ const Note = ({route, navigation, ...props}) => {
         <Text>{n.body}</Text>
 
         {
+          /* Img from Camera roll */
           n.img ?
-        <Image
-          source={{ uri: n.img }}
-          style={stylesNote.thumbnail}
-        />
-        : <></>
-      }
+          <Image
+            source={{ uri: n.img }}
+            style={stylesNote.thumbnail}
+          />
+          : <></>
+        }
+
+        {
+          /* Img from Camera */
+          n.camImg ?
+          <Image
+            source={{ uri: n.camImg }}
+            style={stylesNote.thumbnail}
+          />
+          : <></>
+        }
 
         <TouchableOpacity style={stylesNote.buttonEdit} onPress={ () => navigation.navigate("EditNote", {
           i: i,

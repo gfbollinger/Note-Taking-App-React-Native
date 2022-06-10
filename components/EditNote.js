@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Touchable
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePickerComp from "./ImagePicker";
+import CameraImagePicker from "./CameraImagePicker";
 
 const EditNote = ({route, navigation, ...props}) => {
 
@@ -10,9 +11,11 @@ const EditNote = ({route, navigation, ...props}) => {
 
   const [newEdit, setNewEdit]  = useState(n)
   const [newEditImg, setNewEditImg] = useState(n.img)
+  const [newEditCameraImg, setNewEditCameraImg] = useState(n.camImg)
 
   let editedNote = [...props.notes]
   let thisNoteImg = editedNote[i].img
+  let thisNoteCameraImg = editedNote[i].camImg
 
   function updateNote() {
     editedNote[i] = newEdit
@@ -20,6 +23,7 @@ const EditNote = ({route, navigation, ...props}) => {
     editedNote[i].body = newEdit.body
     editedNote[i].color = newEdit.color
     editedNote[i].img = newEditImg
+    editedNote[i].camImg = newEditCameraImg
 
     props.setNotes(editedNote)
     navigation.navigate('Notes')
@@ -75,7 +79,7 @@ const EditNote = ({route, navigation, ...props}) => {
                 <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFB7F8" })}></TouchableOpacity>
               </View>
 
-              {<ImagePickerComp
+              <ImagePickerComp
                 selectedImage={props.selectedImage}
                 setSelectedImage={props.setSelectedImage}
                 setNewEdit={setNewEdit}
@@ -83,7 +87,17 @@ const EditNote = ({route, navigation, ...props}) => {
                 isEdit={true}
                 newEditImg={newEditImg}
                 setNewEditImg={setNewEditImg}
-              />}
+              />
+
+              <CameraImagePicker
+                cameraImage={props.cameraImage}
+                setCameraImage={props.setCameraImage}
+                setNewEdit={setNewEdit}
+                thisNoteCameraImg={thisNoteCameraImg}
+                isEdit={true}
+                newEditCameraImg={newEditCameraImg}
+                setNewEditCameraImg={setNewEditCameraImg}
+              />
 
               <TouchableOpacity
                 style={styles.button}

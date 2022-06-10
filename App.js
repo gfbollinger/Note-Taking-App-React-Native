@@ -27,6 +27,8 @@ export default function App() {
   const [noteBody, setNoteBody] = useState("")
   const [noteColor, setNoteColor] = useState("")
   const [selectedImage, setSelectedImage] = React.useState(null);
+  const [cameraImage, setCameraImage] = React.useState(null);
+  const [audioRecording, setAudioRecording] = React.useState(null);
 
   const [notes, setNotes] = useState([])
   const [date, setDate] = useState(new Date().toUTCString())
@@ -39,17 +41,24 @@ export default function App() {
     setDate(newDate)
 
     let selectedImgUri = ""
+    let selectedCameraImgUri = ""
 
     /* Check if there is an img */
     if (selectedImage != null && selectedImage != "") {
       selectedImgUri = selectedImage.localUri
     }
 
-    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri }, ...notes]
+    /* Check if there an img from camera */
+    if (cameraImage != null && cameraImage != "") {
+      selectedCameraImgUri = cameraImage.localUri
+    }
+
+    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri }, ...notes]
     setNotes(newNotes)
     setNoteTitle('')
     setNoteBody('')
     setSelectedImage(null)
+    setCameraImage(null)
     console.log(notes)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
@@ -116,6 +125,8 @@ export default function App() {
                 setNoteColor={setNoteColor}
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
+                cameraImage={cameraImage}
+                setCameraImage={setCameraImage}
               />}
             </Stack.Screen>
 
@@ -133,6 +144,8 @@ export default function App() {
                 setNoteBody={setNoteBody}
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
+                cameraImage={cameraImage}
+                setCameraImage={setCameraImage}
               />}
             </Stack.Screen>
 

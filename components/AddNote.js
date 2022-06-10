@@ -3,6 +3,9 @@ import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Touchable
 import * as Style from "./../assets/styles"
 import { Button, ButtonGroup } from '@ui-kitten/components';
 import ImagePickerComp from "./ImagePicker";
+import CameraImagePicker from "./CameraImagePicker";
+import AudioRecorder from "./AudioRecorder";
+import AudioPlayer from "./AudioPlayer";
 
 const AddNote = ({navigation, ...props}) => {
 
@@ -11,7 +14,7 @@ const AddNote = ({navigation, ...props}) => {
     <>
       <ScrollView>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          /* behavior={Platform.OS === 'ios' ? 'padding' : 'height'} */
           /* behavior={'padding'} */
         >
           <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
@@ -52,6 +55,14 @@ const AddNote = ({navigation, ...props}) => {
                 selectedImage={props.selectedImage}
                 setSelectedImage={props.setSelectedImage}
               />
+
+              <CameraImagePicker
+                cameraImage={props.cameraImage}
+                setCameraImage={props.setCameraImage}
+              />
+
+              {/* <AudioPlayer /> */}
+              <AudioRecorder />
 
               <TouchableOpacity
                 style={styles.button}
