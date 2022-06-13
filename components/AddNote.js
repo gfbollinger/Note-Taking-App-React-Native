@@ -6,6 +6,7 @@ import ImagePickerComp from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import AudioRecorder from "./AudioRecorder";
 import AudioPlayer from "./AudioPlayer";
+import GetLocation from "./GetLocation"
 
 const AddNote = ({navigation, ...props}) => {
 
@@ -63,6 +64,8 @@ const AddNote = ({navigation, ...props}) => {
 
               {/* <AudioPlayer /> */}
               <AudioRecorder />
+
+              <GetLocation />
 
               <TouchableOpacity
                 style={styles.button}
