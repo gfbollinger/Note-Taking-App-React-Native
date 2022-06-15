@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from "react"
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 /* import SafeAreaView from 'react-native-safe-area-view'; */
@@ -7,14 +8,17 @@ import AddNote from './components/AddNote';
 import DeletedNotes from './components/DeletedNotes';
 import EditNote from './components/EditNote';
 import Note from './components/Note';
-import React, { useState, useEffect } from "react"
+import About from './components/About';
+import MenuNavigation from "./components/MenuNavigation";
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, IconRegistry, Layout, Icon, Button, Card } from '@ui-kitten/components';
+import { ApplicationProvider, IconRegistry, Layout, Icon, Card } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 import Notes from './components/Notes';
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 
@@ -104,7 +108,13 @@ export default function App() {
 
           <Stack.Navigator>
 
-            <Stack.Screen name="Notes">
+            <Stack.Screen name="Notes"
+              options={({ navigation, route }) => ({
+                headerRight: () => (
+                  <MenuNavigation navigation={navigation} />
+                )
+              })}
+            >
               { props => <Notes {...props} notes={notes} setNotes={setNotes} note={note} setNote={setNote} date={date} setDate={setDate} archived={archived} setArchived={setArchived} /> }
             </Stack.Screen>
 
@@ -149,6 +159,10 @@ export default function App() {
               />}
             </Stack.Screen>
 
+            <Stack.Screen name="About">
+              {props => <About {...props} />}
+            </Stack.Screen>
+
           </Stack.Navigator>
 
         </NavigationContainer>
@@ -157,6 +171,20 @@ export default function App() {
     </>
   );
 }
+
+/* function HomeScreen({ navigation }) {
+  const [count, setCount] = React.useState(0);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={() => setCount(c => c + 1)} title="Update count" />
+      ),
+    });
+  }, [navigation]);
+
+  return <Text>Count: {count}</Text>;
+} */
 
 const styles = StyleSheet.create({
   container: {
