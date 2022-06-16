@@ -13,26 +13,18 @@ const Notes = ({navigation, ...props}) => {
 
   const [searchNote, setSearchNote] = useState("")
 
+  let notesFilteredNewArr = []
 
-  /* Este buscador busca y ordena */
-  function handleSearch() {
-    if(searchNote === ""){
-      Alert.alert("Type something in search box")
-    }
-    else {
-      props.notes.forEach( (item, index) => {
-        if (item.includes(searchNote)) {
-          let searchItem = [...props.notes]
-          let firstElOfArray = searchItem[0]
-          let index = [...props.notes].indexOf(item)
-          searchItem[0] = item
-          searchItem[index] = firstElOfArray
-          props.setNotes(searchItem)
-        }
-      })
-    }
-    setSearchNote("")
-    Keyboard.dismiss
+  function handleSearch(inputText) {
+    /* console.log(props.notes) */
+    /* Keyboard.dismiss */
+    setSearchNote(inputText)
+    notesFilteredNewArr = props.notes.filter( p => 
+        /* console.log(p.title) */
+        p.title.toLowerCase().includes(inputText)
+    )
+    console.log(notesFilteredNewArr)
+    props.setNotesFiltered(notesFilteredNewArr)
   }
 
   function clearAllNotes() {
@@ -77,7 +69,7 @@ const Notes = ({navigation, ...props}) => {
 
       {/* Total notes counter */}
       <View style={styles.notesCounterCont}>
-        <Text style={styles.notesCounter} >Total: {props.notes.length}</Text>
+        <Text style={styles.notesCounter} >Total notes: {props.notes.length}</Text>
       </View>
 
 
@@ -95,12 +87,12 @@ const Notes = ({navigation, ...props}) => {
           placeholderTextColor={Style.color}
           style={styles.searchInput}
           value={searchNote}
-          onChangeText={ (text) => setSearchNote(text) }
+          onChangeText={ (text) => handleSearch(text) }
         />
 
-        <TouchableOpacity style={styles.searchBtn} onPress={ () => handleSearch() }>
+        {/* <TouchableOpacity style={styles.searchBtn} onPress={ () => handleSearch() }>
           <Icon name="search" fill="white" style={{width: 25, height: 25 }} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.clearBtn} onPress={ () => clearAllNotes() }>
           <Text style={{color:"#fff"}}>Archive all</Text>
@@ -118,7 +110,7 @@ const Notes = ({navigation, ...props}) => {
               <Text>There are no notes yet.</Text>
             </View>
             :
-            props.notes.map( (item, index) =>
+            props.notesFiltered.map( (item, index) =>
 
               <TouchableOpacity
                 key={index}

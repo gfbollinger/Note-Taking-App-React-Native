@@ -38,6 +38,8 @@ export default function App() {
   const [date, setDate] = useState(new Date().toUTCString())
   const [archived, setArchived] = useState([])
 
+  const [notesFiltered, setNotesFiltered] = useState([])
+
   function handleNote() {
     /* setNoteData( {title: noteTitle, body: noteBody} )
     let newNote = noteData */
@@ -59,6 +61,7 @@ export default function App() {
 
     let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri }, ...notes]
     setNotes(newNotes)
+    setNotesFiltered(newNotes)
     setNoteTitle('')
     setNoteBody('')
     setSelectedImage(null)
@@ -85,6 +88,8 @@ export default function App() {
       .then ( data => {
         if( data != null){
           setNotes(JSON.parse(data))
+          /* Initial notes filtered same as notes */
+          setNotesFiltered(JSON.parse(data))
         }
       }).catch( (error) => console.log(error))
 
@@ -115,7 +120,18 @@ export default function App() {
                 )
               })}
             >
-              { props => <Notes {...props} notes={notes} setNotes={setNotes} note={note} setNote={setNote} date={date} setDate={setDate} archived={archived} setArchived={setArchived} /> }
+              { props => <Notes {...props}
+                notes={notes} 
+                setNotes={setNotes}
+                note={note}
+                setNote={setNote}
+                date={date}
+                setDate={setDate}
+                archived={archived}
+                setArchived={setArchived}
+                notesFiltered={notesFiltered}
+                setNotesFiltered={setNotesFiltered}
+              /> }
             </Stack.Screen>
 
             <Stack.Screen name="Note">
