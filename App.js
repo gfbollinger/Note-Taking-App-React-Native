@@ -34,6 +34,8 @@ export default function App() {
   const [cameraImage, setCameraImage] = React.useState(null);
   /* const [audioRecording, setAudioRecording] = React.useState(null); */
   const [recordings, setRecordings] = React.useState([]);
+  const [location, setLocation] = useState();
+  const [myAddress, setMyAddress] = useState([{}]);
 
   const [notes, setNotes] = useState([])
   const [date, setDate] = useState(new Date().toUTCString())
@@ -60,7 +62,7 @@ export default function App() {
       selectedCameraImgUri = cameraImage.localUri
     }
 
-    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri, audios: recordings }, ...notes]
+    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri, audios: recordings, location: location, myAddress: myAddress }, ...notes]
     setNotes(newNotes)
     setNotesFiltered(newNotes)
     setNoteTitle('')
@@ -68,6 +70,8 @@ export default function App() {
     setSelectedImage(null)
     setCameraImage(null)
     setRecordings([])
+    setLocation(null)
+    setMyAddress(null)
     console.log(notes)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
@@ -145,6 +149,8 @@ export default function App() {
                 archived={archived}
                 setArchived={setArchived}
                 recordings={recordings}
+                location={location}
+                myAddress={myAddress}
               />}
             </Stack.Screen>
 
@@ -165,6 +171,10 @@ export default function App() {
                 setCameraImage={setCameraImage}
                 recordings={recordings}
                 setRecordings={setRecordings}
+                location={location}
+                setLocation={setLocation}
+                myAddress={myAddress}
+                setMyAddress={setMyAddress}
               />}
             </Stack.Screen>
 

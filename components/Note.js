@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '@ui-kitten/components';
 
 import AudioRecordingsPlayer from "./AudioRecordingsPlayer";
+import LocationPlace from "./LocationPlace";
 
 const Note = ({route, navigation, ...props}) => {
 
@@ -25,7 +26,8 @@ const Note = ({route, navigation, ...props}) => {
         date: archivedNote[0].date,
         img: archivedNote[0].img,
         camImg: archivedNote[0].img,
-        audios: archivedNote[0].audios
+        audios: archivedNote[0].audios,
+        location: archivedNote[0].location
       },
       ...props.archived
     ]
@@ -73,10 +75,17 @@ const Note = ({route, navigation, ...props}) => {
           : <></>
         }
 
-{
+        {
         /* Audios */
           n.audios ?
           <AudioRecordingsPlayer recordings={n.audios} />
+          : <></>
+        }
+
+        {
+          /* Location */
+          n.myAddress ?
+          <LocationPlace myAddress={n.myAddress} />
           : <></>
         }
 

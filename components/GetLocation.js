@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import Device from 'expo-device';
 import * as Location from 'expo-location';
+import LocationPlace from "./LocationPlace"
 import MapViewer from "./MapViewer"
 
-export default function GetLocation() {
-  const [location, setLocation] = useState(null);
-  const [myAddress, setMyAddress] = useState([{}]);
+export default function GetLocation({...props}) {  
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
@@ -23,28 +22,29 @@ export default function GetLocation() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      let address = await Location.reverseGeocodeAsync(location.coords)
-      setLocation(location);
-      setMyAddress(address)
-      console.log(location.coords.longitude)
+      let currLocation = await Location.getCurrentPositionAsync({});
+      let address = await Location.reverseGeocodeAsync(currLocation.coords)
+      props.setLocation(currLocation)
+      props.setMyAddress(address)
+      console.log(props.location)
     })();
   }, []);
 
-  let text = 'Waiting..';
+  /* let text = 'Waiting..';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-  }
+  } */
 
   return (
     <View style={styles.container}>
-      { location &&
+      { props.location ?
       <View>
-        <Text style={styles.paragraph}>You are in: {myAddress[0].city}, {myAddress[0].region}. {myAddress[0].country}.</Text>
-        <MapViewer location={location} />
+        <LocationPlace myAddress={props.myAddress} />
+        <MapViewer location={props.location} />
       </View>
+      : <Text>Loading Location...</Text>
       }
     </View>
 

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Marker } from 'react-native-maps';
 
 
-export default function MapViewer({ location }) {
+export default function MapViewer({ ...props }) {
 
   const [markers, setMarkers ] = useState([
     {
@@ -16,11 +16,12 @@ export default function MapViewer({ location }) {
 
   return (
     <View style={styles.container}>
+      { props.location &&
       <MapView 
         style={styles.map}
         initialRegion={{
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
+          latitude: props.location.coords.latitude,
+          longitude: props.location.coords.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -28,12 +29,13 @@ export default function MapViewer({ location }) {
         {markers.map((marker, index) => (
           <Marker
             key={index}
-            coordinate={{ latitude : location.coords.latitude , longitude : location.coords.longitude }}
+            coordinate={{ latitude : props.location.coords.latitude , longitude : props.location.coords.longitude }}
             title={marker.title}
             description={marker.description}
           />
         ))}
       </MapView>
+      }
     </View>
   );
 }

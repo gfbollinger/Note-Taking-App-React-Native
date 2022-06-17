@@ -63,7 +63,12 @@ const AddNote = ({navigation, ...props}) => {
 
               <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
 
-              <GetLocation />
+              <GetLocation
+                location={props.location}
+                setLocation={props.setLocation}
+                myAddress={props.myAddress}
+                setMyAddress={props.setMyAddress}
+              />
 
               <TouchableOpacity
                 style={styles.button}
