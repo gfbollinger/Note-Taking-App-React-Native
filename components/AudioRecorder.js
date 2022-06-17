@@ -1,11 +1,12 @@
 import React from "react"
 import { Button, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Audio } from 'expo-av';
+import AudioRecordingsPlayer from "./AudioRecordingsPlayer"
 
 
-export default function App() {
+export default function AudioRecorder({...props}) {
+
   const [recording, setRecording] = React.useState();
-  const [recordings, setRecordings] = React.useState([]);
   const [message, setMessage] = React.useState("");
 
   async function startRecording() {
@@ -21,7 +22,7 @@ export default function App() {
           /* interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX, */
           playThroughEarpieceAndroid: false,
         });
-        
+
         const { recording } = await Audio.Recording.createAsync(
           Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
         );
@@ -39,7 +40,7 @@ export default function App() {
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
 
-    let updatedRecordings = [...recordings];
+    let updatedRecordings = [...props.recordings];
     const { sound, status } = await recording.createNewLoadedSoundAsync();
     updatedRecordings.push({
       sound: sound,
@@ -47,12 +48,12 @@ export default function App() {
       file: recording.getURI()
     });
 
-    setRecordings(updatedRecordings);
+    props.setRecordings(updatedRecordings);
   }
 
-  function playRecording(recordingLine) {
+  /* function playRecording(recordingLine) {
     recordingLine.sound.replayAsync({ volume: 1, isLooping : false})
-  }
+  } */
 
   function getDurationFormatted(millis) {
     const minutes = millis / 1000 / 60;
@@ -62,8 +63,8 @@ export default function App() {
     return `${minutesDisplay}:${secondsDisplay}`;
   }
 
-  function getRecordingLines() {
-    return recordings.map((recordingLine, index) => {
+  /* function getRecordingLines() {
+    return props.recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={styles.row}>
           <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
@@ -71,7 +72,7 @@ export default function App() {
         </View>
       );
     });
-  }
+  } */
 
   return (
     <View style={styles.container}>
@@ -79,7 +80,8 @@ export default function App() {
       <Button
         title={recording ? 'Stop Recording Audio' : 'Start Recording Audio'}
         onPress={recording ? stopRecording : startRecording} />
-      {getRecordingLines()}
+      {/* {getRecordingLines()} */}
+      <AudioRecordingsPlayer recordings={props.recordings} />
       <StatusBar style="auto" />
     </View>
   );

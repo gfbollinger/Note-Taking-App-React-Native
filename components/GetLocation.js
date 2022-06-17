@@ -40,9 +40,11 @@ export default function GetLocation() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>You are in: {myAddress[0].city}, {myAddress[0].region}. {myAddress[0].country}.</Text>
       { location &&
-      <MapViewer location={location} />
+      <View>
+        <Text style={styles.paragraph}>You are in: {myAddress[0].city}, {myAddress[0].region}. {myAddress[0].country}.</Text>
+        <MapViewer location={location} />
+      </View>
       }
     </View>
 

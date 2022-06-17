@@ -110,7 +110,7 @@ const Notes = ({navigation, ...props}) => {
               <Text>There are no notes yet.</Text>
             </View>
             :
-            props.notesFiltered.map( (item, index) =>
+            props.notes.map( (item, index) =>
 
               <TouchableOpacity
                 key={index}

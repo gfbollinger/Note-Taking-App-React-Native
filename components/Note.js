@@ -4,6 +4,8 @@ import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '@ui-kitten/components';
 
+import AudioRecordingsPlayer from "./AudioRecordingsPlayer";
+
 const Note = ({route, navigation, ...props}) => {
 
   const { i, n } = route.params
@@ -21,7 +23,9 @@ const Note = ({route, navigation, ...props}) => {
         body: archivedNote[0].body,
         color: archivedNote[0].color,
         date: archivedNote[0].date,
-        img: archivedNote[0].img
+        img: archivedNote[0].img,
+        camImg: archivedNote[0].img,
+        audios: archivedNote[0].audios
       },
       ...props.archived
     ]
@@ -66,6 +70,13 @@ const Note = ({route, navigation, ...props}) => {
             source={{ uri: n.camImg }}
             style={stylesNote.thumbnail}
           />
+          : <></>
+        }
+
+{
+        /* Audios */
+          n.audios ?
+          <AudioRecordingsPlayer recordings={n.audios} />
           : <></>
         }
 

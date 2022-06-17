@@ -5,7 +5,6 @@ import { Button, ButtonGroup } from '@ui-kitten/components';
 import ImagePickerComp from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import AudioRecorder from "./AudioRecorder";
-import AudioPlayer from "./AudioPlayer";
 import GetLocation from "./GetLocation"
 
 const AddNote = ({navigation, ...props}) => {
@@ -62,8 +61,7 @@ const AddNote = ({navigation, ...props}) => {
                 setCameraImage={props.setCameraImage}
               />
 
-              {/* <AudioPlayer /> */}
-              <AudioRecorder />
+              <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
 
               <GetLocation />
 

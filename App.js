@@ -32,7 +32,8 @@ export default function App() {
   const [noteColor, setNoteColor] = useState("")
   const [selectedImage, setSelectedImage] = React.useState(null);
   const [cameraImage, setCameraImage] = React.useState(null);
-  const [audioRecording, setAudioRecording] = React.useState(null);
+  /* const [audioRecording, setAudioRecording] = React.useState(null); */
+  const [recordings, setRecordings] = React.useState([]);
 
   const [notes, setNotes] = useState([])
   const [date, setDate] = useState(new Date().toUTCString())
@@ -59,13 +60,14 @@ export default function App() {
       selectedCameraImgUri = cameraImage.localUri
     }
 
-    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri }, ...notes]
+    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri, audios: recordings }, ...notes]
     setNotes(newNotes)
     setNotesFiltered(newNotes)
     setNoteTitle('')
     setNoteBody('')
     setSelectedImage(null)
     setCameraImage(null)
+    setRecordings([])
     console.log(notes)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
@@ -135,7 +137,15 @@ export default function App() {
             </Stack.Screen>
 
             <Stack.Screen name="Note">
-              { props => <Note {...props} notes={notes} setNotes={setNotes} note={note} setNote={setNote} archived={archived} setArchived={setArchived}/> }
+              { props => <Note {...props}
+                notes={notes}
+                setNotes={setNotes}
+                note={note}
+                setNote={setNote}
+                archived={archived}
+                setArchived={setArchived}
+                recordings={recordings}
+              />}
             </Stack.Screen>
 
             <Stack.Screen name="AddNote">
@@ -153,6 +163,8 @@ export default function App() {
                 setSelectedImage={setSelectedImage}
                 cameraImage={cameraImage}
                 setCameraImage={setCameraImage}
+                recordings={recordings}
+                setRecordings={setRecordings}
               />}
             </Stack.Screen>
 
