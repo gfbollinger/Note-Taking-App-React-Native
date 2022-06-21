@@ -5,9 +5,9 @@ import { Icon } from '@ui-kitten/components';
 import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const StarIcon = (props) => (
+/* const StarIcon = (props) => (
   <Icon {...props} name='star'/>
-);
+); */
 
 const Notes = ({navigation, ...props}) => {
 
@@ -82,17 +82,14 @@ const Notes = ({navigation, ...props}) => {
       {/* Search */}
       <View style={styles.searchContainer}>
 
-        <TextInput 
+        {/* <TextInput 
           placeholder="Search"
           placeholderTextColor={Style.color}
           style={styles.searchInput}
           value={searchNote}
           onChangeText={ (text) => handleSearch(text) }
-        />
+        /> */}
 
-        {/* <TouchableOpacity style={styles.searchBtn} onPress={ () => handleSearch() }>
-          <Icon name="search" fill="white" style={{width: 25, height: 25 }} />
-        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.clearBtn} onPress={ () => clearAllNotes() }>
           <Text style={{color:"#fff"}}>Archive all</Text>

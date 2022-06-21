@@ -15,7 +15,12 @@ const MenuNavigation = ({navigation}) => {
     setSelectedIndex(index);
     setVisible(false);
     console.log(index)
-    navigation.navigate('About')
+    if (index.row === 0 ){
+      navigation.navigate('About')
+    }
+    /* else if (index.row === 1){
+
+    } */
   };
 
   const onUsersPress = ({ index }) => {
@@ -51,7 +56,7 @@ const MenuNavigation = ({navigation}) => {
         /* placement="bottom end" */
       >
         <MenuItem title='About'/>
-        <MenuItem title='Archived'/>
+        <MenuItem title='(No link)'/>
 
       </OverflowMenu>
     </Layout>

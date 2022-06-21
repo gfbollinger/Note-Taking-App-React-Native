@@ -26,13 +26,11 @@ export default function App() {
 
   const [note, setNote] = useState()
 
-  /* const [noteData, setNoteData] = useState({ title:"" , body:""}) */
   const [noteTitle, setNoteTitle] = useState("")
   const [noteBody, setNoteBody] = useState("")
   const [noteColor, setNoteColor] = useState("")
   const [selectedImage, setSelectedImage] = React.useState(null);
   const [cameraImage, setCameraImage] = React.useState(null);
-  /* const [audioRecording, setAudioRecording] = React.useState(null); */
   const [recordings, setRecordings] = React.useState([]);
   const [location, setLocation] = useState();
   const [myAddress, setMyAddress] = useState([{}]);
@@ -44,8 +42,6 @@ export default function App() {
   const [notesFiltered, setNotesFiltered] = useState([])
 
   function handleNote() {
-    /* setNoteData( {title: noteTitle, body: noteBody} )
-    let newNote = noteData */
     let newDate= new Date().toUTCString()
     setDate(newDate)
 
@@ -209,20 +205,6 @@ export default function App() {
     </>
   );
 }
-
-/* function HomeScreen({ navigation }) {
-  const [count, setCount] = React.useState(0);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button onPress={() => setCount(c => c + 1)} title="Update count" />
-      ),
-    });
-  }, [navigation]);
-
-  return <Text>Count: {count}</Text>;
-} */
 
 const styles = StyleSheet.create({
   container: {

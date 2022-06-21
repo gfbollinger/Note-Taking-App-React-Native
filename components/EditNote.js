@@ -101,6 +101,8 @@ const EditNote = ({route, navigation, ...props}) => {
                 setNewEditCameraImg={setNewEditCameraImg}
               />
 
+              {/* TODO: Add button to remove audios if it has, setting setRecordings to empty array */}
+
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
