@@ -56,27 +56,19 @@ const Notes = ({navigation, ...props}) => {
     <View style={styles.notesContainer}>
 
       {/* Heading */}
-      <View style={styles.headingContainer}>
+      {/* <View style={styles.headingContainer}>
         <Text style={styles.heading} >My Notes</Text>
-
-          <TouchableOpacity style={[styles.button2, {marginLeft:40}]}  onPress={ () => navigation.navigate('DeletedNotes') }>
-              <Icon name="archive-outline" fill="#8F9BB3" style={{width: 40, height: 40 }} />
-          </TouchableOpacity>
-
-      </View>
-
+      </View> */}
 
 
       {/* Total notes counter */}
-      <View style={styles.notesCounterCont}>
+      {/* <View style={styles.notesCounterCont}>
         <Text style={styles.notesCounter} >Total notes: {props.notes.length}</Text>
-      </View>
-
+      </View> */}
 
 
       {/* Divider */}
-      <View style={styles.divider}></View>
-
+      {/* <View style={styles.divider}></View> */}
 
 
       {/* Search */}
@@ -144,8 +136,12 @@ const Notes = ({navigation, ...props}) => {
 
       </ScrollView>
 
+      <TouchableOpacity style={[styles.buttonArchive, {marginLeft:0}]}  onPress={ () => navigation.navigate('DeletedNotes') }>
+          <Icon name="archive-outline" fill="white" style={{width: 25, height: 25 }} />
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.buttonAdd} onPress={ () => navigation.navigate('AddNote') }>
-        <Icon name="plus-outline" fill="white" style={{width: 40, height: 40 }} />
+        <Icon name="plus-outline" fill="white" style={{width: 50, height: 50 }} />
       </TouchableOpacity>
 
 
@@ -186,6 +182,14 @@ export const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     right: 20
+  },
+  buttonArchive: {
+    backgroundColor: Style.color,
+    padding: 10,
+    borderRadius: 50,
+    position: "absolute",
+    bottom: 20,
+    left: 20
   },
   notesCounterCont: {
     flexDirection: "row",

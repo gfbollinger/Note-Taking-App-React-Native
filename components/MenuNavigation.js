@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
-import { Layout, MenuItem, OverflowMenu, Icon, Spinner } from '@ui-kitten/components';
+import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
+import { Layout, MenuItem, OverflowMenu, Icon } from '@ui-kitten/components';
 
 const MenuIcon = (props) => (
   <Icon {...props} name='menu-outline'/>
@@ -31,16 +31,13 @@ const MenuNavigation = ({navigation}) => {
 
   const renderToggleButton = () => (
     <View style={styles.buttonContainer}>
-      <Button
-        /* appearance='ghost'
-        status='primary'
-        accessoryRight={MenuIcon} */
+      <TouchableOpacity
         onPress={() => setVisible(true)}
         style={styles.menuButton}
-        /* size='large' */
-        title="MENU"
+        /* title="MENU" */
       >
-      </Button>
+        <Icon name="menu-outline" fill="#8F9BB3" style={{width: 35, height: 35 }} />
+      </TouchableOpacity>
     </View>
   );
 
