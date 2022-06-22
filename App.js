@@ -116,11 +116,14 @@ export default function App() {
           <Stack.Navigator>
 
             <Stack.Screen name="Notes"
-              options={({ navigation, route }) => ({
-                headerRight: () => (
-                  <MenuNavigation navigation={navigation} />
-                )
-              })}
+              options={
+                ({ navigation, route }) => ({
+                  headerRight: () => (
+                    <MenuNavigation navigation={navigation} />
+                  ), 
+                  title: "My Notes"
+                })
+              }
             >
               { props => <Notes {...props}
                 notes={notes} 
@@ -136,7 +139,7 @@ export default function App() {
               /> }
             </Stack.Screen>
 
-            <Stack.Screen name="Note">
+            <Stack.Screen name="Note" options={{ title: 'Note Content' }}>
               { props => <Note {...props}
                 notes={notes}
                 setNotes={setNotes}
@@ -150,7 +153,7 @@ export default function App() {
               />}
             </Stack.Screen>
 
-            <Stack.Screen name="AddNote">
+            <Stack.Screen name="AddNote" options={{ title: 'Add New Note' }}>
               {props => <AddNote {...props}
                 noteTitle={noteTitle}
                 setNoteTitle={setNoteTitle}
@@ -174,7 +177,7 @@ export default function App() {
               />}
             </Stack.Screen>
 
-            <Stack.Screen name="DeletedNotes">
+            <Stack.Screen name="DeletedNotes" options={{ title: 'Archived Notes' }}>
               {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} notes={notes} setNotes={setNotes} date={date} />}
             </Stack.Screen>
 
@@ -193,7 +196,7 @@ export default function App() {
               />}
             </Stack.Screen>
 
-            <Stack.Screen name="About">
+            <Stack.Screen name="About" options={{ title: 'About Page' }}>
               {props => <About {...props} />}
             </Stack.Screen>
 
