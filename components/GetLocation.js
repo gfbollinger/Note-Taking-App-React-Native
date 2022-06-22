@@ -6,7 +6,7 @@ import LocationPlace from "./LocationPlace"
 import MapViewer from "./MapViewer"
 
 export default function GetLocation({...props}) {  
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("Loading Location...");
 
   useEffect(() => {
     (async () => {
@@ -30,25 +30,25 @@ export default function GetLocation({...props}) {
     })();
   }, []);
 
-  /* let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  } */
+
+  if (props.location !== undefined) {
+    return (
+      <View style={styles.container}>
+        { props.location ?
+        <View>
+          <LocationPlace myAddress={props.myAddress} />
+          <MapViewer location={props.location} />
+        </View>
+        : <Text>{errorMsg}</Text>
+        }
+      </View>
+
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      { props.location ?
-      <View>
-        <LocationPlace myAddress={props.myAddress} />
-        <MapViewer location={props.location} />
-      </View>
-      : <Text>Loading Location...</Text>
-      }
-    </View>
-
-  );
+    <></>
+  )
 }
 
 const styles = StyleSheet.create({

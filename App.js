@@ -66,8 +66,8 @@ export default function App() {
     setSelectedImage(null)
     setCameraImage(null)
     setRecordings([])
-    setLocation(null)
-    setMyAddress(null)
+    setLocation()
+    setMyAddress()
     console.log(notes)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
