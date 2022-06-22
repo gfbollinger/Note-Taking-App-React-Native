@@ -6,7 +6,7 @@ const MenuIcon = (props) => (
   <Icon {...props} name='menu-outline'/>
 );
 
-const MenuNavigation = ({navigation}) => {
+const MenuNavigation = ({navigation, archiveAllNotes}) => {
 
   const [visible, setVisible] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(null);
@@ -17,6 +17,9 @@ const MenuNavigation = ({navigation}) => {
     console.log(index)
     if (index.row === 0 ){
       navigation.navigate('About')
+    } 
+    else if (index.row === 1){
+      archiveAllNotes()
     }
     /* else if (index.row === 1){
 
@@ -53,7 +56,7 @@ const MenuNavigation = ({navigation}) => {
         /* placement="bottom end" */
       >
         <MenuItem title='About'/>
-        <MenuItem title='(No link)'/>
+        <MenuItem title='Archive All Notes'/>
 
       </OverflowMenu>
     </Layout>

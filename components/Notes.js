@@ -27,30 +27,6 @@ const Notes = ({navigation, ...props}) => {
     props.setNotesFiltered(notesFilteredNewArr)
   }
 
-  function clearAllNotes() {
-    let emptyArray = [...props.notes]
-    let deletedCompArray = [...props.archived]
-    emptyArray.forEach( (item, index) => {
-      deletedCompArray.push(item)
-    })
-
-    emptyArray = []
-    props.setNotes(emptyArray)
-    props.setArchived(deletedCompArray)
-
-    AsyncStorage.setItem("storedNotes", JSON.stringify(emptyArray))
-      .then( () => {
-        props.setNotes(emptyArray)
-      })
-      .catch( error => console.log(error) )
-
-    AsyncStorage.setItem("archivedNotes", JSON.stringify(deletedCompArray))
-      .then( () => {
-        props.setArchived(deletedCompArray)
-      })
-      .catch( error => console.log(error) )
-
-  }
 
   return (
     <View style={styles.notesContainer}>
@@ -72,7 +48,7 @@ const Notes = ({navigation, ...props}) => {
 
 
       {/* Search */}
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}> */}
 
         {/* <TextInput 
           placeholder="Search"
@@ -83,11 +59,11 @@ const Notes = ({navigation, ...props}) => {
         /> */}
 
 
-        <TouchableOpacity style={styles.clearBtn} onPress={ () => clearAllNotes() }>
+        {/* <TouchableOpacity style={styles.clearBtn} onPress={ () => props.archiveAllNotes() }>
           <Text style={{color:"#fff"}}>Archive all</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-      </View>
+      {/* </View> */}
 
 
       {/* Notes */}

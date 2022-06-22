@@ -81,6 +81,30 @@ export default function App() {
       })
   }
 
+  function archiveAllNotes() {
+    let emptyArray = [...notes]
+    let deletedCompArray = [...archived]
+    emptyArray.forEach( (item, index) => {
+      deletedCompArray.push(item)
+    })
+
+    emptyArray = []
+    setNotes(emptyArray)
+    setArchived(deletedCompArray)
+
+    AsyncStorage.setItem("storedNotes", JSON.stringify(emptyArray))
+      .then( () => {
+        setNotes(emptyArray)
+      })
+      .catch( error => console.log(error) )
+
+    AsyncStorage.setItem("archivedNotes", JSON.stringify(deletedCompArray))
+      .then( () => {
+        setArchived(deletedCompArray)
+      })
+      .catch( error => console.log(error) )
+  }
+
   useEffect( () => {
     loadNotes()
   }, [])
@@ -119,14 +143,14 @@ export default function App() {
               options={
                 ({ navigation, route }) => ({
                   headerRight: () => (
-                    <MenuNavigation navigation={navigation} />
+                    <MenuNavigation navigation={navigation} archiveAllNotes={archiveAllNotes} />
                   ), 
                   title: "My Notes"
                 })
               }
             >
               { props => <Notes {...props}
-                notes={notes} 
+                notes={notes}
                 setNotes={setNotes}
                 note={note}
                 setNote={setNote}
@@ -136,6 +160,7 @@ export default function App() {
                 setArchived={setArchived}
                 notesFiltered={notesFiltered}
                 setNotesFiltered={setNotesFiltered}
+                archiveAllNotes={archiveAllNotes}
               /> }
             </Stack.Screen>
 
