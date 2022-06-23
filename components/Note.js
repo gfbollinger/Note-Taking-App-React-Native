@@ -1,8 +1,9 @@
 import React, { useState } from "react"
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Modal, Button } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '@ui-kitten/components';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 import AudioRecordingsPlayer from "./AudioRecordingsPlayer";
 import LocationPlace from "./LocationPlace";
@@ -10,6 +11,8 @@ import LocationPlace from "./LocationPlace";
 const Note = ({route, navigation, ...props}) => {
 
   const { i, n } = route.params
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalCamVisible, setIsModalCamVisible] = useState(false)
 
   function deleteNote(index){
     let newArray = [...props.notes]
@@ -48,6 +51,24 @@ const Note = ({route, navigation, ...props}) => {
     .catch( error => console.log(error) )
   }
 
+  const images = [{
+    // Simplest usage.
+    url: n.img,
+
+    // width: number
+    // height: number
+    // Optional, if you know the image size, you can set the optimization performance
+
+    // You can pass props to <Image />.
+    props: {
+        // headers: ...
+    }
+  }]
+
+  const camImages =[{
+    url: n.camImg
+  }]
+
   return (
     <View style={stylesNote.noteContainer}>
       {/* <ScrollView> */}
@@ -58,20 +79,47 @@ const Note = ({route, navigation, ...props}) => {
         {
           /* Img from Camera roll */
           n.img ?
-          <Image
-            source={{ uri: n.img }}
-            style={stylesNote.thumbnail}
-          />
+          <View>
+            <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
+              <Image
+                source={{ uri: n.img }}
+                style={stylesNote.thumbnail}
+              />
+            </TouchableOpacity>
+            <Modal
+              animationType = {"fade"}
+              transparent = {false}
+              visible = {isModalVisible}
+              onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+            >
+              <ImageViewer imageUrls={images}/>
+              <Button title="Click To Close Modal" onPress = {() => setIsModalVisible(false)} />
+            </Modal>
+          </View>
           : <></>
         }
+
 
         {
           /* Img from Camera */
           n.camImg ?
-          <Image
-            source={{ uri: n.camImg }}
-            style={stylesNote.thumbnail}
-          />
+          <View>
+            <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
+              <Image
+                source={{ uri: n.camImg }}
+                style={stylesNote.thumbnail}
+              />
+            </TouchableOpacity>
+            <Modal
+              animationType = {"fade"}
+              transparent = {false}
+              visible = {isModalCamVisible}
+              onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+            >
+              <ImageViewer imageUrls={camImages}/>
+              <Button title="Click To Close Modal" onPress = {() => setIsModalCamVisible(false)} />
+            </Modal>
+          </View>
           : <></>
         }
 
