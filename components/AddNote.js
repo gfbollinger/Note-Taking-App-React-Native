@@ -10,6 +10,7 @@ import GetLocation from "./GetLocation"
 const AddNote = ({navigation, ...props}) => {
 
   const [showAudioRecorder, setShowAudioRecorder] = useState(false)
+  const [showLocation, setShowLocation] = useState(false)
 
   return (
     <>
@@ -68,19 +69,28 @@ const AddNote = ({navigation, ...props}) => {
                   <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
                 </TouchableOpacity>
 
+                <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowLocation(!showLocation)}>
+                  <Icon name="navigation-2-outline" fill="white" style={{width: 30, height: 30 }} />
+                </TouchableOpacity>
+
               </View>
 
               {
                 showAudioRecorder &&
-                <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
+                  <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
               }
 
-              <GetLocation
-                location={props.location}
-                setLocation={props.setLocation}
-                myAddress={props.myAddress}
-                setMyAddress={props.setMyAddress}
-              />
+              {
+                showLocation &&
+                  <GetLocation
+                    location={props.location}
+                    setLocation={props.setLocation}
+                    myAddress={props.myAddress}
+                    setMyAddress={props.setMyAddress}
+                  />
+              }
+
+
 
               <TouchableOpacity
                 style={styles.button}
