@@ -39,7 +39,7 @@ const MenuNavigation = ({navigation, archiveAllNotes}) => {
         style={styles.menuButton}
         /* title="MENU" */
       >
-        <Icon name="menu-outline" fill="#8F9BB3" style={{width: 35, height: 35 }} />
+        <Icon name="more-vertical-outline" fill="#8F9BB3" style={{width: 25, height: 25 }} />
       </TouchableOpacity>
     </View>
   );
