@@ -51,15 +51,16 @@ const AddNote = ({navigation, ...props}) => {
                 <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => props.setNoteColor('#FFB7F8')}></TouchableOpacity>
               </View>
 
-              <ImagePickerComp
-                selectedImage={props.selectedImage}
-                setSelectedImage={props.setSelectedImage}
-              />
-
-              <CameraImagePicker
-                cameraImage={props.cameraImage}
-                setCameraImage={props.setCameraImage}
-              />
+              <View style={styles.addMediaContainer}>
+                <ImagePickerComp
+                  selectedImage={props.selectedImage}
+                  setSelectedImage={props.setSelectedImage}
+                />
+                <CameraImagePicker
+                  cameraImage={props.cameraImage}
+                  setCameraImage={props.setCameraImage}
+                />
+              </View>
 
               <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
 
@@ -143,6 +144,11 @@ export const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginRight: 5
+  },
+  addMediaContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    marginBottom: 20
   }
 })
 

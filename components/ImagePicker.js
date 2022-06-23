@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Icon } from '@ui-kitten/components';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function ImagePickerComp({...props}) {
@@ -75,12 +76,12 @@ export default function ImagePickerComp({...props}) {
   /* If creating a new note and haven´t selected an image yet  */
   return (
     <View style={styles.container}>
-      <Text style={styles.instructions}>
+      {/* <Text style={styles.instructions}>
         Press the button below to select an image!
-      </Text>
+      </Text> */}
 
-      <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-        <Text style={styles.buttonText}>Pick a photo from Camera Roll</Text>
+      <TouchableOpacity onPress={openImagePickerAsync} style={styles.buttonIcon}>
+        <Icon name="image-outline" fill="white" style={{width: 30, height: 30 }} />
       </TouchableOpacity>
 
     </View>
@@ -110,5 +111,10 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: "contain",
     marginBottom: 20,
+  },
+  buttonIcon: {
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: "#8F9BB3",
   }
 })

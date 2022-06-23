@@ -1,6 +1,7 @@
 import React from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { Icon } from '@ui-kitten/components';
 
 const CameraImagePicker = ({...props}) =>{
 
@@ -64,24 +65,15 @@ const CameraImagePicker = ({...props}) =>{
     );
   }
 
-  /* NO VA! If editing a note with no image */
-  /* if (props.newEditImg === "" && props.isEdit){
-    return (
-      <View style={styles.container}>
-        <Text>sss</Text>
-      </View>
-    );
-  } */
-
   /* If creating a new note and haven´t selected an image yet  */
   return (
     <View style={styles.container}>
-      <Text style={styles.instructions}>
+      {/* <Text style={styles.instructions}>
         Press the button below to take a picture!
-      </Text>
+      </Text> */}
 
-      <TouchableOpacity onPress={openCameraImagePickerAsync} style={styles.button}>
-        <Text style={styles.buttonText}>Take a photo with the Camera</Text>
+      <TouchableOpacity onPress={openCameraImagePickerAsync} style={styles.buttonIcon}>
+        <Icon name="camera-outline" fill="white" style={{width: 30, height: 30 }} />
       </TouchableOpacity>
 
     </View>
@@ -114,5 +106,11 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: "contain",
     marginBottom: 20,
+  },
+  buttonIcon: {
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: "#8F9BB3",
+    marginLeft: 5
   }
 })
