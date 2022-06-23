@@ -43,12 +43,14 @@ const AddNote = ({navigation, ...props}) => {
                 onChangeText={(text) => props.setNoteBody(text)}
               />
 
-              <Text style={{ marginTop: 15, marginBottom:5 }}>Pick a color:</Text>
-              <View style={styles.colorBtnsContainer}>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => props.setNoteColor('#FFF495')}></TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => props.setNoteColor('#FFDBA6')}></TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => props.setNoteColor('#AEFFF5')}></TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => props.setNoteColor('#FFB7F8')}></TouchableOpacity>
+              <View style={styles.colorPickerContainer}>
+                <Text style={styles.colorPickerTitle}>Pick a color:</Text>
+                <View style={styles.colorBtnsContainer}>
+                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => props.setNoteColor('#FFF495')}></TouchableOpacity>
+                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => props.setNoteColor('#FFDBA6')}></TouchableOpacity>
+                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => props.setNoteColor('#AEFFF5')}></TouchableOpacity>
+                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => props.setNoteColor('#FFB7F8')}></TouchableOpacity>
+                </View>
               </View>
 
               <View style={styles.addMediaContainer}>
@@ -143,12 +145,22 @@ export const styles = StyleSheet.create({
   buttonColor: {
     height: 40,
     width: 40,
-    marginRight: 5
+    marginRight: 5,
+    borderRadius: 50
   },
   addMediaContainer: {
     flexDirection: "row",
     marginTop: 20,
     marginBottom: 20
+  },
+  colorPickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 0
+  },
+  colorPickerTitle: {
+    marginRight: 10
   }
 })
 
