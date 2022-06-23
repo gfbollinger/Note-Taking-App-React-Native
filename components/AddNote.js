@@ -12,6 +12,12 @@ const AddNote = ({navigation, ...props}) => {
   const [showAudioRecorder, setShowAudioRecorder] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
 
+  const notesColors = ["#FFF495", "#FFDBA6", "#AEFFF5", "#FFB7F8"]
+
+  function handleNoteColor(color) {
+    props.setNoteColor(color)
+  }
+
   return (
     <>
       <ScrollView>
@@ -48,10 +54,18 @@ const AddNote = ({navigation, ...props}) => {
               <View style={styles.colorPickerContainer}>
                 <Text style={styles.colorPickerTitle}>Pick a color:</Text>
                 <View style={styles.colorBtnsContainer}>
-                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => props.setNoteColor('#FFF495')}></TouchableOpacity>
-                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => props.setNoteColor('#FFDBA6')}></TouchableOpacity>
-                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => props.setNoteColor('#AEFFF5')}></TouchableOpacity>
-                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => props.setNoteColor('#FFB7F8')}></TouchableOpacity>
+                  {
+                    notesColors.map( (color, index) => {
+                      return (
+                        <TouchableOpacity 
+                          key={color} 
+                          style={[styles.buttonColor, { backgroundColor: color }, props.noteColor === color ? styles.colorSelected : styles.colorNotSelected ]} 
+                          onPress={() => handleNoteColor(color)}
+                        >
+                        </TouchableOpacity>
+                      )
+                    })
+                  }
                 </View>
               </View>
 
@@ -165,7 +179,14 @@ export const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginRight: 5,
-    borderRadius: 50
+    borderRadius: 50,    
+    borderColor: Style.color
+  },
+  colorSelected: {
+    borderWidth: 3,
+  },
+  colorNotSelected: {
+    borderWidth: 0,
   },
   addMediaContainer: {
     flexDirection: "row",

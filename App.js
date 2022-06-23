@@ -63,6 +63,7 @@ export default function App() {
     setNotesFiltered(newNotes)
     setNoteTitle('')
     setNoteBody('')
+    setNoteColor('')
     setSelectedImage(null)
     setCameraImage(null)
     setRecordings([])
