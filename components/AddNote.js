@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text, Alert } from "react-native"
 import * as Style from "./../assets/styles"
-import { Button, ButtonGroup } from '@ui-kitten/components';
+import { Icon } from '@ui-kitten/components';
 import ImagePickerComp from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import AudioRecorder from "./AudioRecorder";
@@ -9,6 +9,7 @@ import GetLocation from "./GetLocation"
 
 const AddNote = ({navigation, ...props}) => {
 
+  const [showAudioRecorder, setShowAudioRecorder] = useState(false)
 
   return (
     <>
@@ -62,9 +63,17 @@ const AddNote = ({navigation, ...props}) => {
                   cameraImage={props.cameraImage}
                   setCameraImage={props.setCameraImage}
                 />
+
+                <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
+                  <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
+                </TouchableOpacity>
+
               </View>
 
-              <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
+              {
+                showAudioRecorder &&
+                <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
+              }
 
               <GetLocation
                 location={props.location}
@@ -89,7 +98,7 @@ const AddNote = ({navigation, ...props}) => {
                   }
                 }
               >
-                <Text style={{ color: "#fff"}} >Add</Text>
+                <Text style={{ color: "#fff"}} >Add Note</Text>
               </TouchableOpacity>
 
             </View>
@@ -119,7 +128,7 @@ export const styles = StyleSheet.create({
     borderColor: Style.color,
     borderRadius: 8,
     fontSize: 16,
-    textAlignVertical : 'top' 
+    textAlignVertical : 'top'
   },
   button: {
     backgroundColor: Style.color,
@@ -161,6 +170,12 @@ export const styles = StyleSheet.create({
   },
   colorPickerTitle: {
     marginRight: 10
+  },
+  buttonIcon: {
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: "#8F9BB3",
+    marginLeft: 5
   }
 })
 
