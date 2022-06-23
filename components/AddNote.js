@@ -73,8 +73,11 @@ const AddNote = ({navigation, ...props}) => {
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  if (props.note === ""){
-                    Alert.alert("Please Type Something")
+                  if (props.noteTitle === ""){
+                    Alert.alert("Please Add a title to the note")
+                  }
+                  if (props.noteColor === ""){
+                    Alert.alert("Please select a color for the note")
                   }
                   else{
                     props.handleNote()
@@ -99,7 +102,7 @@ const AddNote = ({navigation, ...props}) => {
 export const styles = StyleSheet.create({
   textInputTitle: {
     height: 50,
-    padding: 5,
+    padding: 10,
     borderWidth: 2,
     borderColor: Style.color,
     borderRadius: 8,
@@ -108,11 +111,12 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     height: 200,
-    padding: 5,
+    padding: 10,
     borderWidth: 2,
     borderColor: Style.color,
     borderRadius: 8,
     fontSize: 16,
+    textAlignVertical : 'top' 
   },
   button: {
     backgroundColor: Style.color,
