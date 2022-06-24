@@ -1,12 +1,14 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Modal, Button } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '@ui-kitten/components';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
-import AudioRecordingsPlayer from "./AudioRecordingsPlayer";
+import AudioPlayer from "./AudioPlayer";
 import LocationPlace from "./LocationPlace";
+
+import NoteContext from "../context/NoteContext";
 
 const Note = ({route, navigation, ...props}) => {
 
@@ -14,10 +16,13 @@ const Note = ({route, navigation, ...props}) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalCamVisible, setIsModalCamVisible] = useState(false)
 
+  const {notes} = useContext(NoteContext)
+  const {setNotes} = useContext(NoteContext)
+
   function deleteNote(index){
-    let newArray = [...props.notes]
+    let newArray = [...notes]
     let archivedNote = newArray.splice(index, 1)
-    props.setNotes(newArray)
+    setNotes(newArray)
     /* props.setArchived(archivedNote) */
 
     console.log(archivedNote)
@@ -40,7 +45,7 @@ const Note = ({route, navigation, ...props}) => {
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newArray))
       .then( () => {
-        props.setNotes(newArray)
+        setNotes(newArray)
       })
       .catch( error => console.log(error) )
 
@@ -129,7 +134,7 @@ const Note = ({route, navigation, ...props}) => {
           {
           /* Audios */
             n.audios ?
-            <AudioRecordingsPlayer recordings={n.audios} />
+            <AudioPlayer noteIndex={i} /* recordings={n.audios} */ />
             : <></>
           }
 

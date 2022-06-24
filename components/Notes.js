@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView, Alert, Keyboard } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
 import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-/* const StarIcon = (props) => (
-  <Icon {...props} name='star'/>
-); */
+import NoteContext from "../context/NoteContext";
 
 const Notes = ({navigation, ...props}) => {
+
+  const {notes} = useContext(NoteContext)
 
   const [searchNote, setSearchNote] = useState("")
 
   let notesFilteredNewArr = []
 
   function handleSearch(inputText) {
-    /* console.log(props.notes) */
+    /* console.log(notes) */
     /* Keyboard.dismiss */
     setSearchNote(inputText)
-    notesFilteredNewArr = props.notes.filter( p => 
+    notesFilteredNewArr = notes.filter( p => 
         /* console.log(p.title) */
         p.title.toLowerCase().includes(inputText)
     )
@@ -39,7 +38,7 @@ const Notes = ({navigation, ...props}) => {
 
       {/* Total notes counter */}
       {/* <View style={styles.notesCounterCont}>
-        <Text style={styles.notesCounter} >Total notes: {props.notes.length}</Text>
+        <Text style={styles.notesCounter} >Total notes: {notes.length}</Text>
       </View> */}
 
 
@@ -69,13 +68,13 @@ const Notes = ({navigation, ...props}) => {
       {/* Notes */}
       <ScrollView style={styles.notesList} /* showsVerticalScrollIndicator="false" */>
 
-          {props.notes.length === 0
+          {notes.length === 0
             ?
             <View>
               <Text>There are no notes yet.</Text>
             </View>
             :
-            props.notes.map( (item, index) =>
+            notes.map( (item, index) =>
 
               <TouchableOpacity
                 key={index}

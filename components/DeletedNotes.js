@@ -1,10 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import { ScrollView, View, Text, StyleSheet,TouchableOpacity, Alert } from "react-native"
 /* import { styles } from "./AddNote" */
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NoteContext from "../context/NoteContext";
 
 const DeletedNotes = ({...props}) => {
+
+  const {notes} = useContext(NoteContext)
+  const {setNotes} = useContext(NoteContext)
 
   function emptyBin() {
     Alert.alert(
@@ -36,17 +40,17 @@ const DeletedNotes = ({...props}) => {
 
   function undoAllNotes(){
     let deletedNotes = [...props.archived]
-    let notes = [...props.notes]
+    let notes = [...notes]
 
     deletedNotes.forEach( (item, index) => {
       notes.push(item)
     })
     props.setArchived([])
-    props.setNotes(deletedNotes)
+    setNotes(deletedNotes)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(notes))
       .then( () => {
-        props.setNotes(notes)
+        setNotes(notes)
       })
       .catch( error => console.log(error) )
 
@@ -59,8 +63,8 @@ const DeletedNotes = ({...props}) => {
 
   function undoNote(index){
     let getBack = props.archived[index]
-    let arr = [getBack, ...props.notes]
-    props.setNotes(arr)
+    let arr = [getBack, ...notes]
+    setNotes(arr)
 
     let newArr = [...props.archived]
     newArr.splice(index, 1)
@@ -68,7 +72,7 @@ const DeletedNotes = ({...props}) => {
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(arr))
       .then( () => {
-        props.setNotes(arr)
+        setNotes(arr)
       })
       .catch( error => console.log(error) )
 

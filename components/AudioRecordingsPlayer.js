@@ -1,17 +1,23 @@
-import React from "react"
+import React, { useContext } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Icon } from '@ui-kitten/components';
 import { Audio } from 'expo-av';
+import NoteContext from "../context/NoteContext";
 
 
-const AudioRecordingsPlayer = ({...props}) => {
+const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
+
+  const {notes} = useContext(NoteContext)
+
 
   async function playRecording(recordingLine) {
+    console.log(recordingLine.sound)
     recordingLine.sound.replayAsync({ volume: 1, isLooping : false})
   }
 
+
   function getRecordingLines() {
-    return props.recordings.map((recordingLine, index) => {
+    return recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={styles.recordingsContainer}>
           <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
@@ -21,6 +27,28 @@ const AudioRecordingsPlayer = ({...props}) => {
         </View>
       );
     });
+  }
+
+  function getSavedRecordingLines() {
+    return notes[noteIndex].audios.map((recordingLine, index) => {
+      return (
+        <View key={index} style={styles.recordingsContainer}>
+          <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
+          <TouchableOpacity style={styles.button} onPress={() => playRecording(recordingLine)} >
+            <Icon name="play-circle-outline" fill="white" style={{width: 30, height: 30 }} />
+          </TouchableOpacity>
+        </View>
+      );
+    });
+  }
+
+  if (noteIndex) {
+    console.log(notes[noteIndex].audios)
+    return (
+      <>
+        {getSavedRecordingLines()}
+      </>
+    )
   }
 
   return (

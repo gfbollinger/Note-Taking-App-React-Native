@@ -1,21 +1,23 @@
-import * as React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { Audio } from 'expo-av';
+import NoteContext from '../context/NoteContext';
 
-export default function App() {
-  const [sound, setSound] = React.useState();
+export default function AudioPlayer({ noteIndex }) {
+
+  const [sound, setSound] = useState();
+  const {notes} = useContext(NoteContext)
+  console.log(notes[noteIndex].audios[0].sound)
 
   async function playSound() {
     console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync(
-       require('./../assets/hello.mp3')
-    );
+    const { sound } = await Audio.Sound.createAsync(notes[noteIndex].audios[0].sound);
     setSound(sound);
 
     console.log('Playing Sound');
     await sound.playAsync(); }
 
-  React.useEffect(() => {
+  useEffect(() => {
     return sound
       ? () => {
           console.log('Unloading Sound');
@@ -26,15 +28,13 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Button title="Play Sound" onPress={playSound} />
+      <Text>asdasd</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    padding: 10,
+
   },
 });

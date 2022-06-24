@@ -1,13 +1,17 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text  } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePickerComp from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
+import NoteContext from "../context/NoteContext";
 
 const EditNote = ({route, navigation, ...props}) => {
 
   const { i, n } = route.params
+
+  const {notes} = useContext(NoteContext)
+  const {setNotes} = useContext(NoteContext)
 
   const [newEdit, setNewEdit]  = useState(n)
   const [newEditImg, setNewEditImg] = useState(n.img)
@@ -15,7 +19,7 @@ const EditNote = ({route, navigation, ...props}) => {
 
   const notesColors = ["#FFF495", "#FFDBA6", "#AEFFF5", "#FFB7F8"]
 
-  let editedNote = [...props.notes]
+  let editedNote = [...notes]
   let thisNoteImg = editedNote[i].img
   let thisNoteCameraImg = editedNote[i].camImg
 
@@ -29,12 +33,12 @@ const EditNote = ({route, navigation, ...props}) => {
     editedNote[i].audios = newEdit.audios
     editedNote[i].myAddress = newEdit.myAddress
 
-    props.setNotes(editedNote)
+    setNotes(editedNote)
     navigation.navigate('Notes')
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(editedNote))
       .then( () => {
-        props.setNotes(editedNote)
+        setNotes(editedNote)
       })
       .catch( error => console.log(error) )
 
