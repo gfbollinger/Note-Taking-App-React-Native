@@ -77,52 +77,54 @@ const Note = ({route, navigation, ...props}) => {
           <View style={{ backgroundColor: "#8F9BB3", height: 1, width: "100%", marginBottom: 15}}></View>
           <Text style={stylesNote.noteBody}>{n.body}</Text>
 
-          {
-            /* Img from Camera roll */
-            n.img ?
-            <View>
-              <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
-                <Image
-                  source={{ uri: n.img }}
-                  style={stylesNote.thumbnail}
-                />
-              </TouchableOpacity>
-              <Modal
-                animationType = {"fade"}
-                transparent = {false}
-                visible = {isModalVisible}
-                onRequestClose = {() =>{ console.log("Modal has been closed.") } }
-              >
-                <ImageViewer imageUrls={images}/>
-                <Button title="Click To Close Modal" onPress = {() => setIsModalVisible(false)} />
-              </Modal>
-            </View>
-            : <></>
-          }
+          <View style={{ flexDirection: "row"}}>
+            {
+              /* Img from Camera roll */
+              n.img ?
+              <View>
+                <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
+                  <Image
+                    source={{ uri: n.img }}
+                    style={stylesNote.thumbnail}
+                  />
+                </TouchableOpacity>
+                <Modal
+                  animationType = {"fade"}
+                  transparent = {false}
+                  visible = {isModalVisible}
+                  onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+                >
+                  <ImageViewer imageUrls={images}/>
+                  <Button title="Close" onPress = {() => setIsModalVisible(false)} />
+                </Modal>
+              </View>
+              : <></>
+            }
 
 
-          {
-            /* Img from Camera */
-            n.camImg ?
-            <View>
-              <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
-                <Image
-                  source={{ uri: n.camImg }}
-                  style={stylesNote.thumbnail}
-                />
-              </TouchableOpacity>
-              <Modal
-                animationType = {"fade"}
-                transparent = {false}
-                visible = {isModalCamVisible}
-                onRequestClose = {() =>{ console.log("Modal has been closed.") } }
-              >
-                <ImageViewer imageUrls={camImages}/>
-                <Button title="Click To Close Modal" onPress = {() => setIsModalCamVisible(false)} />
-              </Modal>
-            </View>
-            : <></>
-          }
+            {
+              /* Img from Camera */
+              n.camImg ?
+              <View>
+                <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
+                  <Image
+                    source={{ uri: n.camImg }}
+                    style={stylesNote.thumbnail}
+                  />
+                </TouchableOpacity>
+                <Modal
+                  animationType = {"fade"}
+                  transparent = {false}
+                  visible = {isModalCamVisible}
+                  onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+                >
+                  <ImageViewer imageUrls={camImages}/>
+                  <Button title="Close" onPress = {() => setIsModalCamVisible(false)} />
+                </Modal>
+              </View>
+              : <></>
+            }
+          </View>
 
           {
           /* Audios */
@@ -166,6 +168,7 @@ const stylesNote = StyleSheet.create({
   },
   noteWrapper : {
     padding: 20,
+    paddingBottom: 60,
     borderRadius: 10
   },
   noteTitle: {
@@ -174,6 +177,7 @@ const stylesNote = StyleSheet.create({
   },
   noteBody: {
     fontSize: 17,
+    marginBottom: 40
   },
   buttonEdit: {
     backgroundColor: Style.color,
@@ -192,10 +196,13 @@ const stylesNote = StyleSheet.create({
     left: 20
   },
   thumbnail: {
-    width: 100,
-    height: 100,
+    width: 140,
+    height: 140,
     resizeMode: "contain",
     marginBottom: 20,
+    marginRight: 10,
+    borderWidth: 7,
+    borderColor: "white"
   }
 })
 

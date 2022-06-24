@@ -207,7 +207,7 @@ export default function App() {
               {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} notes={notes} setNotes={setNotes} date={date} />}
             </Stack.Screen>
 
-            <Stack.Screen name="EditNote">
+            <Stack.Screen name="EditNote" options={{ title: 'Edit Note' }}>
               {props => <EditNote {...props}
                 notes={notes}
                 setNotes={setNotes}
