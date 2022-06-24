@@ -96,25 +96,30 @@ const EditNote = ({route, navigation, ...props}) => {
                 </View>
               </View>
 
-              <ImagePickerComp
-                selectedImage={props.selectedImage}
-                setSelectedImage={props.setSelectedImage}
-                setNewEdit={setNewEdit}
-                thisNoteImg={thisNoteImg}
-                isEdit={true}
-                newEditImg={newEditImg}
-                setNewEditImg={setNewEditImg}
-              />
 
-              <CameraImagePicker
-                cameraImage={props.cameraImage}
-                setCameraImage={props.setCameraImage}
-                setNewEdit={setNewEdit}
-                thisNoteCameraImg={thisNoteCameraImg}
-                isEdit={true}
-                newEditCameraImg={newEditCameraImg}
-                setNewEditCameraImg={setNewEditCameraImg}
-              />
+              <View style={styles.addMediaContainer}>
+
+                <ImagePickerComp
+                  selectedImage={props.selectedImage}
+                  setSelectedImage={props.setSelectedImage}
+                  setNewEdit={setNewEdit}
+                  thisNoteImg={thisNoteImg}
+                  isEdit={true}
+                  newEditImg={newEditImg}
+                  setNewEditImg={setNewEditImg}
+                />
+
+                <CameraImagePicker
+                  cameraImage={props.cameraImage}
+                  setCameraImage={props.setCameraImage}
+                  setNewEdit={setNewEdit}
+                  thisNoteCameraImg={thisNoteCameraImg}
+                  isEdit={true}
+                  newEditCameraImg={newEditCameraImg}
+                  setNewEditCameraImg={setNewEditCameraImg}
+                />
+
+              </View>
 
               {/* TODO: Add button to remove audios if it has, setting setRecordings to empty array */}
 
@@ -147,7 +152,7 @@ const EditNote = ({route, navigation, ...props}) => {
 export const styles = StyleSheet.create({
   textInputTitle: {
     height: 50,
-    padding: 5,
+    padding: 10,
     borderWidth: 2,
     borderColor: Style.color,
     borderRadius: 8,
@@ -156,11 +161,12 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     height: 200,
-    padding: 5,
+    padding: 10,
     borderWidth: 2,
     borderColor: Style.color,
     borderRadius: 8,
     fontSize: 16,
+    textAlignVertical : 'top'
   },
   button: {
     backgroundColor: Style.color,
@@ -209,6 +215,11 @@ export const styles = StyleSheet.create({
   },
   colorNotSelected: {
     borderWidth: 0,
+  },
+  addMediaContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    marginBottom: 20
   },
 })
 

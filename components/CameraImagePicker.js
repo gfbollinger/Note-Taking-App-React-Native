@@ -53,7 +53,6 @@ const CameraImagePicker = ({...props}) =>{
   if (props.newEditCameraImg && props.isEdit){
     return (
       <View style={styles.container}>
-        <Text style={styles.thumbnailText}>Image:</Text>
         <Image
           source={{ uri: props.newEditCameraImg }}
           style={styles.thumbnail}
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: "contain",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   buttonIcon: {
     padding: 10,

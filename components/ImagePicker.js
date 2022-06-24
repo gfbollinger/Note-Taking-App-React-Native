@@ -36,7 +36,6 @@ export default function ImagePickerComp({...props}) {
   if (props.selectedImage !== null) {
     return (
       <View style={styles.container}>
-        <Text style={styles.thumbnailText}>Image:</Text>
         <Image
           source={{ uri: props.selectedImage.localUri }}
           style={styles.thumbnail}
@@ -52,7 +51,6 @@ export default function ImagePickerComp({...props}) {
   if (props.newEditImg && props.isEdit){
     return (
       <View style={styles.container}>
-        <Text style={styles.thumbnailText}>Image:</Text>
         <Image
           source={{ uri: props.newEditImg }}
           style={styles.thumbnail}
@@ -110,7 +108,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: "contain",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   buttonIcon: {
     padding: 10,
