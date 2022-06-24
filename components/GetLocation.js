@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    paddingTop: 0
   },
   paragraph: {
     fontSize: 18,

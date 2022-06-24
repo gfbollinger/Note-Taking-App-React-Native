@@ -6,7 +6,8 @@ const LocationPlace = (props) => {
   if (props.myAddress !== undefined) {
     return (
       <>
-        <Text style={styles.paragraph}>You are in: {props.myAddress[0].city}, {props.myAddress[0].region}. {props.myAddress[0].country}.</Text>
+        <Text style={styles.preparagraph}>Your location is: </Text>
+        <Text style={styles.paragraph}>{props.myAddress[0].city}, {props.myAddress[0].region}. {props.myAddress[0].country}.</Text>
       </>
     )
   }
@@ -17,8 +18,17 @@ const LocationPlace = (props) => {
 export default LocationPlace
 
 const styles = StyleSheet.create({
+  preparagraph: {
+    fontSize: 14,
+    textAlign: 'left',
+    paddingLeft: 20,
+    paddingRight: 20
+  },
   paragraph: {
-    fontSize: 18,
-    textAlign: 'center',
+    fontSize: 16,
+    textAlign: 'left',
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 10
   },
 });
