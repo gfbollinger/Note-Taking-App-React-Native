@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Audio } from 'expo-av';
 import AudioRecordingsPlayer from "./AudioRecordingsPlayer"
 
@@ -77,9 +77,12 @@ export default function AudioRecorder({...props}) {
   return (
     <View style={styles.container}>
       <Text>{message}</Text>
-      <Button
-        title={recording ? 'Stop Recording Audio' : 'Start Recording Audio'}
-        onPress={recording ? stopRecording : startRecording} />
+      <TouchableOpacity
+        style={styles.buttonToggleRecord}
+        onPress={recording ? stopRecording : startRecording} 
+      >
+        <Text style={{ color: "#fff" }}>{recording ? 'Stop Recording Audio' : 'Start Recording Audio'}</Text>
+      </TouchableOpacity>
       {/* {getRecordingLines()} */}
       <AudioRecordingsPlayer recordings={props.recordings} />
       <StatusBar style="auto" />
@@ -104,5 +107,12 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 16
+  },
+  buttonToggleRecord: {
+    marginBottom: 20,
+    backgroundColor: "#8F9BB3",
+    padding: 10,
+    borderRadius: 8,
+    color: "#fff",
   }
 });
