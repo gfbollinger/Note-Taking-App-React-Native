@@ -72,70 +72,73 @@ const Note = ({route, navigation, ...props}) => {
   return (
     <View style={stylesNote.noteContainer}>
       {/* <ScrollView> */}
-        <Text style={stylesNote.noteTitle}>{n.title}</Text>
-        <View style={{ backgroundColor: n.color, height: 15, width: "100%", marginBottom: 15}}></View>
-        <Text>{n.body}</Text>
+        <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
+          <Text style={stylesNote.noteTitle}>{n.title}</Text>
+          <View style={{ backgroundColor: "#8F9BB3", height: 1, width: "100%", marginBottom: 15}}></View>
+          <Text style={stylesNote.noteBody}>{n.body}</Text>
 
-        {
-          /* Img from Camera roll */
-          n.img ?
-          <View>
-            <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
-              <Image
-                source={{ uri: n.img }}
-                style={stylesNote.thumbnail}
-              />
-            </TouchableOpacity>
-            <Modal
-              animationType = {"fade"}
-              transparent = {false}
-              visible = {isModalVisible}
-              onRequestClose = {() =>{ console.log("Modal has been closed.") } }
-            >
-              <ImageViewer imageUrls={images}/>
-              <Button title="Click To Close Modal" onPress = {() => setIsModalVisible(false)} />
-            </Modal>
-          </View>
-          : <></>
-        }
+          {
+            /* Img from Camera roll */
+            n.img ?
+            <View>
+              <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
+                <Image
+                  source={{ uri: n.img }}
+                  style={stylesNote.thumbnail}
+                />
+              </TouchableOpacity>
+              <Modal
+                animationType = {"fade"}
+                transparent = {false}
+                visible = {isModalVisible}
+                onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+              >
+                <ImageViewer imageUrls={images}/>
+                <Button title="Click To Close Modal" onPress = {() => setIsModalVisible(false)} />
+              </Modal>
+            </View>
+            : <></>
+          }
 
 
-        {
-          /* Img from Camera */
-          n.camImg ?
-          <View>
-            <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
-              <Image
-                source={{ uri: n.camImg }}
-                style={stylesNote.thumbnail}
-              />
-            </TouchableOpacity>
-            <Modal
-              animationType = {"fade"}
-              transparent = {false}
-              visible = {isModalCamVisible}
-              onRequestClose = {() =>{ console.log("Modal has been closed.") } }
-            >
-              <ImageViewer imageUrls={camImages}/>
-              <Button title="Click To Close Modal" onPress = {() => setIsModalCamVisible(false)} />
-            </Modal>
-          </View>
-          : <></>
-        }
+          {
+            /* Img from Camera */
+            n.camImg ?
+            <View>
+              <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
+                <Image
+                  source={{ uri: n.camImg }}
+                  style={stylesNote.thumbnail}
+                />
+              </TouchableOpacity>
+              <Modal
+                animationType = {"fade"}
+                transparent = {false}
+                visible = {isModalCamVisible}
+                onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+              >
+                <ImageViewer imageUrls={camImages}/>
+                <Button title="Click To Close Modal" onPress = {() => setIsModalCamVisible(false)} />
+              </Modal>
+            </View>
+            : <></>
+          }
 
-        {
-        /* Audios */
-          n.audios ?
-          <AudioRecordingsPlayer recordings={n.audios} />
-          : <></>
-        }
+          {
+          /* Audios */
+            n.audios ?
+            <AudioRecordingsPlayer recordings={n.audios} />
+            : <></>
+          }
 
-        {
-          /* Location */
-          n.myAddress ?
-          <LocationPlace myAddress={n.myAddress} />
-          : <></>
-        }
+          {
+            /* Location */
+            n.myAddress ?
+            <LocationPlace myAddress={n.myAddress} />
+            : <></>
+          }
+
+        </View>
 
         <TouchableOpacity style={stylesNote.buttonEdit} onPress={ () => navigation.navigate("EditNote", {
           i: i,
@@ -148,7 +151,9 @@ const Note = ({route, navigation, ...props}) => {
           {/* <Text>Archive</Text> */}
           <Icon name="archive-outline" fill="white" style={{width: 30, height: 30 }} />
         </TouchableOpacity>
-      {/* </ScrollView> */}
+
+        {/* </ScrollView> */}
+
     </View>
   )
 }
@@ -159,9 +164,16 @@ const stylesNote = StyleSheet.create({
     height: "100%",
     position: "relative"
   },
+  noteWrapper : {
+    padding: 20,
+    borderRadius: 10
+  },
   noteTitle: {
-    fontSize: 28,
+    fontSize: 30,
     marginBottom: 10
+  },
+  noteBody: {
+    fontSize: 17,
   },
   buttonEdit: {
     backgroundColor: Style.color,
