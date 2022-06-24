@@ -179,7 +179,7 @@ export const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginRight: 5,
-    borderRadius: 50,    
+    borderRadius: 50,
     borderColor: Style.color
   },
   colorSelected: {

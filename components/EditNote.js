@@ -13,6 +13,8 @@ const EditNote = ({route, navigation, ...props}) => {
   const [newEditImg, setNewEditImg] = useState(n.img)
   const [newEditCameraImg, setNewEditCameraImg] = useState(n.camImg)
 
+  const notesColors = ["#FFF495", "#FFDBA6", "#AEFFF5", "#FFB7F8"]
+
   let editedNote = [...props.notes]
   let thisNoteImg = editedNote[i].img
   let thisNoteCameraImg = editedNote[i].camImg
@@ -62,7 +64,7 @@ const EditNote = ({route, navigation, ...props}) => {
                 style={styles.textInputTitle}
                 placeholder="Title"
                 value={newEdit.title}
-                onChangeText={(text) => setNewEdit({ title: text, body: newEdit.body})}
+                onChangeText={(text) => setNewEdit({ title: text, body: newEdit.body, color: newEdit.color})}
               />
 
               <TextInput
@@ -70,15 +72,28 @@ const EditNote = ({route, navigation, ...props}) => {
                 placeholder="Type Here"
                 multiline={true}
                 value={newEdit.body}
-                onChangeText={(text) => setNewEdit({ title: newEdit.title, body: text })}
+                onChangeText={(text) => setNewEdit({ title: newEdit.title, body: text, color: newEdit.color })}
               />
 
-              <Text style={{ marginTop: 15, marginBottom:5 }}>Pick a color:</Text>
-              <View style={styles.colorBtnsContainer}>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFF495", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFDBA6", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#AEFFF5", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFB7F8", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
+              <View style={styles.colorPickerContainer}>
+                <Text style={styles.colorPickerTitle}>Pick a color:</Text>
+                <View style={styles.colorBtnsContainer}>
+                  {
+                    notesColors.map( newColor => {
+                      return (
+                        <TouchableOpacity
+                          key={newColor}
+                          style={[styles.buttonColor, { backgroundColor: newColor}, newEdit.color === newColor ? styles.colorSelected : styles.colorNotSelected]} 
+                          onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: newColor, img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}>
+                        </TouchableOpacity>
+                      )
+                    })
+                  }
+                  {/* <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFF495", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
+                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFDBA6", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
+                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#AEFFF5", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
+                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFB7F8", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity> */}
+                </View>
               </View>
 
               <ImagePickerComp
@@ -172,7 +187,29 @@ export const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginRight: 5
-  }
+  },
+  colorPickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 0
+  },
+  colorPickerTitle: {
+    marginRight: 10
+  },
+  buttonColor: {
+    height: 40,
+    width: 40,
+    marginRight: 5,
+    borderRadius: 50,
+    borderColor: Style.color
+  },
+  colorSelected: {
+    borderWidth: 3,
+  },
+  colorNotSelected: {
+    borderWidth: 0,
+  },
 })
 
 export default EditNote
