@@ -6,6 +6,8 @@ import ImagePickerComp from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import AudioRecorder from "./AudioRecorder";
 import GetLocation from "./GetLocation"
+import NoteContext from "../context/NoteContext";
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const AddNote = ({navigation, ...props}) => {
 
@@ -14,8 +16,18 @@ const AddNote = ({navigation, ...props}) => {
 
   const notesColors = ["#FFF495", "#FFDBA6", "#AEFFF5", "#FFB7F8"]
 
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_700Bold
+  });
+
   function handleNoteColor(color) {
     props.setNoteColor(color)
+  }
+
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
   }
 
   return (
@@ -122,7 +134,7 @@ const AddNote = ({navigation, ...props}) => {
                   }
                 }
               >
-                <Text style={{ color: "#fff"}} >Add Note</Text>
+                <Text style={ styles.buttoAddNote } >Add Note</Text>
               </TouchableOpacity>
 
             </View>
@@ -138,12 +150,14 @@ const AddNote = ({navigation, ...props}) => {
 export const styles = StyleSheet.create({
   textInputTitle: {
     height: 50,
-    padding: 10,
+    paddingTop: 6,
+    paddingLeft: 10,
     borderWidth: 2,
     borderColor: Style.color,
     borderRadius: 8,
-    fontSize: 16,
-    marginBottom: 10
+    fontSize: 18,
+    marginBottom: 10,
+    fontFamily: "Poppins_400Regular"
   },
   textInput: {
     height: 200,
@@ -152,7 +166,8 @@ export const styles = StyleSheet.create({
     borderColor: Style.color,
     borderRadius: 8,
     fontSize: 16,
-    textAlignVertical : 'top'
+    textAlignVertical : 'top',
+    fontFamily: "Poppins_400Regular"
   },
   button: {
     backgroundColor: Style.color,
@@ -161,7 +176,12 @@ export const styles = StyleSheet.create({
     color: "#fff",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10
+    marginTop: 10,
+  },
+  buttoAddNote:  {
+    color: "#fff",
+    fontFamily: "Poppins_400Regular",
+    fontSize: 17
   },
   emptyButton: {
     backgroundColor: Style.color,
@@ -200,7 +220,8 @@ export const styles = StyleSheet.create({
     marginBottom: 0
   },
   colorPickerTitle: {
-    marginRight: 10
+    marginRight: 10,
+    fontFamily: "Poppins_400Regular"
   },
   buttonIcon: {
     padding: 10,

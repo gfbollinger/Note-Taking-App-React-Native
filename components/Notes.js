@@ -5,8 +5,15 @@ import { Icon } from '@ui-kitten/components';
 import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteContext from "../context/NoteContext";
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const Notes = ({navigation, ...props}) => {
+
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_700Bold
+  });
 
   const {notes} = useContext(NoteContext)
   /* console.log(notes) */
@@ -26,6 +33,9 @@ const Notes = ({navigation, ...props}) => {
     props.setNotesFiltered(notesFilteredNewArr)
   }
 
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
+  }
 
   return (
     <View style={styles.notesContainer}>
@@ -87,10 +97,10 @@ const Notes = ({navigation, ...props}) => {
               >
 
                 <View>
-                  <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>{item.title}</Text>
+                  <Text style={{ fontSize: 20, marginBottom: 15, fontFamily: 'Poppins_700Bold', lineHeight: 25}}>{item.title}</Text>
                 </View>
 
-                <Text style={{ textAlign: "right"}}> {item.date} </Text>
+                <Text style={{ textAlign: "right", fontFamily: 'Poppins_300Light'}}> {item.date} </Text>
 
                 {/* <TouchableOpacity onPress={ () => deleteNote(index) } >
                   <Text>X</Text>
@@ -149,7 +159,7 @@ export const styles = StyleSheet.create({
     marginLeft: 5
   },
   notesList: {
-    paddingTop: 20
+    /* paddingTop: 20 */
   },
   buttonAdd: {
     backgroundColor: Style.color,

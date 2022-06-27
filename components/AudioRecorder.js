@@ -2,7 +2,7 @@ import React from "react"
 import { TouchableOpacity, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Audio } from 'expo-av';
 import AudioRecordingsPlayer from "./AudioRecordingsPlayer"
-
+import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 
 export default function AudioRecorder({...props}) {
 
@@ -74,6 +74,12 @@ export default function AudioRecorder({...props}) {
     });
   } */
 
+  let [fontsLoaded] = useFonts({ Poppins_400Regular  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
+  }
+
   return (
     <View style={styles.container}>
       <Text>{message}</Text>
@@ -81,7 +87,7 @@ export default function AudioRecorder({...props}) {
         style={styles.buttonToggleRecord}
         onPress={recording ? stopRecording : startRecording} 
       >
-        <Text style={{ color: "#fff" }}>{recording ? 'Stop Recording Audio' : 'Start Recording Audio'}</Text>
+        <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular" }}>{recording ? 'Stop Recording Audio' : 'Start Recording Audio'}</Text>
       </TouchableOpacity>
       {/* {getRecordingLines()} */}
       <AudioRecordingsPlayer recordings={props.recordings} />

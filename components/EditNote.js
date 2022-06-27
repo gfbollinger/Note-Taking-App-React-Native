@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePickerComp from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import NoteContext from "../context/NoteContext";
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const EditNote = ({route, navigation, ...props}) => {
 
@@ -44,6 +45,15 @@ const EditNote = ({route, navigation, ...props}) => {
 
   }
 
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_700Bold
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
+  }
 
   return(
     <>
@@ -140,7 +150,7 @@ const EditNote = ({route, navigation, ...props}) => {
                 }
 
               >
-                <Text style={{ color: "#fff"}} >Update</Text>
+                <Text style={ styles.buttonUpdateNote } >Update</Text>
               </TouchableOpacity>
 
             </View>
@@ -156,12 +166,14 @@ const EditNote = ({route, navigation, ...props}) => {
 export const styles = StyleSheet.create({
   textInputTitle: {
     height: 50,
-    padding: 10,
+    paddingTop: 6,
+    paddingLeft: 10,
     borderWidth: 2,
     borderColor: Style.color,
     borderRadius: 8,
-    fontSize: 16,
-    marginBottom: 10
+    fontSize: 18,
+    marginBottom: 10,
+    fontFamily: "Poppins_400Regular"
   },
   textInput: {
     height: 200,
@@ -170,7 +182,8 @@ export const styles = StyleSheet.create({
     borderColor: Style.color,
     borderRadius: 8,
     fontSize: 16,
-    textAlignVertical : 'top'
+    textAlignVertical : 'top',
+    fontFamily: "Poppins_400Regular"
   },
   button: {
     backgroundColor: Style.color,
@@ -180,6 +193,11 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10
+  },
+  buttonUpdateNote:  {
+    color: "#fff",
+    fontFamily: "Poppins_400Regular",
+    fontSize: 17
   },
   emptyButton: {
     backgroundColor: Style.color,
@@ -205,7 +223,8 @@ export const styles = StyleSheet.create({
     marginBottom: 0
   },
   colorPickerTitle: {
-    marginRight: 10
+    marginRight: 10,
+    fontFamily: "Poppins_400Regular"
   },
   buttonColor: {
     height: 40,

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Icon } from '@ui-kitten/components';
 import { Audio } from 'expo-av';
 import NoteContext from "../context/NoteContext";
+import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 
 
 const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
@@ -42,6 +43,12 @@ const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
     });
   }
 
+  let [fontsLoaded] = useFonts({ Poppins_400Regular });
+
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
+  }
+
   if (noteIndex) {
     console.log(notes[noteIndex].audios)
     return (
@@ -77,7 +84,8 @@ const styles = StyleSheet.create({
   },
   fill: {
     flex: 1,
-    margin: 16
+    margin: 16,
+    fontFamily: "Poppins_400Regular"
   },
   button: {
     margin: 16,

@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react"
 import { Text, View, StyleSheet } from 'react-native'
+import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 
 const LocationPlace = (props) => {
+
+  let [fontsLoaded] = useFonts({    
+    Poppins_400Regular,
+    Poppins_700Bold
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
+  }
 
   if (props.myAddress !== undefined) {
     return (
@@ -22,10 +32,12 @@ const styles = StyleSheet.create({
   preparagraph: {
     fontSize: 14,
     textAlign: 'left',
+    fontFamily: 'Poppins_400Regular'
   },
   paragraph: {
     fontSize: 16,
     textAlign: 'left',
-    marginBottom: 10
+    marginBottom: 10,
+    fontFamily: 'Poppins_400Regular'
   },
 });

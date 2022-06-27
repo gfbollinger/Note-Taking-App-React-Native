@@ -4,6 +4,7 @@ import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '@ui-kitten/components';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 import AudioPlayer from "./AudioPlayer";
 import LocationPlace from "./LocationPlace";
@@ -18,6 +19,12 @@ const Note = ({route, navigation, ...props}) => {
 
   const {notes} = useContext(NoteContext)
   const {setNotes} = useContext(NoteContext)
+
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_700Bold
+  });
 
   function deleteNote(index){
     let newArray = [...notes]
@@ -76,12 +83,16 @@ const Note = ({route, navigation, ...props}) => {
     url: n.camImg
   }]
 
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
+  }
+
   return (
     <View style={stylesNote.noteContainer}>
       {/* <ScrollView> */}
         <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
           <Text style={stylesNote.noteTitle}>{n.title}</Text>
-          <View style={{ backgroundColor: "#fff", height: 7, width: "20%", marginBottom: 25, opacity: 0.7 }}></View>
+          {/* <View style={{ backgroundColor: "#fff", height: 7, width: "20%", marginBottom: 25, opacity: 0.7 }}></View> */}
           <Text style={stylesNote.noteBody}>{n.body}</Text>
 
           <View style={{ flexDirection: "row"}}>
@@ -143,7 +154,7 @@ const Note = ({route, navigation, ...props}) => {
           {
             /* Location */
             n.myAddress ?
-            <View style={{ position: "absolute", bottom: 37, left: 20}}>
+            <View style={{ position: "absolute", bottom: 30, left: 20}}>
               <LocationPlace myAddress={n.myAddress} text="Note written in:" />
             </View>
             : <></>
@@ -176,18 +187,21 @@ const stylesNote = StyleSheet.create({
     position: "relative"
   },
   noteWrapper : {
-    padding: 20,
-    borderRadius: 10,
+    padding: 35,
+    borderRadius: 12,
     minHeight: "90%",
     position: "relative"
   },
   noteTitle: {
-    fontSize: 30,
+    fontSize: 25,
+    lineHeight: 30,
     marginBottom: 15,
+    fontFamily: "Poppins_700Bold"
   },
   noteBody: {
     fontSize: 17,
-    marginBottom: 40
+    marginBottom: 40,
+    fontFamily: "Poppins_400Regular"
   },
   buttonEdit: {
     backgroundColor: Style.color,
