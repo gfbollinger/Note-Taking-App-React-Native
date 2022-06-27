@@ -158,7 +158,7 @@ const Note = ({route, navigation, ...props}) => {
         </TouchableOpacity>
         <TouchableOpacity style={stylesNote.buttonArchive} onPress={ () => deleteNote(i) } >
           {/* <Text>Archive</Text> */}
-          <Icon name="archive-outline" fill="white" style={{width: 30, height: 30 }} />
+          <Icon name="download-outline" fill="white" style={{width: 30, height: 30 }} />
         </TouchableOpacity>
 
         {/* </ScrollView> */}
