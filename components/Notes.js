@@ -82,6 +82,7 @@ const Notes = ({navigation, ...props}) => {
                 onPress={ () => navigation.navigate("Note", {
                   i: index,
                   n: item,
+                  /* TODO Agregar selected note index o algo asi para acceder desde el estado?? */
                 })}
               >
 

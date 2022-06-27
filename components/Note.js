@@ -131,12 +131,12 @@ const Note = ({route, navigation, ...props}) => {
             }
           </View>
 
-          {
-          /* Audios */
+          {/* Audios */}
+          {/* {
             n.audios ?
-            <AudioPlayer noteIndex={i} /* recordings={n.audios} */ />
+            <AudioPlayer noteIndex={i} recordings={n.audios} />
             : <></>
-          }
+          } */}
 
           {
             /* Location */

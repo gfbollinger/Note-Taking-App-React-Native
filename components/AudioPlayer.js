@@ -7,7 +7,7 @@ export default function AudioPlayer({ noteIndex }) {
 
   const [sound, setSound] = useState();
   const {notes} = useContext(NoteContext)
-  console.log(notes[noteIndex].audios[0].sound)
+  /* console.log(notes[noteIndex].audios[0].sound) */
 
   async function playSound() {
     console.log('Loading Sound');
