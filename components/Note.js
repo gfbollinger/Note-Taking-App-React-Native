@@ -25,6 +25,8 @@ const Note = ({route, navigation, ...props}) => {
     setNotes(newArray)
     /* props.setArchived(archivedNote) */
 
+    console.log(n)
+
     console.log(archivedNote)
     let bin = [
       {

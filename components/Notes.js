@@ -9,7 +9,7 @@ import NoteContext from "../context/NoteContext";
 const Notes = ({navigation, ...props}) => {
 
   const {notes} = useContext(NoteContext)
-
+  console.log(notes)
   const [searchNote, setSearchNote] = useState("")
 
   let notesFilteredNewArr = []
@@ -78,19 +78,19 @@ const Notes = ({navigation, ...props}) => {
 
               <TouchableOpacity
                 key={index}
-                style={[styles.note, {backgroundColor: item.color}]}
+                style={[styles.note,  {backgroundColor: item.color} ]}
                 onPress={ () => navigation.navigate("Note", {
                   i: index,
                   n: item,
                   /* TODO Agregar selected note index o algo asi para acceder desde el estado?? */
-                })}
+                })} 
               >
 
                 <View>
-                  <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>{item.title}</Text>
+                  <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>  {item.title} </Text>
                 </View>
 
-                <Text style={{ textAlign: "right"}}>{item.date}</Text>
+                <Text style={{ textAlign: "right"}}> {item.date} </Text>
 
                 {/* <TouchableOpacity onPress={ () => deleteNote(index) } >
                   <Text>X</Text>

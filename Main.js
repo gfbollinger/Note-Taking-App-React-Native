@@ -145,8 +145,6 @@ export default function Main() {
             }
           >
             { props => <Notes {...props}
-              note={note}
-              setNote={setNote}
               date={date}
               setDate={setDate}
               archived={archived}
@@ -159,8 +157,6 @@ export default function Main() {
 
           <Stack.Screen name="Note" options={{ title: 'Note Content' }}>
             { props => <Note {...props}
-              note={note}
-              setNote={setNote}
               archived={archived}
               setArchived={setArchived}
               /* recordings={recordings} */
@@ -175,8 +171,6 @@ export default function Main() {
               setNoteTitle={setNoteTitle}
               noteBody={noteBody}
               setNoteBody={setNoteBody}
-              note={note}
-              setNote={setNote}
               handleNote={handleNote}
               noteColor={noteColor}
               setNoteColor={setNoteColor}
@@ -194,7 +188,7 @@ export default function Main() {
           </Stack.Screen>
 
           <Stack.Screen name="DeletedNotes" options={{ title: 'Archived Notes' }}>
-            {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} notes={notes} setNotes={setNotes} date={date} />}
+            {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} date={date} />}
           </Stack.Screen>
 
           <Stack.Screen name="EditNote" options={{ title: 'Edit Note' }}>

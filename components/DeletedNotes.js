@@ -10,6 +10,8 @@ const DeletedNotes = ({...props}) => {
   const {notes} = useContext(NoteContext)
   const {setNotes} = useContext(NoteContext)
 
+  console.log(props.archived)
+
   function emptyBin() {
     Alert.alert(
       "Delete All",
@@ -40,17 +42,18 @@ const DeletedNotes = ({...props}) => {
 
   function undoAllNotes(){
     let deletedNotes = [...props.archived]
-    let notes = [...notes]
+    let notes2 = [...notes]
 
     deletedNotes.forEach( (item, index) => {
-      notes.push(item)
+      notes2.push(item)
     })
+    console.log(notes2)
     props.setArchived([])
-    setNotes(deletedNotes)
+    setNotes(notes2)
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(notes))
       .then( () => {
-        setNotes(notes)
+        setNotes(notes2)
       })
       .catch( error => console.log(error) )
 
@@ -145,10 +148,10 @@ const DeletedNotes = ({...props}) => {
             :
               props.archived.map( (item, index) =>
 
-                <View key={index} style={[styles.note, {backgroundColor: item.color}]}>
+                <View key={index} style={[styles.note, /* {backgroundColor: item.color} */]}>
 
                   <View>
-                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>{item.title}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>  {item.title}  </Text>
                   </View>
 
                   <TouchableOpacity onPress={ () => undoNote(index)} >
