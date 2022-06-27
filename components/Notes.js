@@ -9,7 +9,7 @@ import NoteContext from "../context/NoteContext";
 const Notes = ({navigation, ...props}) => {
 
   const {notes} = useContext(NoteContext)
-  console.log(notes)
+  /* console.log(notes) */
   const [searchNote, setSearchNote] = useState("")
 
   let notesFilteredNewArr = []
@@ -87,7 +87,7 @@ const Notes = ({navigation, ...props}) => {
               >
 
                 <View>
-                  <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>  {item.title} </Text>
+                  <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>{item.title}</Text>
                 </View>
 
                 <Text style={{ textAlign: "right"}}> {item.date} </Text>
@@ -156,16 +156,16 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 50,
     position: "absolute",
-    bottom: 20,
-    right: 20
+    bottom: 25,
+    right: 25
   },
   buttonArchive: {
     backgroundColor: Style.color,
     padding: 10,
     borderRadius: 50,
     position: "absolute",
-    bottom: 20,
-    left: 20
+    bottom: 25,
+    left: 25
   },
   notesCounterCont: {
     flexDirection: "row",

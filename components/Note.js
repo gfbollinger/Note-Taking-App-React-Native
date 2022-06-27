@@ -81,7 +81,7 @@ const Note = ({route, navigation, ...props}) => {
       {/* <ScrollView> */}
         <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
           <Text style={stylesNote.noteTitle}>{n.title}</Text>
-          <View style={{ backgroundColor: "#8F9BB3", height: 1, width: "100%", marginBottom: 15}}></View>
+          <View style={{ backgroundColor: "#fff", height: 7, width: "20%", marginBottom: 25, opacity: 0.7 }}></View>
           <Text style={stylesNote.noteBody}>{n.body}</Text>
 
           <View style={{ flexDirection: "row"}}>
@@ -143,7 +143,9 @@ const Note = ({route, navigation, ...props}) => {
           {
             /* Location */
             n.myAddress ?
-            <LocationPlace myAddress={n.myAddress} />
+            <View style={{ position: "absolute", bottom: 37, left: 20}}>
+              <LocationPlace myAddress={n.myAddress} text="Note written in:" />
+            </View>
             : <></>
           }
 
@@ -175,12 +177,13 @@ const stylesNote = StyleSheet.create({
   },
   noteWrapper : {
     padding: 20,
-    paddingBottom: 60,
-    borderRadius: 10
+    borderRadius: 10,
+    minHeight: "90%",
+    position: "relative"
   },
   noteTitle: {
     fontSize: 30,
-    marginBottom: 10
+    marginBottom: 15,
   },
   noteBody: {
     fontSize: 17,

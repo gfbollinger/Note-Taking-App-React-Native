@@ -68,7 +68,7 @@ export default function Main() {
     setRecordings([])
     setLocation()
     setMyAddress()
-    console.log(notes)
+    /* console.log(notes) */
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {

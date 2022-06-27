@@ -36,7 +36,7 @@ export default function GetLocation({...props}) {
       <View style={styles.container}>
         { props.location ?
         <View>
-          <LocationPlace myAddress={props.myAddress} />
+          <LocationPlace myAddress={props.myAddress} text="Your location is:"  />
           <MapViewer location={props.location} />
         </View>
         : <Text>{errorMsg}</Text>
@@ -53,14 +53,13 @@ export default function GetLocation({...props}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    /* flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
-    paddingTop: 0
+    padding: 20, */
   },
   paragraph: {
-    fontSize: 18,
-    textAlign: 'center',
+    /* fontSize: 18,
+    textAlign: 'center', */
   },
 });
