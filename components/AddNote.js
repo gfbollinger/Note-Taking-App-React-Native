@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text, Alert } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
@@ -10,6 +10,9 @@ import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const AddNote = ({navigation, ...props}) => {
+
+  /* State from Context */
+  const {noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor } = useContext(NoteContext)
 
   const [showAudioRecorder, setShowAudioRecorder] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
@@ -23,7 +26,7 @@ const AddNote = ({navigation, ...props}) => {
   });
 
   function handleNoteColor(color) {
-    props.setNoteColor(color)
+    setNoteColor(color)
   }
 
   if (!fontsLoaded) {
@@ -42,27 +45,19 @@ const AddNote = ({navigation, ...props}) => {
           <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
             <View style={{padding: 20, justifyContent: "space-around"}}>
 
-              {/* <TextInput
-                style={styles.textInput}
-                placeholder="Type Here"
-                multiline={true}
-                value={props.note}
-                onChangeText={(text) => props.setNote(text)}
-              /> */}
-
               <TextInput
                 style={styles.textInputTitle}
                 placeholder="Title"
-                value={props.noteTitle}
-                onChangeText={(text) => props.setNoteTitle(text)}
+                value={noteTitle}
+                onChangeText={(text) => setNoteTitle(text)}
               />
 
               <TextInput
                 style={styles.textInput}
                 placeholder="Type Here"
                 multiline={true}
-                value={props.noteBody}
-                onChangeText={(text) => props.setNoteBody(text)}
+                value={noteBody}
+                onChangeText={(text) => setNoteBody(text)}
               />
 
               <View style={styles.colorPickerContainer}>
@@ -73,7 +68,7 @@ const AddNote = ({navigation, ...props}) => {
                       return (
                         <TouchableOpacity 
                           key={color} 
-                          style={[styles.buttonColor, { backgroundColor: color }, props.noteColor === color ? styles.colorSelected : styles.colorNotSelected ]} 
+                          style={[styles.buttonColor, { backgroundColor: color }, noteColor === color ? styles.colorSelected : styles.colorNotSelected ]} 
                           onPress={() => handleNoteColor(color)}
                         >
                         </TouchableOpacity>
@@ -84,14 +79,8 @@ const AddNote = ({navigation, ...props}) => {
               </View>
 
               <View style={styles.addMediaContainer}>
-                <ImagePickerComp
-                  selectedImage={props.selectedImage}
-                  setSelectedImage={props.setSelectedImage}
-                />
-                <CameraImagePicker
-                  cameraImage={props.cameraImage}
-                  setCameraImage={props.setCameraImage}
-                />
+                <ImagePickerComp />
+                <CameraImagePicker />
 
                 <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
                   <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
@@ -123,10 +112,10 @@ const AddNote = ({navigation, ...props}) => {
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  if (props.noteTitle === ""){
+                  if (noteTitle === ""){
                     Alert.alert("Please Add a title to the note")
                   }
-                  if (props.noteColor === ""){
+                  if (noteColor === ""){
                     Alert.alert("Please select a color for the note")
                   }
                   else{

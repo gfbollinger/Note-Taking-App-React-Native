@@ -11,8 +11,7 @@ const EditNote = ({route, navigation, ...props}) => {
 
   const { i, n } = route.params
 
-  const {notes} = useContext(NoteContext)
-  const {setNotes} = useContext(NoteContext)
+  const {notes, setNotes} = useContext(NoteContext)
 
   const [newEdit, setNewEdit]  = useState(n)
   const [newEditImg, setNewEditImg] = useState(n.img)
@@ -115,8 +114,6 @@ const EditNote = ({route, navigation, ...props}) => {
               <View style={styles.addMediaContainer}>
 
                 <ImagePickerComp
-                  selectedImage={props.selectedImage}
-                  setSelectedImage={props.setSelectedImage}
                   setNewEdit={setNewEdit}
                   thisNoteImg={thisNoteImg}
                   isEdit={true}
@@ -125,8 +122,6 @@ const EditNote = ({route, navigation, ...props}) => {
                 />
 
                 <CameraImagePicker
-                  cameraImage={props.cameraImage}
-                  setCameraImage={props.setCameraImage}
                   setNewEdit={setNewEdit}
                   thisNoteCameraImg={thisNoteCameraImg}
                   isEdit={true}

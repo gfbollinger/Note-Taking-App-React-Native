@@ -42,7 +42,7 @@ const Note = ({route, navigation, ...props}) => {
         color: archivedNote[0].color,
         date: archivedNote[0].date,
         img: archivedNote[0].img,
-        camImg: archivedNote[0].img,
+        camImg: archivedNote[0].camImg,
         audios: archivedNote[0].audios,
         location: archivedNote[0].location
       },

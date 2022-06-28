@@ -1,9 +1,12 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import NoteContext from "../context/NoteContext";
 import { Icon } from '@ui-kitten/components';
 
 const CameraImagePicker = ({...props}) =>{
+
+  const { cameraImage, setCameraImage } = useContext(NoteContext)
 
   let openCameraImagePickerAsync = async () => {
     let permissionCameraResult = await ImagePicker.requestCameraPermissionsAsync();
@@ -27,22 +30,22 @@ const CameraImagePicker = ({...props}) =>{
 
     /* If I am not editing */
     if (!props.isEdit){
-      props.setCameraImage({ localUri: pickerCameraResult.uri });
+      setCameraImage({ localUri: pickerCameraResult.uri });
     }
 
   }
 
 
   /* If adding a new note and selected an image */
-  if (props.cameraImage !== null) {
+  if (cameraImage !== null) {
     return (
       <View style={styles.container}>
         <Text style={styles.thumbnailText}>Image took with camera:</Text>
         <Image
-          source={{ uri: props.cameraImage.localUri }}
+          source={{ uri: cameraImage.localUri }}
           style={styles.thumbnail}
         />
-        <TouchableOpacity onPress={ () => props.setCameraImage(null)}>
+        <TouchableOpacity onPress={ () => setCameraImage(null)}>
           <Text>Remove Photo</Text>
         </TouchableOpacity>
       </View>

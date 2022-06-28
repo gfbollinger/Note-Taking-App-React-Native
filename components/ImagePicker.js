@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@ui-kitten/components';
+import NoteContext from "../context/NoteContext";
 import * as ImagePicker from 'expo-image-picker';
 
 export default function ImagePickerComp({...props}) {
+
+  const { selectedImage, setSelectedImage } = useContext(NoteContext)
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -27,20 +30,20 @@ export default function ImagePickerComp({...props}) {
 
     /* If I am not editing */
     if (!props.isEdit){
-      props.setSelectedImage({ localUri: pickerResult.uri });
+      setSelectedImage({ localUri: pickerResult.uri });
     }
 
   }
 
   /* If adding a new note and selected an image */
-  if (props.selectedImage !== null) {
+  if (selectedImage !== null) {
     return (
       <View style={styles.container}>
         <Image
-          source={{ uri: props.selectedImage.localUri }}
+          source={{ uri: selectedImage.localUri }}
           style={styles.thumbnail}
         />
-        <TouchableOpacity onPress={ () => props.setSelectedImage(null)}>
+        <TouchableOpacity onPress={ () => setSelectedImage(null)}>
           <Text>Remove Image</Text>
         </TouchableOpacity>
       </View>

@@ -23,23 +23,17 @@ export default function Main() {
 
   const [note, setNote] = useState()
 
-  const [noteTitle, setNoteTitle] = useState("")
-  const [noteBody, setNoteBody] = useState("")
-  const [noteColor, setNoteColor] = useState("")
-  const [selectedImage, setSelectedImage] = React.useState(null);
-  const [cameraImage, setCameraImage] = React.useState(null);
   const [recordings, setRecordings] = useState([]);
   const [location, setLocation] = useState();
   const [myAddress, setMyAddress] = useState([{}]);
-
   const [date, setDate] = useState(new Date().toUTCString())
+
   const [archived, setArchived] = useState([])
 
   const [notesFiltered, setNotesFiltered] = useState([])
 
   /* From context */
-  const {notes} = useContext(NoteContext)
-  const {setNotes} = useContext(NoteContext)
+  const {notes, setNotes, noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor, selectedImage, setSelectedImage, cameraImage, setCameraImage} = useContext(NoteContext)
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -165,8 +159,8 @@ export default function Main() {
               setDate={setDate}
               archived={archived}
               setArchived={setArchived}
-              notesFiltered={notesFiltered}
-              setNotesFiltered={setNotesFiltered}
+              /* notesFiltered={notesFiltered}
+              setNotesFiltered={setNotesFiltered} */
               archiveAllNotes={archiveAllNotes}
             /> }
           </Stack.Screen>
@@ -205,17 +199,7 @@ export default function Main() {
             }}
           >
             {props => <AddNote {...props}
-              noteTitle={noteTitle}
-              setNoteTitle={setNoteTitle}
-              noteBody={noteBody}
-              setNoteBody={setNoteBody}
               handleNote={handleNote}
-              noteColor={noteColor}
-              setNoteColor={setNoteColor}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-              cameraImage={cameraImage}
-              setCameraImage={setCameraImage}
               recordings={recordings}
               setRecordings={setRecordings}
               location={location}
@@ -251,16 +235,7 @@ export default function Main() {
               headerTintColor: "#8F9BB3"
             }}
           >
-            {props => <EditNote {...props}
-              noteTitle={noteTitle}
-              setNoteTitle={setNoteTitle}
-              noteBody={noteBody}
-              setNoteBody={setNoteBody}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-              cameraImage={cameraImage}
-              setCameraImage={setCameraImage}
-            />}
+            {props => <EditNote {...props} />}
           </Stack.Screen>
 
           <Stack.Screen

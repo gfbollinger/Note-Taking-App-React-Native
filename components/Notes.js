@@ -16,7 +16,7 @@ const Notes = ({navigation, ...props}) => {
   });
 
   const {notes} = useContext(NoteContext)
-  /* console.log(notes) */
+  console.log(notes)
   const [searchNote, setSearchNote] = useState("")
 
   let notesFilteredNewArr = []
