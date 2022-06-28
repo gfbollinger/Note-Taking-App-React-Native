@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-/* import SafeAreaView from 'react-native-safe-area-view'; */
 import AddNote from './components/AddNote';
 import DeletedNotes from './components/DeletedNotes';
 import EditNote from './components/EditNote';
@@ -13,7 +11,6 @@ import MenuNavigation from "./components/MenuNavigation";
 import NoteContext, { NoteProvider } from "./context/NoteContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Notes from './components/Notes';
-
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 
@@ -21,7 +18,7 @@ const Stack = createStackNavigator();
 
 export default function Main() {
 
-  const [note, setNote] = useState()
+  /* const [note, setNote] = useState() */
 
   const [recordings, setRecordings] = useState([]);
   const [location, setLocation] = useState();
@@ -35,11 +32,16 @@ export default function Main() {
   /* From context */
   const {notes, setNotes, noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor, selectedImage, setSelectedImage, cameraImage, setCameraImage} = useContext(NoteContext)
 
-  let [fontsLoaded] = useFonts({
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_700Bold
-  });
+  const menuOptions = {
+    headerTitleStyle: {
+      fontFamily: "Poppins_700Bold",
+      color: "#8F9BB3",
+      fontSize: 21,
+    },
+    headerTintColor: "#8F9BB3"
+  }
+
+  let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   function handleNote() {
     let newDate= new Date().toUTCString()
@@ -146,11 +148,7 @@ export default function Main() {
                   <MenuNavigation navigation={navigation} archiveAllNotes={archiveAllNotes} />
                 ), 
                 title: "My Notes",
-                headerTitleStyle: {
-                  fontFamily: "Poppins_700Bold",
-                  color: "#8F9BB3",
-                  fontSize: 21
-                }
+                ...menuOptions
               })
             }
           >
@@ -165,16 +163,10 @@ export default function Main() {
             /> }
           </Stack.Screen>
 
-          <Stack.Screen name="Note" 
-            options={{ 
+          <Stack.Screen name="Note"
+            options={{
               title: 'Note',
-              headerTitleStyle: {
-                fontFamily: "Poppins_700Bold",
-                color: "#8F9BB3",
-                fontSize: 21,
-                /* marginLeft: -10 */
-              },
-              headerTintColor: "#8F9BB3"
+              ...menuOptions
             }}
           >
             { props => <Note {...props}
@@ -190,12 +182,7 @@ export default function Main() {
             name="AddNote"
             options={{
               title: 'Add New Note',
-              headerTitleStyle: {
-                fontFamily: "Poppins_700Bold",
-                color: "#8F9BB3",
-                fontSize: 21,
-              },
-              headerTintColor: "#8F9BB3"
+              ...menuOptions
             }}
           >
             {props => <AddNote {...props}
@@ -213,12 +200,7 @@ export default function Main() {
             name="DeletedNotes"
             options={{
               title: 'Archived Notes',
-              headerTitleStyle: {
-                fontFamily: "Poppins_700Bold",
-                color: "#8F9BB3",
-                fontSize: 21,
-              },
-              headerTintColor: "#8F9BB3"
+              ...menuOptions
             }}>
             {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} date={date} />}
           </Stack.Screen>
@@ -227,12 +209,7 @@ export default function Main() {
             name="EditNote"
             options={{
               title: 'Edit Note',
-              headerTitleStyle: {
-                fontFamily: "Poppins_700Bold",
-                color: "#8F9BB3",
-                fontSize: 21,
-              },
-              headerTintColor: "#8F9BB3"
+              ...menuOptions
             }}
           >
             {props => <EditNote {...props} />}
@@ -240,14 +217,9 @@ export default function Main() {
 
           <Stack.Screen
             name="About"
-            options={{ 
+            options={{
               title: 'About Page',
-              headerTitleStyle: {
-                fontFamily: "Poppins_700Bold",
-                color: "#8F9BB3",
-                fontSize: 21,
-              },
-              headerTintColor: "#8F9BB3"
+              ...menuOptions
             }}
           >
             {props => <About {...props} />}

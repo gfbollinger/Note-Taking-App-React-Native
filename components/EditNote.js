@@ -45,11 +45,7 @@ const EditNote = ({route, navigation, ...props}) => {
 
   }
 
-  let [fontsLoaded] = useFonts({
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_700Bold
-  });
+  let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   if (!fontsLoaded) {
     return <Text>Loading</Text>
@@ -58,21 +54,10 @@ const EditNote = ({route, navigation, ...props}) => {
   return(
     <>
       <ScrollView>
-        {/* <KeyboardAvoidingView */}
-          { /*behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-           behavior={'padding'} */ }
-        {/* > */}
+
           <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
 
             <View style={{padding: 20, justifyContent: "space-around"}}>
-
-              {/* <TextInput
-                style={styles.textInput}
-                placeholder="Type Here"
-                multiline={true}
-                value={newEdit.toString()}
-                onChangeText={(text) => setNewEdit(text)}
-              /> */}
 
               <TextInput
                 style={styles.textInputTitle}
@@ -103,10 +88,6 @@ const EditNote = ({route, navigation, ...props}) => {
                       )
                     })
                   }
-                  {/* <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFF495"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFF495", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
-                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFDBA6"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFDBA6", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
-                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#AEFFF5"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#AEFFF5", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity>
-                  <TouchableOpacity style={[styles.buttonColor, { backgroundColor: "#FFB7F8"}]} onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: "#FFB7F8", img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}></TouchableOpacity> */}
                 </View>
               </View>
 
@@ -153,7 +134,6 @@ const EditNote = ({route, navigation, ...props}) => {
 
           </TouchableWithoutFeedback>
 
-        {/* </KeyboardAvoidingView> */}
       </ScrollView>
     </>
   )

@@ -36,103 +36,94 @@ const AddNote = ({navigation, ...props}) => {
   return (
     <>
       <ScrollView>
-        {/* <KeyboardAvoidingView */}
-          { /* 
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          behavior={'padding'} 
-          */ }
-        {/* > */}
-          <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
-            <View style={{padding: 20, justifyContent: "space-around"}}>
+        <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
+          <View style={{padding: 20, justifyContent: "space-around"}}>
 
-              <TextInput
-                style={styles.textInputTitle}
-                placeholder="Title"
-                value={noteTitle}
-                onChangeText={(text) => setNoteTitle(text)}
-              />
+            <TextInput
+              style={styles.textInputTitle}
+              placeholder="Title"
+              value={noteTitle}
+              onChangeText={(text) => setNoteTitle(text)}
+            />
 
-              <TextInput
-                style={styles.textInput}
-                placeholder="Type Here"
-                multiline={true}
-                value={noteBody}
-                onChangeText={(text) => setNoteBody(text)}
-              />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Type Here"
+              multiline={true}
+              value={noteBody}
+              onChangeText={(text) => setNoteBody(text)}
+            />
 
-              <View style={styles.colorPickerContainer}>
-                <Text style={styles.colorPickerTitle}>Pick a color:</Text>
-                <View style={styles.colorBtnsContainer}>
-                  {
-                    notesColors.map( (color, index) => {
-                      return (
-                        <TouchableOpacity 
-                          key={color} 
-                          style={[styles.buttonColor, { backgroundColor: color }, noteColor === color ? styles.colorSelected : styles.colorNotSelected ]} 
-                          onPress={() => handleNoteColor(color)}
-                        >
-                        </TouchableOpacity>
-                      )
-                    })
-                  }
-                </View>
-              </View>
-
-              <View style={styles.addMediaContainer}>
-                <ImagePickerComp />
-                <CameraImagePicker />
-
-                <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
-                  <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowLocation(!showLocation)}>
-                  <Icon name="navigation-2-outline" fill="white" style={{width: 30, height: 30 }} />
-                </TouchableOpacity>
-
-              </View>
-
-              {
-                showAudioRecorder &&
-                  <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
-              }
-
-              {
-                showLocation &&
-                  <GetLocation
-                    location={props.location}
-                    setLocation={props.setLocation}
-                    myAddress={props.myAddress}
-                    setMyAddress={props.setMyAddress}
-                  />
-              }
-
-
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  if (noteTitle === ""){
-                    Alert.alert("Please Add a title to the note")
-                  }
-                  if (noteColor === ""){
-                    Alert.alert("Please select a color for the note")
-                  }
-                  else{
-                    props.handleNote()
-                    navigation.navigate('Notes')
-                  }
-                  }
+            <View style={styles.colorPickerContainer}>
+              <Text style={styles.colorPickerTitle}>Pick a color:</Text>
+              <View style={styles.colorBtnsContainer}>
+                {
+                  notesColors.map( (color, index) => {
+                    return (
+                      <TouchableOpacity 
+                        key={color} 
+                        style={[styles.buttonColor, { backgroundColor: color }, noteColor === color ? styles.colorSelected : styles.colorNotSelected ]} 
+                        onPress={() => handleNoteColor(color)}
+                      >
+                      </TouchableOpacity>
+                    )
+                  })
                 }
-              >
-                <Text style={ styles.buttoAddNote } >Add Note</Text>
+              </View>
+            </View>
+
+            <View style={styles.addMediaContainer}>
+              <ImagePickerComp />
+              <CameraImagePicker />
+
+              <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
+                <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowLocation(!showLocation)}>
+                <Icon name="navigation-2-outline" fill="white" style={{width: 30, height: 30 }} />
               </TouchableOpacity>
 
             </View>
-          </TouchableWithoutFeedback>
+
+            {
+              showAudioRecorder &&
+                <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
+            }
+
+            {
+              showLocation &&
+                <GetLocation
+                  location={props.location}
+                  setLocation={props.setLocation}
+                  myAddress={props.myAddress}
+                  setMyAddress={props.setMyAddress}
+                />
+            }
 
 
-        {/* </KeyboardAvoidingView> */}
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                if (noteTitle === ""){
+                  Alert.alert("Please Add a title to the note")
+                }
+                if (noteColor === ""){
+                  Alert.alert("Please select a color for the note")
+                }
+                else{
+                  props.handleNote()
+                  navigation.navigate('Notes')
+                }
+                }
+              }
+            >
+              <Text style={ styles.buttoAddNote } >Add Note</Text>
+            </TouchableOpacity>
+
+          </View>
+        </TouchableWithoutFeedback>
       </ScrollView>
     </>
   )

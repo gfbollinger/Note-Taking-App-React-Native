@@ -2,18 +2,13 @@ import React, { useState, useContext } from "react";
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView, Alert, Keyboard } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
-import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const Notes = ({navigation, ...props}) => {
 
-  let [fontsLoaded] = useFonts({
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_700Bold
-  });
+  let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   const {notes} = useContext(NoteContext)
   console.log(notes)
@@ -39,21 +34,6 @@ const Notes = ({navigation, ...props}) => {
 
   return (
     <View style={styles.notesContainer}>
-
-      {/* Heading */}
-      {/* <View style={styles.headingContainer}>
-        <Text style={styles.heading} >My Notes</Text>
-      </View> */}
-
-
-      {/* Total notes counter */}
-      {/* <View style={styles.notesCounterCont}>
-        <Text style={styles.notesCounter} >Total notes: {notes.length}</Text>
-      </View> */}
-
-
-      {/* Divider */}
-      {/* <View style={styles.divider}></View> */}
 
 
       {/* Search */}
@@ -93,7 +73,7 @@ const Notes = ({navigation, ...props}) => {
                   i: index,
                   n: item,
                   /* TODO Agregar selected note index o algo asi para acceder desde el estado?? */
-                })} 
+                })}
               >
 
                 <View>
@@ -101,19 +81,6 @@ const Notes = ({navigation, ...props}) => {
                 </View>
 
                 <Text style={{ textAlign: "right", fontFamily: 'Poppins_300Light'}}> {item.date} </Text>
-
-                {/* <TouchableOpacity onPress={ () => deleteNote(index) } >
-                  <Text>X</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={ () => navigation.navigate("EditNote", {
-                  i: index,
-                  n: item
-                }
-
-                )}>
-                  <Text>Edit</Text>
-                </TouchableOpacity> */}
 
               </TouchableOpacity>
 
@@ -143,7 +110,6 @@ export const styles = StyleSheet.create({
   headingContainer: {
     flexDirection: "row",
     justifyContent: "space-between"
-    /* alignContent: "space-between", */
   },
   heading: {
     color: Style.color,
@@ -153,13 +119,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row"
   },
   button: {
-    /* backgroundColor: Style.color, */
-    /* padding: 10,
-    borderRadius: "50%", */
     marginLeft: 5
   },
   notesList: {
-    /* paddingTop: 20 */
   },
   buttonAdd: {
     backgroundColor: Style.color,
@@ -182,7 +144,6 @@ export const styles = StyleSheet.create({
     alignItems: "center"
   },
   notesCounter: {
-    //fontWeight: 700,
     fontSize: 18,
     color: Style.color
   },

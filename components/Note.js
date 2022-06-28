@@ -93,7 +93,6 @@ const Note = ({route, navigation, ...props}) => {
         <ScrollView  showsVerticalScrollIndicator ={false}>
           <Text style={stylesNote.noteTitle}>{n.title}</Text>
           <Text style={stylesNote.noteDate}>{n.date}</Text>
-          {/* <View style={{ backgroundColor: "#fff", height: 7, width: "20%", marginBottom: 25, opacity: 0.7 }}></View> */}
           <Text style={stylesNote.noteBody}>{n.body}</Text>
 
           <View style={{ flexDirection: "row"}}>
@@ -155,7 +154,7 @@ const Note = ({route, navigation, ...props}) => {
           {
             /* Location */
             n.myAddress ?
-            <View style={{ position: "absolute", bottom: 30, left: 20}}>
+            <View style={{ paddingTop: 30 }}>
               <LocationPlace myAddress={n.myAddress} text="Note written in:" />
             </View>
             : <></>
