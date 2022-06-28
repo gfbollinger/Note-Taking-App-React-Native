@@ -89,9 +89,10 @@ const Note = ({route, navigation, ...props}) => {
 
   return (
     <View style={stylesNote.noteContainer}>
-      {/* <ScrollView> */}
-        <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
+      <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
+        <ScrollView  showsVerticalScrollIndicator ={false}>
           <Text style={stylesNote.noteTitle}>{n.title}</Text>
+          <Text style={stylesNote.noteDate}>{n.date}</Text>
           {/* <View style={{ backgroundColor: "#fff", height: 7, width: "20%", marginBottom: 25, opacity: 0.7 }}></View> */}
           <Text style={stylesNote.noteBody}>{n.body}</Text>
 
@@ -159,6 +160,7 @@ const Note = ({route, navigation, ...props}) => {
             </View>
             : <></>
           }
+          </ScrollView>
 
         </View>
 
@@ -174,7 +176,7 @@ const Note = ({route, navigation, ...props}) => {
           <Icon name="download-outline" fill="white" style={{width: 30, height: 30 }} />
         </TouchableOpacity>
 
-        {/* </ScrollView> */}
+
 
     </View>
   )
@@ -195,8 +197,14 @@ const stylesNote = StyleSheet.create({
   noteTitle: {
     fontSize: 25,
     lineHeight: 30,
-    marginBottom: 15,
+    marginBottom: 5,
     fontFamily: "Poppins_700Bold"
+  },
+  noteDate: {
+    fontSize: 14,
+    lineHeight: 30,
+    marginBottom: 15,
+    fontFamily: "Poppins_300Light"
   },
   noteBody: {
     fontSize: 17,

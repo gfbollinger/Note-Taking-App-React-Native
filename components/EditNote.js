@@ -29,6 +29,7 @@ const EditNote = ({route, navigation, ...props}) => {
     editedNote[i].title = newEdit.title
     editedNote[i].body = newEdit.body
     editedNote[i].color = newEdit.color
+    editedNote[i].date = newEdit.date
     editedNote[i].img = newEditImg
     editedNote[i].camImg = newEditCameraImg
     editedNote[i].audios = newEdit.audios
@@ -58,10 +59,10 @@ const EditNote = ({route, navigation, ...props}) => {
   return(
     <>
       <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          /* behavior={'padding'} */
-        >
+        {/* <KeyboardAvoidingView */}
+          { /*behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+           behavior={'padding'} */ }
+        {/* > */}
           <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
 
             <View style={{padding: 20, justifyContent: "space-around"}}>
@@ -78,7 +79,7 @@ const EditNote = ({route, navigation, ...props}) => {
                 style={styles.textInputTitle}
                 placeholder="Title"
                 value={newEdit.title}
-                onChangeText={(text) => setNewEdit({ title: text, body: newEdit.body, color: newEdit.color})}
+                onChangeText={(text) => setNewEdit({ title: text, body: newEdit.body, color: newEdit.color, date: newEdit.date, img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress})}
               />
 
               <TextInput
@@ -86,7 +87,7 @@ const EditNote = ({route, navigation, ...props}) => {
                 placeholder="Type Here"
                 multiline={true}
                 value={newEdit.body}
-                onChangeText={(text) => setNewEdit({ title: newEdit.title, body: text, color: newEdit.color })}
+                onChangeText={(text) => setNewEdit({ title: newEdit.title, body: text, color: newEdit.color, date: newEdit.date, img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}
               />
 
               <View style={styles.colorPickerContainer}>
@@ -157,7 +158,7 @@ const EditNote = ({route, navigation, ...props}) => {
 
           </TouchableWithoutFeedback>
 
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
       </ScrollView>
     </>
   )
