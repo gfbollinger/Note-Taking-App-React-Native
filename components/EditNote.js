@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react"
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text  } from "react-native"
+import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, TextInput, TouchableOpacity, Text  } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePickerComp from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
+import ImagePicked from "./ImagePicked";
+import CameraImagePicked from "./CameraImagePicked";
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
@@ -111,6 +113,18 @@ const EditNote = ({route, navigation, ...props}) => {
                 />
 
               </View>
+
+              <ImagePicked
+                isEdit={true}
+                newEditImg={newEditImg}
+                setNewEditImg={setNewEditImg}
+              />
+
+              <CameraImagePicked 
+                isEdit={true}
+                newEditCameraImg={newEditCameraImg}
+                setNewEditCameraImg={setNewEditCameraImg}
+              />
 
               {/* TODO: Add button to remove audios if it has, setting setRecordings to empty array */}
 

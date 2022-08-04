@@ -1,12 +1,12 @@
 import React, { useContext } from "react"
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import NoteContext from "../context/NoteContext";
 import { Icon } from '@ui-kitten/components';
 
 const CameraImagePicker = ({...props}) =>{
 
-  const { cameraImage, setCameraImage } = useContext(NoteContext)
+  const { setCameraImage } = useContext(NoteContext)
 
   let openCameraImagePickerAsync = async () => {
     let permissionCameraResult = await ImagePicker.requestCameraPermissionsAsync();
@@ -37,7 +37,7 @@ const CameraImagePicker = ({...props}) =>{
 
 
   /* If adding a new note and selected an image */
-  if (cameraImage !== null) {
+  /* if (cameraImage !== null) {
     return (
       <View style={styles.container}>
         <Text style={styles.thumbnailText}>Image took with camera:</Text>
@@ -50,10 +50,10 @@ const CameraImagePicker = ({...props}) =>{
         </TouchableOpacity>
       </View>
     );
-  }
+  } */
 
   /* If editing a note with existing image */
-  if (props.newEditCameraImg && props.isEdit){
+  /* if (props.newEditCameraImg && props.isEdit){
     return (
       <View style={styles.container}>
         <Image
@@ -65,7 +65,7 @@ const CameraImagePicker = ({...props}) =>{
         </TouchableOpacity>
       </View>
     );
-  }
+  } */
 
   /* If creating a new note and haven´t selected an image yet  */
   return (

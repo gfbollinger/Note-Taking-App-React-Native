@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@ui-kitten/components';
 import NoteContext from "../context/NoteContext";
 import * as ImagePicker from 'expo-image-picker';
 
 export default function ImagePickerComp({...props}) {
 
-  const { selectedImage, setSelectedImage } = useContext(NoteContext)
+  const { setSelectedImage } = useContext(NoteContext)
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -36,7 +36,7 @@ export default function ImagePickerComp({...props}) {
   }
 
   /* If adding a new note and selected an image */
-  if (selectedImage !== null) {
+  /* if (selectedImage !== null) {
     return (
       <View style={styles.container}>
         <Image
@@ -48,43 +48,14 @@ export default function ImagePickerComp({...props}) {
         </TouchableOpacity>
       </View>
     );
-  }
-
-  /* If editing a note with existing image */
-  if (props.newEditImg && props.isEdit){
-    return (
-      <View style={styles.container}>
-        <Image
-          source={{ uri: props.newEditImg }}
-          style={styles.thumbnail}
-        />
-        <TouchableOpacity onPress={ () => props.setNewEditImg(null)}>
-          <Text>Remove Image</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  /* If editing a note with no image */
-  /* if (props.newEditImg === "" && props.isEdit){
-    return (
-      <View style={styles.container}>
-        <Text>sss</Text>
-      </View>
-    );
   } */
 
-  /* If creating a new note and haven´t selected an image yet  */
+  /* Button to select image  */
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.instructions}>
-        Press the button below to select an image!
-      </Text> */}
-
       <TouchableOpacity onPress={openImagePickerAsync} style={styles.buttonIcon}>
         <Icon name="image-outline" fill="white" style={{width: 30, height: 30 }} />
       </TouchableOpacity>
-
     </View>
   );
 }
@@ -106,12 +77,6 @@ const styles = StyleSheet.create({
   },
   thumbnailText: {
     marginTop: 10,
-  },
-  thumbnail: {
-    width: 100,
-    height: 100,
-    resizeMode: "contain",
-    marginBottom: 10,
   },
   buttonIcon: {
     padding: 10,

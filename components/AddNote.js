@@ -7,6 +7,8 @@ import CameraImagePicker from "./CameraImagePicker";
 import AudioRecorder from "./AudioRecorder";
 import GetLocation from "./GetLocation"
 import NoteContext from "../context/NoteContext";
+import ImagePicked from "./ImagePicked";
+import CameraImagePicked from "./CameraImagePicked";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const AddNote = ({navigation, ...props}) => {
@@ -84,6 +86,9 @@ const AddNote = ({navigation, ...props}) => {
                 <Icon name="navigation-2-outline" fill="white" style={{width: 30, height: 30 }} />
               </TouchableOpacity>
             </View>
+
+            <ImagePicked />
+            <CameraImagePicked />
 
             {
               showAudioRecorder &&
