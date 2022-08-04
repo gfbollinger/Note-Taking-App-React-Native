@@ -158,7 +158,7 @@ const DeletedNotes = ({...props}) => {
                     <Text>Undo</Text>
                   </TouchableOpacity>
 
-                  <Text>{props.date}</Text>
+                  <Text>{item.date}</Text>
 
                   <TouchableOpacity onPress={ () => deleteNote(index) }>
                     <Text>Delete</Text>

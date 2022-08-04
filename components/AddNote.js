@@ -83,7 +83,6 @@ const AddNote = ({navigation, ...props}) => {
               <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowLocation(!showLocation)}>
                 <Icon name="navigation-2-outline" fill="white" style={{width: 30, height: 30 }} />
               </TouchableOpacity>
-
             </View>
 
             {

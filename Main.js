@@ -23,14 +23,14 @@ export default function Main() {
   const [recordings, setRecordings] = useState([]);
   const [location, setLocation] = useState();
   const [myAddress, setMyAddress] = useState([{}]);
-  const [date, setDate] = useState(new Date().toUTCString())
+  /* const [date, setDate] = useState(new Date().toUTCString()) */
 
   const [archived, setArchived] = useState([])
 
   const [notesFiltered, setNotesFiltered] = useState([])
 
   /* From context */
-  const {notes, setNotes, noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor, selectedImage, setSelectedImage, cameraImage, setCameraImage} = useContext(NoteContext)
+  const {notes, setNotes, noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor, selectedImage, setSelectedImage, cameraImage, setCameraImage, noteDate, setNoteDate} = useContext(NoteContext)
 
   const menuOptions = {
     headerTitleStyle: {
@@ -45,7 +45,7 @@ export default function Main() {
 
   function handleNote() {
     let newDate= new Date().toUTCString()
-    setDate(newDate)
+    setNoteDate(newDate)
 
     let selectedImgUri = ""
     let selectedCameraImgUri = ""
@@ -60,7 +60,7 @@ export default function Main() {
       selectedCameraImgUri = cameraImage.localUri
     }
 
-    let newNotes = [{ title: noteTitle, body: noteBody, date: date, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri, audios: recordings, location: location, myAddress: myAddress }, ...notes]
+    let newNotes = [{ title: noteTitle, body: noteBody, date: noteDate, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri, audios: recordings, location: location, myAddress: myAddress }, ...notes]
     setNotes(newNotes)
     setNotesFiltered(newNotes)
     setNoteTitle('')
@@ -71,17 +71,12 @@ export default function Main() {
     setRecordings([])
     setLocation()
     setMyAddress()
-    /* console.log(notes) */
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {
         setNotes(newNotes)
       }).catch( error => console.log(error) )
 
-    AsyncStorage.setItem("date", JSON.stringify(date))
-      .then( () => {
-        setDate(date)
-      })
   }
 
   function archiveAllNotes() {
@@ -153,8 +148,6 @@ export default function Main() {
             }
           >
             { props => <Notes {...props}
-              date={date}
-              setDate={setDate}
               archived={archived}
               setArchived={setArchived}
               /* notesFiltered={notesFiltered}
@@ -202,7 +195,7 @@ export default function Main() {
               title: 'Archived Notes',
               ...menuOptions
             }}>
-            {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} date={date} />}
+            {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} />}
           </Stack.Screen>
 
           <Stack.Screen
