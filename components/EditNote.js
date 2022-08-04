@@ -155,22 +155,20 @@ const EditNote = ({route, navigation, ...props}) => {
 
 export const styles = StyleSheet.create({
   textInputTitle: {
-    height: 50,
-    paddingTop: 6,
+    height: 46,
     paddingLeft: 10,
-    borderWidth: 2,
-    borderColor: Style.color,
-    borderRadius: 8,
+    borderBottomWidth: 2,
+    borderBottomColor: Style.color,
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 20,
     fontFamily: "Poppins_400Regular"
   },
   textInput: {
     height: 200,
     padding: 10,
-    borderWidth: 2,
+    /* borderWidth: 2,
     borderColor: Style.color,
-    borderRadius: 8,
+    borderRadius: 8, */
     fontSize: 16,
     textAlignVertical : 'top',
     fontFamily: "Poppins_400Regular"
