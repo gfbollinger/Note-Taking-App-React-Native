@@ -146,10 +146,6 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     height: 200,
-    /* padding: 10,
-    borderWidth: 2,
-    borderColor: Style.color,
-    borderRadius: 8, */
     fontSize: 16,
     textAlignVertical : 'top',
     fontFamily: "Poppins_400Regular"

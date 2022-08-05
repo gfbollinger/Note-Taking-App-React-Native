@@ -14,7 +14,7 @@ const MenuNavigation = ({navigation, archiveAllNotes}) => {
   const onItemSelect = (index) => {
     setSelectedIndex(index);
     setVisible(false);
-    console.log(index)
+    /* console.log(index) */
     if (index.row === 0 ){
       navigation.navigate('About')
     } 

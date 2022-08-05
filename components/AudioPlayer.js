@@ -10,17 +10,17 @@ export default function AudioPlayer({ noteIndex }) {
   /* console.log(notes[noteIndex].audios[0].sound) */
 
   async function playSound() {
-    console.log('Loading Sound');
+    /* console.log('Loading Sound'); */
     const { sound } = await Audio.Sound.createAsync(notes[noteIndex].audios[0].sound);
     setSound(sound);
 
-    console.log('Playing Sound');
+    /* console.log('Playing Sound'); */
     await sound.playAsync(); }
 
   useEffect(() => {
     return sound
       ? () => {
-          console.log('Unloading Sound');
+          /* console.log('Unloading Sound'); */
           sound.unloadAsync(); }
       : undefined;
   }, [sound]);

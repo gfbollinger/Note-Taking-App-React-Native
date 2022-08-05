@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AddNote from './components/AddNote';
@@ -18,15 +18,10 @@ const Stack = createStackNavigator();
 
 export default function Main() {
 
-  /* const [note, setNote] = useState() */
-
   const [recordings, setRecordings] = useState([]);
   const [location, setLocation] = useState();
   const [myAddress, setMyAddress] = useState([{}]);
-  /* const [date, setDate] = useState(new Date().toUTCString()) */
-
   const [archived, setArchived] = useState([])
-
   const [notesFiltered, setNotesFiltered] = useState([])
 
   /* From context */
@@ -43,9 +38,21 @@ export default function Main() {
 
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
-  function handleNote() {
-    let newDate= new Date().toUTCString()
+  
+  function formatDate() {
+    let newDate = new Date();
+    let dd = String(newDate.getDate()).padStart(2, '0');
+    let mm = String(newDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = newDate.getFullYear();
+    let hh = newDate.getHours();
+    let mins = (newDate.getMinutes() < 10) ? `0${newDate.getMinutes()}` : newDate.getMinutes();
+
+    newDate = `${hh}:${mins} ${dd}/${mm}/${yyyy}`;
     setNoteDate(newDate)
+  }
+
+  function handleNote() {
+    formatDate();
 
     let selectedImgUri = ""
     let selectedCameraImgUri = ""
@@ -113,7 +120,7 @@ export default function Main() {
         if( data != null){
           setNotes(JSON.parse(data))
           /* Initial notes filtered same as notes */
-          setNotesFiltered(JSON.parse(data))
+          /* setNotesFiltered(JSON.parse(data)) */
         }
       }).catch( (error) => console.log(error))
 

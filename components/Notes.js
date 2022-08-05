@@ -11,7 +11,7 @@ const Notes = ({navigation, ...props}) => {
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   const {notes} = useContext(NoteContext)
-  console.log(notes)
+  /* console.log(notes) */
   const [searchNote, setSearchNote] = useState("")
 
   let notesFilteredNewArr = []
@@ -24,7 +24,7 @@ const Notes = ({navigation, ...props}) => {
         /* console.log(p.title) */
         p.title.toLowerCase().includes(inputText)
     )
-    console.log(notesFilteredNewArr)
+    /* console.log(notesFilteredNewArr) */
     props.setNotesFiltered(notesFilteredNewArr)
   }
 
