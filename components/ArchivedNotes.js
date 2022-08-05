@@ -1,11 +1,11 @@
 import React, { useContext } from "react"
 import { ScrollView, View, Text, StyleSheet,TouchableOpacity, Alert } from "react-native"
 /* import { styles } from "./AddNote" */
-import * as Style from "./../assets/styles"
+import * as Style from "../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteContext from "../context/NoteContext";
 
-const DeletedNotes = ({...props}) => {
+const ArchivedNotes = ({...props}) => {
 
   const {notes} = useContext(NoteContext)
   const {setNotes} = useContext(NoteContext)
@@ -41,10 +41,10 @@ const DeletedNotes = ({...props}) => {
   }
 
   function undoAllNotes(){
-    let deletedNotes = [...props.archived]
+    let archivedNotes = [...props.archived]
     let notes2 = [...notes]
 
-    deletedNotes.forEach( (item, index) => {
+    archivedNotes.forEach( (item, index) => {
       notes2.push(item)
     })
     console.log(notes2)
@@ -241,4 +241,4 @@ export const styles = StyleSheet.create({
 })
 
 
-export default DeletedNotes
+export default ArchivedNotes

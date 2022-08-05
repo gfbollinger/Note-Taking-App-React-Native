@@ -89,7 +89,7 @@ const Notes = ({navigation, ...props}) => {
 
       </ScrollView>
 
-      <TouchableOpacity style={[styles.buttonArchive, {marginLeft:0}]}  onPress={ () => navigation.navigate('DeletedNotes') }>
+      <TouchableOpacity style={[styles.buttonArchive, {marginLeft:0}]}  onPress={ () => navigation.navigate('ArchivedNotes') }>
           <Icon name="archive-outline" fill="white" style={{width: 25, height: 25 }} />
       </TouchableOpacity>
 

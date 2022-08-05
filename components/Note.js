@@ -153,11 +153,11 @@ const Note = ({route, navigation, ...props}) => {
 
           {
             /* Location */
-            n.myAddress ?
+            /* n.myAddress ?
             <View style={{ paddingTop: 30 }}>
               <LocationPlace myAddress={n.myAddress} text="Note written in:" />
             </View>
-            : <></>
+            : <></> */
           }
           </ScrollView>
 

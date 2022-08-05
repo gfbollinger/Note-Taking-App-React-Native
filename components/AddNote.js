@@ -39,7 +39,7 @@ const AddNote = ({navigation, ...props}) => {
     let hh = newDate.getHours();
     let mins = (newDate.getMinutes() < 10) ? `0${newDate.getMinutes()}` : newDate.getMinutes();
 
-    newDate = `${hh}:${mins} ${dd}/${mm}/${yyyy}`;
+    newDate = `${hh}:${mins}hs. ${dd}/${mm}/${yyyy}`;
     setNoteDate(newDate)
   }
 
@@ -94,19 +94,19 @@ const AddNote = ({navigation, ...props}) => {
               <ImagePickerComp />
               <CameraImagePicker />
 
-              <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
+              {/* <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
                 <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowLocation(!showLocation)}>
                 <Icon name="navigation-2-outline" fill="white" style={{width: 30, height: 30 }} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
 
             <ImagePicked />
             <CameraImagePicked />
 
-            {
+            {/* {
               showAudioRecorder &&
                 <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
             }
@@ -119,7 +119,7 @@ const AddNote = ({navigation, ...props}) => {
                   myAddress={props.myAddress}
                   setMyAddress={props.setMyAddress}
                 />
-            }
+            } */}
 
 
 

@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AddNote from './components/AddNote';
-import DeletedNotes from './components/DeletedNotes';
+import ArchivedNotes from './components/ArchivedNotes';
 import EditNote from './components/EditNote';
 import Note from './components/Note';
 import About from './components/About';
@@ -184,12 +184,12 @@ export default function Main() {
           </Stack.Screen>
 
           <Stack.Screen
-            name="DeletedNotes"
+            name="ArchivedNotes"
             options={{
               title: 'Archived Notes',
               ...menuOptions
             }}>
-            {props => <DeletedNotes {...props} archived={archived} setArchived={setArchived} />}
+            {props => <ArchivedNotes {...props} archived={archived} setArchived={setArchived} />}
           </Stack.Screen>
 
           <Stack.Screen
