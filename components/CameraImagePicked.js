@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import NoteContext from "../context/NoteContext";
+import { Icon } from '@ui-kitten/components';
 
 const CameraImagePicked = (props) => {
   const { cameraImage, setCameraImage } = useContext(NoteContext)
@@ -13,8 +14,8 @@ const CameraImagePicked = (props) => {
           source={{ uri: cameraImage.localUri }}
           style={styles.thumbnail}
         />
-        <TouchableOpacity onPress={ () => setCameraImage(null)}>
-          <Text>Remove Photo</Text>
+        <TouchableOpacity onPress={ () => setCameraImage(null)} style={styles.closeButton}>
+          <Icon name="close-circle-outline" fill="white" style={{width: 35, height: 35 }} />
         </TouchableOpacity>
       </View>
     );
@@ -24,13 +25,15 @@ const CameraImagePicked = (props) => {
   if (props.newEditCameraImg && props.isEdit){
     return (
       <View style={styles.container}>
-        <Image
-          source={{ uri: props.newEditCameraImg }}
-          style={styles.thumbnail}
-        />
-        <TouchableOpacity onPress={ () => props.setNewEditCameraImg(null)}>
-          <Text>Remove Photo</Text>
-        </TouchableOpacity>
+        <View style={styles.thumbnailContainer}>
+          <Image
+            source={{ uri: props.newEditCameraImg }}
+            style={styles.thumbnail}
+          />
+          <TouchableOpacity onPress={ () => props.setNewEditCameraImg(null)} style={styles.closeButton}>
+            <Icon name="close-circle-outline" fill="white" style={{width: 35, height: 35 }} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -45,10 +48,21 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 5,
   },
+  thumbnailContainer: {
+    position: 'relative',
+    width: 100
+  },
   thumbnail: {
     width: 100,
     height: 100,
-    resizeMode: "contain",
+    resizeMode: "cover",
     marginBottom: 10,
   },
+  closeButton: {
+    position: 'absolute',
+    top: -17,
+    right: -17,
+    backgroundColor: 'black',
+    borderRadius: 80
+  }
 })

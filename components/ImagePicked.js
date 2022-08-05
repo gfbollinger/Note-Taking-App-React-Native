@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import NoteContext from "../context/NoteContext";
+import { Icon } from '@ui-kitten/components';
 
 const ImagePicked = (props) => {
   const { selectedImage, setSelectedImage } = useContext(NoteContext)
@@ -9,13 +10,15 @@ const ImagePicked = (props) => {
   if (selectedImage !== null) {
     return (
       <View style={styles.container}>
-        <Image
-          source={{ uri: selectedImage.localUri }}
-          style={styles.thumbnail}
-        />
-        <TouchableOpacity onPress={ () => setSelectedImage(null)}>
-          <Text>Remove Image</Text>
-        </TouchableOpacity>
+        <View style={styles.thumbnailContainer}>
+          <Image
+            source={{ uri: selectedImage.localUri }}
+            style={styles.thumbnail}
+          />
+          <TouchableOpacity onPress={ () => setSelectedImage(null)} style={styles.closeButton}>
+            <Icon name="close-circle-outline" fill="white" style={{width: 35, height: 35 }} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -24,13 +27,15 @@ const ImagePicked = (props) => {
   if (props.newEditImg && props.isEdit){
     return (
       <View style={styles.container}>
-        <Image
-          source={{ uri: props.newEditImg }}
-          style={styles.thumbnail}
-        />
-        <TouchableOpacity onPress={ () => props.setNewEditImg(null)}>
-          <Text>Remove Image</Text>
-        </TouchableOpacity>
+        <View style={styles.thumbnailContainer}>
+          <Image
+            source={{ uri: props.newEditImg }}
+            style={styles.thumbnail}
+          />
+          <TouchableOpacity onPress={ () => props.setNewEditImg(null)} style={styles.closeButton}>
+            <Icon name="close-circle-outline" fill="white" style={{width: 35, height: 35 }} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -45,10 +50,21 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 5,
   },
+  thumbnailContainer: {
+    position: 'relative',
+    width: 100
+  },
   thumbnail: {
     width: 100,
     height: 100,
-    resizeMode: "contain",
+    resizeMode: "cover",
     marginBottom: 10,
   },
+  closeButton: {
+    position: 'absolute',
+    top: -17,
+    right: -17,
+    backgroundColor: 'black',
+    borderRadius: 80
+  }
 })
