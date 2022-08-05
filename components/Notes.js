@@ -77,10 +77,10 @@ const Notes = ({navigation, ...props}) => {
               >
 
                 <View>
-                  <Text style={{ fontSize: 20, marginBottom: 15, fontFamily: 'Poppins_700Bold', lineHeight: 25}}>{item.title}</Text>
+                  <Text style={{ fontSize: 20, marginBottom: 15, fontFamily: 'Poppins_700Bold', lineHeight: 25 }}>{item.title}</Text>
                 </View>
 
-                <Text style={{ textAlign: "right", fontFamily: 'Poppins_300Light'}}> {item.date} </Text>
+                <Text style={{ textAlign: "right", fontFamily: 'Poppins_300Light' }}> {item.date} </Text>
 
               </TouchableOpacity>
 

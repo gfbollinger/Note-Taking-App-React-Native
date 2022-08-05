@@ -1,11 +1,14 @@
 import React, { useContext } from "react"
 import { ScrollView, View, Text, StyleSheet,TouchableOpacity, Alert } from "react-native"
-/* import { styles } from "./AddNote" */
+import { Icon } from '@ui-kitten/components';
 import * as Style from "../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteContext from "../context/NoteContext";
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const ArchivedNotes = ({...props}) => {
+
+  let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   const {notes} = useContext(NoteContext)
   const {setNotes} = useContext(NoteContext)
@@ -113,6 +116,9 @@ const ArchivedNotes = ({...props}) => {
     )
   }
 
+  if (!fontsLoaded) {
+    return <Text>Loading</Text>
+  }
 
   return (
     <>
@@ -120,18 +126,20 @@ const ArchivedNotes = ({...props}) => {
 
         <View style={styles.notesContainer}>
 
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
 
-            <TouchableOpacity style={styles.emptyButton} onPress={ () => undoAllNotes() }>
-              <Text>Undo all</Text>
+            <TouchableOpacity style={styles.iconButtonText} onPress={ () => undoAllNotes() }>
+              <Icon name="undo-outline" fill="#8F9BB3" style={{width: 25, height: 25 }} />
+              <Text style={{ fontFamily: 'Poppins_700Bold', color: '#8F9BB3', fontSize: 16 , marginLeft: 4 }}>Undo all</Text>
             </TouchableOpacity>
 
-            <Text>
+            <Text style={{ fontFamily: 'Poppins_700Bold', color: '#8F9BB3'}}>
               Total: {props.archived.length}
             </Text>
 
-            <TouchableOpacity style={styles.emptyButton} onPress={() => emptyBin()}>
-              <Text>Empty</Text>
+            <TouchableOpacity style={styles.iconButtonText} onPress={() => emptyBin()}>
+              <Icon name="trash-2-outline" fill="#8F9BB3" style={{width: 25, height: 25 }} />
+              <Text style={{ fontFamily: 'Poppins_700Bold', color: '#8F9BB3', fontSize: 16 , marginLeft: 4 }}>Delete All</Text>
             </TouchableOpacity>
 
           </View>
@@ -144,25 +152,22 @@ const ArchivedNotes = ({...props}) => {
           {
             props.archived.length === 0
             ?
-              <Text>No archived noted</Text>
+              <Text>No archived notes</Text>
             :
               props.archived.map( (item, index) =>
 
-                <View key={index} style={[styles.note, /* {backgroundColor: item.color} */]}>
+                <View key={index} style={[styles.note, {backgroundColor: item.color}]}>
+                  <Text style={{ fontSize: 20, marginBottom: 0, fontFamily: 'Poppins_700Bold', lineHeight: 25 }}>{item.title}</Text>
+                  <Text style={{ marginBottom: 20, fontFamily: 'Poppins_300Light' }}>Created: {item.date}</Text>
 
-                  <View>
-                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15}}>  {item.title}  </Text>
+                  <View style={{ display:'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <TouchableOpacity onPress={ () => undoNote(index)} style={styles.undoButton}>
+                      <Text style={{ fontFamily: 'Poppins_400Regular'}}>Undo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={ () => deleteNote(index)} style={styles.removeButton}>
+                      <Text style={{ fontFamily: 'Poppins_400Regular'}}>Delete</Text>
+                    </TouchableOpacity>
                   </View>
-
-                  <TouchableOpacity onPress={ () => undoNote(index)} >
-                    <Text>Undo</Text>
-                  </TouchableOpacity>
-
-                  <Text>{item.date}</Text>
-
-                  <TouchableOpacity onPress={ () => deleteNote(index) }>
-                    <Text>Delete</Text>
-                  </TouchableOpacity>
 
                 </View>
               )
@@ -176,10 +181,12 @@ const ArchivedNotes = ({...props}) => {
 
 export const styles = StyleSheet.create({
   notesContainer: {
-    padding: 10
+    padding: 15,
+    height: "100%"
   },
   headingContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   heading: {
     color: Style.color,
@@ -189,23 +196,38 @@ export const styles = StyleSheet.create({
     flexDirection: "row"
   },
   button: {
+    marginLeft: 5
+  },
+  notesList: {
+  },
+  buttonAdd: {
     backgroundColor: Style.color,
     padding: 10,
     borderRadius: 50,
-    marginLeft: 5
+    position: "absolute",
+    bottom: 25,
+    right: 25
+  },
+  buttonArchive: {
+    backgroundColor: Style.color,
+    padding: 10,
+    borderRadius: 50,
+    position: "absolute",
+    bottom: 25,
+    left: 25
   },
   notesCounterCont: {
     flexDirection: "row",
     alignItems: "center"
   },
   notesCounter: {
-    //fontWeight: 700,
     fontSize: 18,
     color: Style.color
   },
   divider: {
     borderBottomColor: "#ccc",
     borderBottomWidth: 2,
+    marginBottom: 10
   },
   searchContainer: {
     flexDirection: "row"
@@ -233,10 +255,30 @@ export const styles = StyleSheet.create({
     justifyContent: "center"
   },
   note: {
-    padding: 10,
+    padding: 20,
     backgroundColor: "#FFF495",
     marginBottom: 10,
     borderRadius: 8
+  },
+  undoButton: {
+    backgroundColor: 'white',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    fontFamily: 'Poppins_400Regular',
+    borderRadius: 8
+  },
+  removeButton: {
+    backgroundColor: 'white',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    fontFamily: 'Poppins_400Regular',
+    borderRadius: 8
+  },
+  iconButtonText: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 
