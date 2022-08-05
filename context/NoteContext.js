@@ -13,7 +13,7 @@ export function NoteProvider({children}) {
   const [noteColor, setNoteColor] = useState("")
   const [selectedImage, setSelectedImage] = useState(null);
   const [cameraImage, setCameraImage] = useState(null);
-  const [noteDate, setNoteDate] = useState(new Date().toUTCString())
+  const [noteDate, setNoteDate] = useState();
 
   return (
     <NoteContext.Provider value={{ notes, setNotes, noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor, selectedImage, setSelectedImage, cameraImage, setCameraImage, noteDate, setNoteDate }}>{children}</NoteContext.Provider>

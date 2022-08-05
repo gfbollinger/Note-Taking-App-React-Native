@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text, Alert } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
@@ -14,7 +14,7 @@ import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from 
 const AddNote = ({navigation, ...props}) => {
 
   /* State from Context */
-  const {noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor } = useContext(NoteContext)
+  const {noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor,setNoteDate } = useContext(NoteContext)
 
   const [showAudioRecorder, setShowAudioRecorder] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
@@ -30,6 +30,22 @@ const AddNote = ({navigation, ...props}) => {
   function handleNoteColor(color) {
     setNoteColor(color)
   }
+
+  function formatDate() {
+    let newDate = new Date();
+    let dd = String(newDate.getDate()).padStart(2, '0');
+    let mm = String(newDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = newDate.getFullYear();
+    let hh = newDate.getHours();
+    let mins = (newDate.getMinutes() < 10) ? `0${newDate.getMinutes()}` : newDate.getMinutes();
+
+    newDate = `${hh}:${mins} ${dd}/${mm}/${yyyy}`;
+    setNoteDate(newDate)
+  }
+
+  useEffect( () => {
+    formatDate();
+  }, [])
 
   if (!fontsLoaded) {
     return <Text>Loading</Text>

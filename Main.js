@@ -38,21 +38,7 @@ export default function Main() {
 
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
-  
-  function formatDate() {
-    let newDate = new Date();
-    let dd = String(newDate.getDate()).padStart(2, '0');
-    let mm = String(newDate.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = newDate.getFullYear();
-    let hh = newDate.getHours();
-    let mins = (newDate.getMinutes() < 10) ? `0${newDate.getMinutes()}` : newDate.getMinutes();
-
-    newDate = `${hh}:${mins} ${dd}/${mm}/${yyyy}`;
-    setNoteDate(newDate)
-  }
-
   function handleNote() {
-    formatDate();
 
     let selectedImgUri = ""
     let selectedCameraImgUri = ""
@@ -78,6 +64,7 @@ export default function Main() {
     setRecordings([])
     setLocation()
     setMyAddress()
+    setNoteDate()
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {
