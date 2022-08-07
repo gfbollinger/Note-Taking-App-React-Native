@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function ImagePickerComp({...props}) {
 
-  const { setSelectedImage } = useContext(NoteContext)
+  const { note, setNote } = useContext(NoteContext)
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -17,7 +17,7 @@ export default function ImagePickerComp({...props}) {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult);
+    /* console.log(pickerResult); */
 
     if (pickerResult.cancelled === true) {
       return;
@@ -30,7 +30,7 @@ export default function ImagePickerComp({...props}) {
 
     /* If I am not editing */
     if (!props.isEdit){
-      setSelectedImage({ localUri: pickerResult.uri });
+      setNote({ ...note, image:{ localUri: pickerResult.uri }});
     }
 
   }

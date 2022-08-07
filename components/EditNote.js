@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react"
 import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, TextInput, TouchableOpacity, Text  } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ImagePickerComp from "./ImagePicker";
+import ImagePicker from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import ImagePicked from "./ImagePicked";
 import CameraImagePicked from "./CameraImagePicked";
@@ -16,14 +16,14 @@ const EditNote = ({route, navigation, ...props}) => {
   const {notes, setNotes} = useContext(NoteContext)
 
   const [newEdit, setNewEdit]  = useState(n)
-  const [newEditImg, setNewEditImg] = useState(n.img)
-  const [newEditCameraImg, setNewEditCameraImg] = useState(n.camImg)
+  const [newEditImg, setNewEditImg] = useState(n.image)
+  const [newEditCameraImg, setNewEditCameraImg] = useState(n.cameraImage)
 
   const notesColors = ["#FFF495", "#FFDBA6", "#AEFFF5", "#FFB7F8"]
 
   let editedNote = [...notes]
-  let thisNoteImg = editedNote[i].img
-  let thisNoteCameraImg = editedNote[i].camImg
+  let thisNoteImg = editedNote[i].image
+  let thisNoteCameraImg = editedNote[i].cameraImage
 
   function updateNote() {
     editedNote[i] = newEdit
@@ -31,8 +31,8 @@ const EditNote = ({route, navigation, ...props}) => {
     editedNote[i].body = newEdit.body
     editedNote[i].color = newEdit.color
     editedNote[i].date = newEdit.date
-    editedNote[i].img = newEditImg
-    editedNote[i].camImg = newEditCameraImg
+    editedNote[i].image = newEditImg
+    editedNote[i].cameraImage = newEditCameraImg
     editedNote[i].audios = newEdit.audios
     editedNote[i].myAddress = newEdit.myAddress
 
@@ -65,7 +65,7 @@ const EditNote = ({route, navigation, ...props}) => {
                 style={styles.textInputTitle}
                 placeholder="Title"
                 value={newEdit.title}
-                onChangeText={(text) => setNewEdit({ title: text, body: newEdit.body, color: newEdit.color, date: newEdit.date, img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress})}
+                onChangeText={(text) => setNewEdit({ ...newEdit, title: text})}
               />
 
               <TextInput
@@ -73,7 +73,7 @@ const EditNote = ({route, navigation, ...props}) => {
                 placeholder="Type Here"
                 multiline={true}
                 value={newEdit.body}
-                onChangeText={(text) => setNewEdit({ title: newEdit.title, body: text, color: newEdit.color, date: newEdit.date, img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}
+                onChangeText={(text) => setNewEdit({ ...newEdit, body: text })}
               />
 
               <View style={styles.colorPickerContainer}>
@@ -85,7 +85,7 @@ const EditNote = ({route, navigation, ...props}) => {
                         <TouchableOpacity
                           key={newColor}
                           style={[styles.buttonColor, { backgroundColor: newColor}, newEdit.color === newColor ? styles.colorSelected : styles.colorNotSelected]} 
-                          onPress={() => setNewEdit({ title: newEdit.title, body: newEdit.body, date: newEdit.date, color: newColor, img: newEdit.img, camImg: newEdit.camImg, audios: newEdit.audios, myAddress: newEdit.myAddress })}>
+                          onPress={() => setNewEdit({ ...newEdit, color: newColor })}>
                         </TouchableOpacity>
                       )
                     })
@@ -96,7 +96,7 @@ const EditNote = ({route, navigation, ...props}) => {
 
               <View style={styles.addMediaContainer}>
 
-                <ImagePickerComp
+                <ImagePicker
                   setNewEdit={setNewEdit}
                   thisNoteImg={thisNoteImg}
                   isEdit={true}

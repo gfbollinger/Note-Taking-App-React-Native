@@ -2,20 +2,21 @@ import React, { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import NoteContext from "../context/NoteContext";
 import { Icon } from '@ui-kitten/components';
+import Note from "./Note";
 
 const ImagePicked = (props) => {
-  const { selectedImage, setSelectedImage } = useContext(NoteContext)
+  const { note, setNote } = useContext(NoteContext)
 
   /* If adding a new note and selected an image */
-  if (selectedImage !== null) {
+  if (note.image) {
     return (
       <View style={styles.container}>
         <View style={styles.thumbnailContainer}>
           <Image
-            source={{ uri: selectedImage.localUri }}
+            source={{ uri: note.image.localUri }}
             style={styles.thumbnail}
           />
-          <TouchableOpacity onPress={ () => setSelectedImage(null)} style={styles.closeButton}>
+          <TouchableOpacity onPress={ () => setNote( {...note, image: null} )} style={styles.closeButton}>
             <Icon name="close-circle-outline" fill="white" style={{width: 35, height: 35 }} />
           </TouchableOpacity>
         </View>

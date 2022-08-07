@@ -28,7 +28,6 @@ export default function AudioPlayer({ noteIndex }) {
   return (
     <View style={styles.container}>
       <Button title="Play Sound" onPress={playSound} />
-      <Text>asdasd</Text>
     </View>
   );
 }

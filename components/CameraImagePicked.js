@@ -4,19 +4,21 @@ import NoteContext from "../context/NoteContext";
 import { Icon } from '@ui-kitten/components';
 
 const CameraImagePicked = (props) => {
-  const { cameraImage, setCameraImage } = useContext(NoteContext)
+  const { note, setNote } = useContext(NoteContext)
 
   /* If adding a new note and selected an image */
-  if (cameraImage !== null) {
+  if (note.cameraImage) {
     return (
       <View style={styles.container}>
-        <Image
-          source={{ uri: cameraImage.localUri }}
-          style={styles.thumbnail}
-        />
-        <TouchableOpacity onPress={ () => setCameraImage(null)} style={styles.closeButton}>
-          <Icon name="close-circle-outline" fill="white" style={{width: 35, height: 35 }} />
-        </TouchableOpacity>
+        <View style={styles.thumbnailContainer}>
+          <Image
+            source={{ uri: note.cameraImage.localUri }}
+            style={styles.thumbnail}
+          />
+          <TouchableOpacity onPress={ () => setNote({ ...note, cameraImage: null})} style={styles.closeButton}>
+            <Icon name="close-circle-outline" fill="white" style={{width: 35, height: 35 }} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

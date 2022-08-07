@@ -6,7 +6,7 @@ import { Icon } from '@ui-kitten/components';
 
 const CameraImagePicker = ({...props}) =>{
 
-  const { setCameraImage } = useContext(NoteContext)
+  const { note, setNote } = useContext(NoteContext)
 
   let openCameraImagePickerAsync = async () => {
     let permissionCameraResult = await ImagePicker.requestCameraPermissionsAsync();
@@ -17,7 +17,7 @@ const CameraImagePicker = ({...props}) =>{
     }
 
     let pickerCameraResult = await ImagePicker.launchCameraAsync();
-    console.log(pickerCameraResult);
+    /* console.log(pickerCameraResult); */
 
     if (pickerCameraResult.cancelled === true) {
       return;
@@ -30,7 +30,7 @@ const CameraImagePicker = ({...props}) =>{
 
     /* If I am not editing */
     if (!props.isEdit){
-      setCameraImage({ localUri: pickerCameraResult.uri });
+      setNote({ ...note, cameraImage: { localUri: pickerCameraResult.uri }});
     }
 
   }

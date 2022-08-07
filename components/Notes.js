@@ -11,7 +11,6 @@ const Notes = ({navigation, ...props}) => {
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   const {notes} = useContext(NoteContext)
-  /* console.log(notes) */
   const [searchNote, setSearchNote] = useState("")
 
   let notesFilteredNewArr = []
@@ -60,7 +59,7 @@ const Notes = ({navigation, ...props}) => {
 
           {notes.length === 0
             ?
-            <View>
+            <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
               <Text>There are no notes yet.</Text>
             </View>
             :

@@ -12,9 +12,10 @@ import CameraImagePicked from "./CameraImagePicked";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const AddNote = ({navigation, ...props}) => {
-
+  
   /* State from Context */
-  const {noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor,setNoteDate } = useContext(NoteContext)
+  const { note, setNote } = useContext(NoteContext)
+  console.log(note)
 
   const [showAudioRecorder, setShowAudioRecorder] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
@@ -28,7 +29,7 @@ const AddNote = ({navigation, ...props}) => {
   });
 
   function handleNoteColor(color) {
-    setNoteColor(color)
+    setNote({ ...note, color: color })
   }
 
   function formatDate() {
@@ -39,8 +40,8 @@ const AddNote = ({navigation, ...props}) => {
     let hh = newDate.getHours();
     let mins = (newDate.getMinutes() < 10) ? `0${newDate.getMinutes()}` : newDate.getMinutes();
 
-    newDate = `${hh}:${mins}hs. ${dd}/${mm}/${yyyy}`;
-    setNoteDate(newDate)
+    newDate = `${dd}/${mm}/${yyyy}, ${hh}:${mins}hs.`;
+    setNote({ ...note, date: newDate })
   }
 
   useEffect( () => {
@@ -60,16 +61,16 @@ const AddNote = ({navigation, ...props}) => {
             <TextInput
               style={styles.textInputTitle}
               placeholder="Title"
-              value={noteTitle}
-              onChangeText={(text) => setNoteTitle(text)}
+              value={note.title}
+              onChangeText={(text) => setNote({ ...note, title: text })}
             />
 
             <TextInput
               style={styles.textInput}
               placeholder="Type Here"
               multiline={true}
-              value={noteBody}
-              onChangeText={(text) => setNoteBody(text)}
+              value={note.body}
+              onChangeText={(text) => setNote({ ...note, body: text })}
             />
 
             <View style={styles.colorPickerContainer}>
@@ -80,7 +81,7 @@ const AddNote = ({navigation, ...props}) => {
                     return (
                       <TouchableOpacity 
                         key={color} 
-                        style={[styles.buttonColor, { backgroundColor: color }, noteColor === color ? styles.colorSelected : styles.colorNotSelected ]} 
+                        style={[styles.buttonColor, { backgroundColor: color }, note.color === color ? styles.colorSelected : styles.colorNotSelected ]} 
                         onPress={() => handleNoteColor(color)}
                       >
                       </TouchableOpacity>
@@ -126,11 +127,13 @@ const AddNote = ({navigation, ...props}) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                if (noteTitle === ""){
+                if (!note.title){
                   Alert.alert("Please Add a title to the note")
+                  return
                 }
-                if (noteColor === ""){
+                if (!note.color){
                   Alert.alert("Please select a color for the note")
+                  return
                 }
                 else{
                   props.handleNote()

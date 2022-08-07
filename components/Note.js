@@ -41,8 +41,8 @@ const Note = ({route, navigation, ...props}) => {
         body: archivedNote[0].body,
         color: archivedNote[0].color,
         date: archivedNote[0].date,
-        img: archivedNote[0].img,
-        camImg: archivedNote[0].camImg,
+        image: archivedNote[0].image,
+        cameraImage: archivedNote[0].cameraImage,
         audios: archivedNote[0].audios,
         location: archivedNote[0].location
       },
@@ -67,7 +67,7 @@ const Note = ({route, navigation, ...props}) => {
 
   const images = [{
     // Simplest usage.
-    url: n.img,
+    url: n.image,
 
     // width: number
     // height: number
@@ -80,7 +80,7 @@ const Note = ({route, navigation, ...props}) => {
   }]
 
   const camImages =[{
-    url: n.camImg
+    url: n.cameraImage
   }]
 
   if (!fontsLoaded) {
@@ -92,17 +92,17 @@ const Note = ({route, navigation, ...props}) => {
       <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
         <ScrollView  showsVerticalScrollIndicator ={false}>
           <Text style={stylesNote.noteTitle}>{n.title}</Text>
-          <Text style={stylesNote.noteDate}>{n.date}</Text>
+          <Text style={stylesNote.noteDate}>Created: {n.date}</Text>
           <Text style={stylesNote.noteBody}>{n.body}</Text>
 
           <View style={{ flexDirection: "row"}}>
             {
               /* Img from Camera roll */
-              n.img ?
+              n.image ?
               <View>
                 <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
                   <Image
-                    source={{ uri: n.img }}
+                    source={{ uri: n.image }}
                     style={stylesNote.thumbnail}
                   />
                 </TouchableOpacity>
@@ -122,11 +122,11 @@ const Note = ({route, navigation, ...props}) => {
 
             {
               /* Img from Camera */
-              n.camImg ?
+              n.cameraImage ?
               <View>
                 <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
                   <Image
-                    source={{ uri: n.camImg }}
+                    source={{ uri: n.cameraImage }}
                     style={stylesNote.thumbnail}
                   />
                 </TouchableOpacity>

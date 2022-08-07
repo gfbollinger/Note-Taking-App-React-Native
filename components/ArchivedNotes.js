@@ -13,7 +13,7 @@ const ArchivedNotes = ({...props}) => {
   const {notes} = useContext(NoteContext)
   const {setNotes} = useContext(NoteContext)
 
-  console.log(props.archived)
+  /* console.log(props.archived) */
 
   function emptyBin() {
     Alert.alert(
@@ -50,7 +50,7 @@ const ArchivedNotes = ({...props}) => {
     archivedNotes.forEach( (item, index) => {
       notes2.push(item)
     })
-    console.log(notes2)
+    /* console.log(notes2) */
     props.setArchived([])
     setNotes(notes2)
 

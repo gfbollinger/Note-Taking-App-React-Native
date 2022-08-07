@@ -25,7 +25,7 @@ export default function Main() {
   const [notesFiltered, setNotesFiltered] = useState([])
 
   /* From context */
-  const {notes, setNotes, noteTitle, setNoteTitle, noteBody, setNoteBody, noteColor, setNoteColor, selectedImage, setSelectedImage, cameraImage, setCameraImage, noteDate, setNoteDate} = useContext(NoteContext)
+  const { note, setNote, notes, setNotes } = useContext(NoteContext)
 
   const menuOptions = {
     headerTitleStyle: {
@@ -44,27 +44,22 @@ export default function Main() {
     let selectedCameraImgUri = ""
 
     /* Check if there is an img */
-    if (selectedImage != null && selectedImage != "") {
-      selectedImgUri = selectedImage.localUri
+    if (note.image) {
+      selectedImgUri = note.image.localUri
     }
 
     /* Check if there an img from camera */
-    if (cameraImage != null && cameraImage != "") {
-      selectedCameraImgUri = cameraImage.localUri
+    if (note.cameraImage) {
+      selectedCameraImgUri = note.cameraImage.localUri
     }
 
-    let newNotes = [{ title: noteTitle, body: noteBody, date: noteDate, color: noteColor, img: selectedImgUri, camImg: selectedCameraImgUri, audios: recordings, location: location, myAddress: myAddress }, ...notes]
+    let newNotes = [{ title: note.title, body: note.body, date: note.date, color: note.color, image: selectedImgUri, cameraImage: selectedCameraImgUri, audios: recordings, location: location, myAddress: myAddress }, ...notes]
     setNotes(newNotes)
-    setNotesFiltered(newNotes)
-    setNoteTitle('')
-    setNoteBody('')
-    setNoteColor('')
-    setSelectedImage(null)
-    setCameraImage(null)
-    setRecordings([])
+    setNote({title: '', body: '', color:'', date:'', image: '', cameraImage:''})
+    /* setNotesFiltered(newNotes) */
     setLocation()
     setMyAddress()
-    setNoteDate()
+    /* setNoteDate() */
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {
