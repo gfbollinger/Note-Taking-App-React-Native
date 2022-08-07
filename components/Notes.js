@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Text, StyleSheet, View, TouchableOpacity, ScrollView, Alert, Keyboard } from "react-native"
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView, TextInput } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,20 +11,10 @@ const Notes = ({navigation, ...props}) => {
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   const {notes} = useContext(NoteContext)
-  const [searchNote, setSearchNote] = useState("")
-
-  let notesFilteredNewArr = []
+  const [searchQuery, setSearchQuery] = useState("")
 
   function handleSearch(inputText) {
-    /* console.log(notes) */
-    /* Keyboard.dismiss */
-    setSearchNote(inputText)
-    notesFilteredNewArr = notes.filter( p => 
-        /* console.log(p.title) */
-        p.title.toLowerCase().includes(inputText)
-    )
-    /* console.log(notesFilteredNewArr) */
-    props.setNotesFiltered(notesFilteredNewArr)
+    setSearchQuery(inputText)
   }
 
   if (!fontsLoaded) {
@@ -36,22 +26,16 @@ const Notes = ({navigation, ...props}) => {
 
 
       {/* Search */}
-      {/* <View style={styles.searchContainer}> */}
-
-        {/* <TextInput 
-          placeholder="Search"
+      <View style={styles.searchContainer}>
+        <TextInput 
+          placeholder="Search Note"
           placeholderTextColor={Style.color}
-          style={styles.searchInput}
-          value={searchNote}
+          style={[styles.searchInput, { fontFamily: 'Poppins_400Regular' }]}
+          value={searchQuery}
           onChangeText={ (text) => handleSearch(text) }
-        /> */}
-
-
-        {/* <TouchableOpacity style={styles.clearBtn} onPress={ () => props.archiveAllNotes() }>
-          <Text style={{color:"#fff"}}>Archive all</Text>
-        </TouchableOpacity> */}
-
-      {/* </View> */}
+        />
+        
+      </View>
 
 
       {/* Notes */}
@@ -63,7 +47,13 @@ const Notes = ({navigation, ...props}) => {
               <Text>There are no notes yet.</Text>
             </View>
             :
-            notes.map( (item, index) =>
+            notes.filter(noteItem => {
+              if (searchQuery === ''){
+                return noteItem
+              } else if (noteItem.title.toLowerCase().includes(searchQuery.toLowerCase())){
+                return noteItem
+              }
+            }).map( (item, index) =>
 
               <TouchableOpacity
                 key={index}
@@ -155,11 +145,11 @@ export const styles = StyleSheet.create({
   },
   searchInput: {
     padding: 5,
-    borderWidth: 2,
+    borderBottomWidth: 2,
     borderColor: Style.color,
-    borderRadius: 8,
     fontSize: 16,
-    width: 200
+    width: '100%',
+    marginBottom: 15
   },
   searchBtn: {
     backgroundColor: Style.color,

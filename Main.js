@@ -22,7 +22,6 @@ export default function Main() {
   const [location, setLocation] = useState();
   const [myAddress, setMyAddress] = useState([{}]);
   const [archived, setArchived] = useState([])
-  const [notesFiltered, setNotesFiltered] = useState([])
 
   /* From context */
   const { note, setNote, notes, setNotes } = useContext(NoteContext)
@@ -56,10 +55,8 @@ export default function Main() {
     let newNotes = [{ title: note.title, body: note.body, date: note.date, color: note.color, image: selectedImgUri, cameraImage: selectedCameraImgUri, audios: recordings, location: location, myAddress: myAddress }, ...notes]
     setNotes(newNotes)
     setNote({title: '', body: '', color:'', date:'', image: '', cameraImage:''})
-    /* setNotesFiltered(newNotes) */
     setLocation()
     setMyAddress()
-    /* setNoteDate() */
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {
@@ -101,8 +98,6 @@ export default function Main() {
       .then ( data => {
         if( data != null){
           setNotes(JSON.parse(data))
-          /* Initial notes filtered same as notes */
-          /* setNotesFiltered(JSON.parse(data)) */
         }
       }).catch( (error) => console.log(error))
 
@@ -139,8 +134,6 @@ export default function Main() {
             { props => <Notes {...props}
               archived={archived}
               setArchived={setArchived}
-              /* notesFiltered={notesFiltered}
-              setNotesFiltered={setNotesFiltered} */
               archiveAllNotes={archiveAllNotes}
             /> }
           </Stack.Screen>
