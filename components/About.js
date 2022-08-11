@@ -1,13 +1,14 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
+import Loading from "./UI/Loading";
 
 const About = () => {
 
   let [fontsLoaded] = useFonts({ Poppins_400Regular  });
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   return (

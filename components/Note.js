@@ -4,12 +4,14 @@ import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '@ui-kitten/components';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 import AudioPlayer from "./AudioPlayer";
 import LocationPlace from "./LocationPlace";
 
 import NoteContext from "../context/NoteContext";
+import Loading from "./UI/Loading";
+import { styles } from "./Notes";
 
 const Note = ({route, navigation, ...props}) => {
 
@@ -23,6 +25,7 @@ const Note = ({route, navigation, ...props}) => {
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
+    Poppins_600SemiBold,
     Poppins_700Bold
   });
 
@@ -84,7 +87,7 @@ const Note = ({route, navigation, ...props}) => {
   }]
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   return (
@@ -94,6 +97,10 @@ const Note = ({route, navigation, ...props}) => {
           <Text style={stylesNote.noteTitle}>{n.title}</Text>
           <Text style={stylesNote.noteDate}>Created: {n.date}</Text>
           <Text style={stylesNote.noteBody}>{n.body}</Text>
+
+          {
+            n.img || n.cameraImage ? <Text style={stylesNote.imagesTitle}>Attached images:</Text> : <></>
+          }
 
           <View style={{ flexDirection: "row"}}>
             {
@@ -185,19 +192,22 @@ const stylesNote = StyleSheet.create({
   noteContainer: {
     padding: 15,
     height: "100%",
-    position: "relative"
+    position: "relative",
+    backgroundColor: "#fff"
   },
   noteWrapper : {
-    padding: 35,
-    borderRadius: 12,
+    paddingVertical: 35,
+    paddingHorizontal: 25,
+    borderRadius: Style.borderRadius,
     minHeight: "90%",
-    position: "relative"
+    position: "relative",
+    ...Style.shadow
   },
   noteTitle: {
     fontSize: 25,
     lineHeight: 30,
     marginBottom: 5,
-    fontFamily: "Poppins_700Bold"
+    fontFamily: "Poppins_600SemiBold"
   },
   noteDate: {
     fontSize: 14,
@@ -211,12 +221,14 @@ const stylesNote = StyleSheet.create({
     fontFamily: "Poppins_400Regular"
   },
   buttonEdit: {
-    backgroundColor: Style.color,
+    backgroundColor: "#111",
     padding: 10,
     borderRadius: 50,
     position: "absolute",
     bottom: 20,
-    right: 20
+    right: 20,
+    zIndex: 10,
+    ...Style.shadow
   },
   buttonArchive: {
     backgroundColor: Style.color,
@@ -224,16 +236,27 @@ const stylesNote = StyleSheet.create({
     borderRadius: 50,
     position: "absolute",
     bottom: 20,
-    left: 20
+    left: 20,
+    ...Style.shadow
+  },
+  imagesTitle: {
+    fontSize: 14,
+    marginBottom: 5,
+    fontFamily: "Poppins_400Regular",
+    borderTopWidth: 1,
+    borderTopColor: "#999",
+    borderStyle: "dotted",
+    paddingTop: 12
   },
   thumbnail: {
-    width: 140,
-    height: 140,
+    width: 80,
+    height: 80,
     resizeMode: "contain",
     marginBottom: 20,
     marginRight: 10,
-    borderWidth: 7,
-    borderColor: "white"
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: Style.borderRadius
   }
 })
 

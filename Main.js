@@ -12,6 +12,7 @@ import NoteContext, { NoteProvider } from "./context/NoteContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Notes from './components/Notes';
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import Loading from "./components/UI/Loading";
 
 
 const Stack = createStackNavigator();
@@ -25,20 +26,9 @@ export default function Main() {
 
   /* From context */
   const { note, setNote, notes, setNotes } = useContext(NoteContext)
-
-  const menuOptions = {
-    headerTitleStyle: {
-      fontFamily: "Poppins_700Bold",
-      color: "#8F9BB3",
-      fontSize: 21,
-    },
-    headerTintColor: "#8F9BB3"
-  }
-
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   function handleNote() {
-
     let selectedImgUri = ""
     let selectedCameraImgUri = ""
 
@@ -112,13 +102,23 @@ export default function Main() {
   }
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+            headerTitleStyle: {
+              fontFamily: "Poppins_700Bold",
+              color: "#111",
+              fontSize: 23,
+              marginLeft: -15,
+              marginTop: 2
+            },
+            headerTintColor: "#111"
+          }
+        }>
 
           <Stack.Screen name="Notes"
             options={
@@ -126,8 +126,13 @@ export default function Main() {
                 headerRight: () => (
                   <MenuNavigation navigation={navigation} archiveAllNotes={archiveAllNotes} />
                 ), 
-                title: "My Notes",
-                ...menuOptions
+                title: "Notes",
+                headerTitleStyle: {
+                  fontFamily: "Poppins_700Bold",
+                  color: "#111",
+                  fontSize: 26,
+                  paddingTop: 16
+                },
               })
             }
           >
@@ -141,7 +146,6 @@ export default function Main() {
           <Stack.Screen name="Note"
             options={{
               title: 'Note',
-              ...menuOptions
             }}
           >
             { props => <Note {...props}
@@ -157,7 +161,6 @@ export default function Main() {
             name="AddNote"
             options={{
               title: 'Add New Note',
-              ...menuOptions
             }}
           >
             {props => <AddNote {...props}
@@ -175,7 +178,6 @@ export default function Main() {
             name="ArchivedNotes"
             options={{
               title: 'Archived Notes',
-              ...menuOptions
             }}>
             {props => <ArchivedNotes {...props} archived={archived} setArchived={setArchived} />}
           </Stack.Screen>
@@ -184,7 +186,6 @@ export default function Main() {
             name="EditNote"
             options={{
               title: 'Edit Note',
-              ...menuOptions
             }}
           >
             {props => <EditNote {...props} />}
@@ -194,7 +195,6 @@ export default function Main() {
             name="About"
             options={{
               title: 'About Page',
-              ...menuOptions
             }}
           >
             {props => <About {...props} />}
@@ -205,12 +205,3 @@ export default function Main() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-});

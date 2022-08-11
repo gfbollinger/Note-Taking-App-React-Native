@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Text, View, StyleSheet } from 'react-native'
 import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import Loading from "./UI/Loading";
 
 
 const LocationPlace = (props) => {
@@ -11,7 +12,7 @@ const LocationPlace = (props) => {
   });
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   if (props.myAddress !== undefined) {

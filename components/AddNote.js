@@ -1,15 +1,16 @@
 import React, { useState, useContext, useEffect } from "react"
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, TextInput, TouchableOpacity, Text, Alert } from "react-native"
+import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Text, Alert } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
-import ImagePickerComp from "./ImagePicker";
+import ImagePicker from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import AudioRecorder from "./AudioRecorder";
 import GetLocation from "./GetLocation"
 import NoteContext from "../context/NoteContext";
 import ImagePicked from "./ImagePicked";
 import CameraImagePicked from "./CameraImagePicked";
-import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import Loading from "./UI/Loading";
 
 const AddNote = ({navigation, ...props}) => {
   
@@ -20,11 +21,12 @@ const AddNote = ({navigation, ...props}) => {
   const [showAudioRecorder, setShowAudioRecorder] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
 
-  const notesColors = ["#FFF495", "#FFDBA6", "#AEFFF5", "#FFB7F8"]
+  const notesColors = ["#FFCE3A", "#FFA348", "#EF785E", "#7ECCFF", "#1ECDC4", "#BB8EFF"]
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
+    Poppins_600SemiBold,
     Poppins_700Bold
   });
 
@@ -49,13 +51,12 @@ const AddNote = ({navigation, ...props}) => {
   }, [])
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   return (
     <>
       <ScrollView>
-        <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
           <View style={{padding: 20, justifyContent: "space-around"}}>
 
             <TextInput
@@ -92,7 +93,8 @@ const AddNote = ({navigation, ...props}) => {
             </View>
 
             <View style={styles.addMediaContainer}>
-              <ImagePickerComp />
+              <Text style={styles.attachTitle}>Attach:</Text>
+              <ImagePicker />
               <CameraImagePicker />
 
               {/* <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
@@ -146,7 +148,6 @@ const AddNote = ({navigation, ...props}) => {
             </TouchableOpacity>
 
           </View>
-        </TouchableWithoutFeedback>
       </ScrollView>
     </>
   )
@@ -159,9 +160,9 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
     borderBottomWidth: 2,
     borderBottomColor: Style.color,
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 20,
-    fontFamily: "Poppins_400Regular"
+    fontFamily: "Poppins_600SemiBold"
   },
   textInput: {
     height: 200,
@@ -170,18 +171,20 @@ export const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular"
   },
   button: {
-    backgroundColor: Style.color,
+    backgroundColor: "#02B283",
     padding: 10,
     borderRadius: 8,
     color: "#fff",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
+    backgroundColor: Style.greyDarkercolor,
+    ...Style.shadow
   },
   buttoAddNote:  {
     color: "#fff",
     fontFamily: "Poppins_400Regular",
-    fontSize: 17
+    fontSize: 17,
   },
   emptyButton: {
     backgroundColor: Style.color,
@@ -199,8 +202,9 @@ export const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginRight: 5,
-    borderRadius: 50,
-    borderColor: Style.color
+    borderRadius: Style.borderRadius,
+    borderColor: Style.greyDarkcolor,
+    ...Style.shadow
   },
   colorSelected: {
     borderWidth: 3,
@@ -211,7 +215,8 @@ export const styles = StyleSheet.create({
   addMediaContainer: {
     flexDirection: "row",
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 30,
+    alignItems: "center",
   },
   colorPickerContainer: {
     flexDirection: "row",
@@ -220,6 +225,10 @@ export const styles = StyleSheet.create({
     marginBottom: 0
   },
   colorPickerTitle: {
+    marginRight: 10,
+    fontFamily: "Poppins_400Regular"
+  },
+  attachTitle: {
     marginRight: 10,
     fontFamily: "Poppins_400Regular"
   },

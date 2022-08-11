@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import NoteContext from "../context/NoteContext";
 import { Icon } from '@ui-kitten/components';
+import * as Style from "./../assets/styles"
 
 const CameraImagePicker = ({...props}) =>{
 
@@ -75,7 +76,7 @@ const CameraImagePicker = ({...props}) =>{
       </Text> */}
 
       <TouchableOpacity onPress={openCameraImagePickerAsync} style={styles.buttonIcon}>
-        <Icon name="camera-outline" fill="white" style={{width: 30, height: 30 }} />
+        <Icon name="camera-outline" fill="white" style={{width: 36, height: 36 }} />
       </TouchableOpacity>
 
     </View>
@@ -110,9 +111,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonIcon: {
-    padding: 10,
-    borderRadius: 50,
-    backgroundColor: "#8F9BB3",
-    marginLeft: 5
+    padding: 8,
+    borderRadius: Style.borderRadius,
+    backgroundColor: Style.color,
+    marginLeft: 8,
+    ...Style.shadow,
   }
 })

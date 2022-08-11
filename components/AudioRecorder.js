@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, Text, View, StatusBar } from 'react-nativ
 import { Audio } from 'expo-av';
 import AudioRecordingsPlayer from "./AudioRecordingsPlayer"
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
+import Loading from "./UI/Loading";
 
 export default function AudioRecorder({...props}) {
 
@@ -77,7 +78,7 @@ export default function AudioRecorder({...props}) {
   let [fontsLoaded] = useFonts({ Poppins_400Regular  });
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   return (

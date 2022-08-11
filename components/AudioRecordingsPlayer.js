@@ -4,6 +4,7 @@ import { Icon } from '@ui-kitten/components';
 import { Audio } from 'expo-av';
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
+import Loading from "./UI/Loading";
 
 
 const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
@@ -46,7 +47,7 @@ const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
   let [fontsLoaded] = useFonts({ Poppins_400Regular });
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   if (noteIndex) {

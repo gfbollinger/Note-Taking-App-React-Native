@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@ui-kitten/components';
 import NoteContext from "../context/NoteContext";
 import * as ImagePicker from 'expo-image-picker';
+import * as Style from "./../assets/styles"
 
 export default function ImagePickerComp({...props}) {
 
@@ -54,7 +55,7 @@ export default function ImagePickerComp({...props}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={openImagePickerAsync} style={styles.buttonIcon}>
-        <Icon name="image-outline" fill="white" style={{width: 30, height: 30 }} />
+        <Icon name="image-outline" fill="#fff" style={{width: 36, height: 36 }} />
       </TouchableOpacity>
     </View>
   );
@@ -79,8 +80,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonIcon: {
-    padding: 10,
-    borderRadius: 50,
-    backgroundColor: "#8F9BB3",
+    padding: 8,
+    borderRadius: Style.borderRadius,
+    backgroundColor: Style.color,
+    ...Style.shadow,
   }
 })

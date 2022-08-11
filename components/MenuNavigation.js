@@ -1,6 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Layout, MenuItem, OverflowMenu, Icon } from '@ui-kitten/components';
+import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
+import Loading from './UI/Loading';
+import AvatarImg from '../assets/img/avatar.png'
 
 const MenuIcon = (props) => (
   <Icon {...props} name='menu-outline'/>
@@ -10,6 +13,10 @@ const MenuNavigation = ({navigation, archiveAllNotes}) => {
 
   const [visible, setVisible] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(null);
+
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+  });
 
   const onItemSelect = (index) => {
     setSelectedIndex(index);
@@ -34,15 +41,20 @@ const MenuNavigation = ({navigation, archiveAllNotes}) => {
 
   const renderToggleButton = () => (
     <View style={styles.buttonContainer}>
+      <Image source={AvatarImg} style={styles.avatar}></Image>
       <TouchableOpacity
         onPress={() => setVisible(true)}
         style={styles.menuButton}
         /* title="MENU" */
       >
-        <Icon name="more-vertical-outline" fill="#8F9BB3" style={{width: 25, height: 25 }} />
+        <Icon name="more-vertical-outline" fill="#111" style={{width: 27, height: 27 }} />
       </TouchableOpacity>
     </View>
   );
+
+  if (!fontsLoaded) {
+    return <Loading />
+  }
 
   return (
     <Layout style={styles.OverflowMenuContainer} level='1'>
@@ -78,7 +90,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   buttonContainer:{
-    paddingRight: 20
+    paddingRight: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    marginRight: 5,
   },
   menuButton: {}
 });

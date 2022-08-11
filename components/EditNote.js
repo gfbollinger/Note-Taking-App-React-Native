@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, TextInput, TouchableOpacity, Text  } from "react-native"
+import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Text  } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePicker from "./ImagePicker";
@@ -7,7 +7,8 @@ import CameraImagePicker from "./CameraImagePicker";
 import ImagePicked from "./ImagePicked";
 import CameraImagePicked from "./CameraImagePicked";
 import NoteContext from "../context/NoteContext";
-import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import Loading from "./UI/Loading";
 
 const EditNote = ({route, navigation, ...props}) => {
 
@@ -19,7 +20,7 @@ const EditNote = ({route, navigation, ...props}) => {
   const [newEditImg, setNewEditImg] = useState(n.image)
   const [newEditCameraImg, setNewEditCameraImg] = useState(n.cameraImage)
 
-  const notesColors = ["#FFF495", "#FFDBA6", "#AEFFF5", "#FFB7F8"]
+  const notesColors = ["#FFCE3A", "#FFA348", "#EF785E", "#7ECCFF", "#1ECDC4", "#BB8EFF"]
 
   let editedNote = [...notes]
   let thisNoteImg = editedNote[i].image
@@ -50,14 +51,12 @@ const EditNote = ({route, navigation, ...props}) => {
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   if (!fontsLoaded) {
-    return <Text>Loading</Text>
+    return <Loading />
   }
 
   return(
     <>
       <ScrollView>
-
-          <TouchableWithoutFeedback /* onPress={Keyboard.dismiss} */>
 
             <View style={{padding: 20, justifyContent: "space-around"}}>
 
@@ -95,6 +94,7 @@ const EditNote = ({route, navigation, ...props}) => {
 
 
               <View style={styles.addMediaContainer}>
+                <Text style={styles.attachTitle}>Attach:</Text>
 
                 <ImagePicker
                   setNewEdit={setNewEdit}
@@ -145,9 +145,6 @@ const EditNote = ({route, navigation, ...props}) => {
               </TouchableOpacity>
 
             </View>
-
-          </TouchableWithoutFeedback>
-
       </ScrollView>
     </>
   )
@@ -159,9 +156,9 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
     borderBottomWidth: 2,
     borderBottomColor: Style.color,
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 20,
-    fontFamily: "Poppins_400Regular"
+    fontFamily: "Poppins_600SemiBold"
   },
   textInput: {
     height: 200,
@@ -174,7 +171,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular"
   },
   button: {
-    backgroundColor: Style.color,
+    backgroundColor: "#02B283",
     padding: 10,
     borderRadius: 8,
     color: "#fff",
@@ -214,12 +211,16 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     fontFamily: "Poppins_400Regular"
   },
+  attachTitle: {
+    marginRight: 10,
+    fontFamily: "Poppins_400Regular"
+  },
   buttonColor: {
     height: 40,
     width: 40,
     marginRight: 5,
-    borderRadius: 50,
-    borderColor: Style.color
+    borderRadius: Style.borderRadius,
+    borderColor: Style.greyDarkcolor
   },
   colorSelected: {
     borderWidth: 3,
@@ -229,8 +230,9 @@ export const styles = StyleSheet.create({
   },
   addMediaContainer: {
     flexDirection: "row",
+    alignItems: "center",
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 30
   },
 })
 
