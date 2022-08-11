@@ -75,7 +75,7 @@ const CameraImagePicker = ({...props}) =>{
         Press the button below to take a picture!
       </Text> */}
 
-      <TouchableOpacity onPress={openCameraImagePickerAsync} style={styles.buttonIcon}>
+      <TouchableOpacity onPress={openCameraImagePickerAsync} style={Style.buttonIcon}>
         <Icon name="camera-outline" fill="white" style={{width: 36, height: 36 }} />
       </TouchableOpacity>
 
@@ -110,11 +110,11 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginBottom: 10,
   },
-  buttonIcon: {
+  /* buttonIcon: {
     padding: 8,
     borderRadius: Style.borderRadius,
     backgroundColor: Style.color,
     marginLeft: 8,
     ...Style.shadow,
-  }
+  } */
 })

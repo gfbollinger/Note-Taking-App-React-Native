@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react"
 import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Text  } from "react-native"
 import * as Style from "./../assets/styles"
+import { Icon } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePicker from "./ImagePicker";
 import CameraImagePicker from "./CameraImagePicker";
 import ImagePicked from "./ImagePicked";
 import CameraImagePicked from "./CameraImagePicked";
+import GetLocation from "./GetLocation";
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
@@ -19,6 +21,7 @@ const EditNote = ({route, navigation, ...props}) => {
   const [newEdit, setNewEdit]  = useState(n)
   const [newEditImg, setNewEditImg] = useState(n.image)
   const [newEditCameraImg, setNewEditCameraImg] = useState(n.cameraImage)
+  const [showLocation, setShowLocation] = useState(false)
 
   const notesColors = ["#FFCE3A", "#FFA348", "#EF785E", "#7ECCFF", "#1ECDC4", "#BB8EFF"]
 
@@ -35,7 +38,8 @@ const EditNote = ({route, navigation, ...props}) => {
     editedNote[i].image = newEditImg
     editedNote[i].cameraImage = newEditCameraImg
     editedNote[i].audios = newEdit.audios
-    editedNote[i].myAddress = newEdit.myAddress
+    editedNote[i].location = newEdit.location
+    editedNote[i].address = newEdit.address
 
     setNotes(editedNote)
     navigation.navigate('Notes')
@@ -55,7 +59,7 @@ const EditNote = ({route, navigation, ...props}) => {
   }
 
   return(
-    <>
+    <View style={styles.container}>
       <ScrollView>
 
             <View style={{padding: 20, justifyContent: "space-around"}}>
@@ -112,6 +116,10 @@ const EditNote = ({route, navigation, ...props}) => {
                   setNewEditCameraImg={setNewEditCameraImg}
                 />
 
+              <TouchableOpacity onPress={ () => setShowLocation(!showLocation)} style={Style.buttonIcon}>
+                <Icon name="navigation-2-outline" fill="white" style={{width: 36, height: 36 }} />
+              </TouchableOpacity>
+
               </View>
 
               <ImagePicked
@@ -125,6 +133,10 @@ const EditNote = ({route, navigation, ...props}) => {
                 newEditCameraImg={newEditCameraImg}
                 setNewEditCameraImg={setNewEditCameraImg}
               />
+
+              { showLocation &&
+                <GetLocation />
+              }
 
               {/* TODO: Add button to remove audios if it has, setting setRecordings to empty array */}
 
@@ -146,11 +158,14 @@ const EditNote = ({route, navigation, ...props}) => {
 
             </View>
       </ScrollView>
-    </>
+    </View>
   )
 }
 
 export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff"
+  },
   textInputTitle: {
     height: 46,
     paddingLeft: 10,
@@ -171,7 +186,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular"
   },
   button: {
-    backgroundColor: "#02B283",
+    backgroundColor: Style.greyDarkercolor,
     padding: 10,
     borderRadius: 8,
     color: "#fff",

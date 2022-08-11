@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react"
 import { Text, View, StyleSheet } from 'react-native'
 import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
-
+import * as Style from "./../assets/styles"
+import { Icon } from '@ui-kitten/components';
 
 const LocationPlace = (props) => {
 
-  let [fontsLoaded] = useFonts({    
+  let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold
   });
@@ -18,7 +19,10 @@ const LocationPlace = (props) => {
   if (props.myAddress !== undefined) {
     return (
       <View style={{ }}>
-        <Text style={styles.preparagraph}>{props.text}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Icon name="navigation-2-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+          <Text style={styles.preparagraph}>{props.text}</Text>
+        </View>
         <Text style={styles.paragraph}>{props.myAddress[0].city}, {props.myAddress[0].region}. {props.myAddress[0].country}.</Text>
       </View>
     )
@@ -38,7 +42,7 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 16,
     textAlign: 'left',
-    marginBottom: 10,
+    /* marginBottom: 10, */
     fontFamily: 'Poppins_400Regular'
   },
 });

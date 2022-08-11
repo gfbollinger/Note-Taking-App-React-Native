@@ -47,7 +47,8 @@ const Note = ({route, navigation, ...props}) => {
         image: archivedNote[0].image,
         cameraImage: archivedNote[0].cameraImage,
         audios: archivedNote[0].audios,
-        location: archivedNote[0].location
+        location: archivedNote[0].location,
+        address: archivedNote[0].address
       },
       ...props.archived
     ]
@@ -90,66 +91,74 @@ const Note = ({route, navigation, ...props}) => {
     return <Loading />
   }
 
+  console.log(n)
+
   return (
     <View style={stylesNote.noteContainer}>
       <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
         <ScrollView  showsVerticalScrollIndicator ={false}>
           <Text style={stylesNote.noteTitle}>{n.title}</Text>
           <Text style={stylesNote.noteDate}>Created: {n.date}</Text>
-          <Text style={stylesNote.noteBody}>{n.body}</Text>
-
-          {
-            n.img || n.cameraImage ? <Text style={stylesNote.imagesTitle}>Attached images:</Text> : <></>
+          { n.body ?
+            <Text style={stylesNote.noteBody}>{n.body}</Text>
+            : <></>
           }
-
-          <View style={{ flexDirection: "row"}}>
-            {
-              /* Img from Camera roll */
-              n.image ?
-              <View>
-                <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
-                  <Image
-                    source={{ uri: n.image }}
-                    style={stylesNote.thumbnail}
-                  />
-                </TouchableOpacity>
-                <Modal
-                  animationType = {"fade"}
-                  transparent = {false}
-                  visible = {isModalVisible}
-                  onRequestClose = {() =>{ console.log("Modal has been closed.") } }
-                >
-                  <ImageViewer imageUrls={images}/>
-                  <Button title="Close" onPress = {() => setIsModalVisible(false)} />
-                </Modal>
+          { n.image || n.cameraImage ?
+            <View style={stylesNote.containerLighter}>
+              <View style={{ flexDirection: "row" }}>
+                <Icon name="image-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+                <Text style={stylesNote.imagesTitle}>Attached images:</Text>
               </View>
-              : <></>
-            }
 
-
-            {
-              /* Img from Camera */
-              n.cameraImage ?
-              <View>
-                <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
-                  <Image
-                    source={{ uri: n.cameraImage }}
-                    style={stylesNote.thumbnail}
-                  />
-                </TouchableOpacity>
-                <Modal
-                  animationType = {"fade"}
-                  transparent = {false}
-                  visible = {isModalCamVisible}
-                  onRequestClose = {() =>{ console.log("Modal has been closed.") } }
-                >
-                  <ImageViewer imageUrls={camImages}/>
-                  <Button title="Close" onPress = {() => setIsModalCamVisible(false)} />
-                </Modal>
+              <View style={{ flexDirection: "row"}}>
+                {
+                  /* Img from Camera roll */
+                  n.image ?
+                  <View>
+                    <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
+                      <Image
+                        source={{ uri: n.image }}
+                        style={stylesNote.thumbnail}
+                      />
+                    </TouchableOpacity>
+                    <Modal
+                      animationType = {"fade"}
+                      transparent = {false}
+                      visible = {isModalVisible}
+                      onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+                    >
+                      <ImageViewer imageUrls={images}/>
+                      <Button title="Close" onPress = {() => setIsModalVisible(false)} />
+                    </Modal>
+                  </View>
+                  : <></>
+                }
+                {
+                  /* Img from Camera */
+                  n.cameraImage ?
+                  <View>
+                    <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
+                      <Image
+                        source={{ uri: n.cameraImage }}
+                        style={stylesNote.thumbnail}
+                      />
+                    </TouchableOpacity>
+                    <Modal
+                      animationType = {"fade"}
+                      transparent = {false}
+                      visible = {isModalCamVisible}
+                      onRequestClose = {() =>{ console.log("Modal has been closed.") } }
+                    >
+                      <ImageViewer imageUrls={camImages}/>
+                      <Button title="Close" onPress = {() => setIsModalCamVisible(false)} />
+                    </Modal>
+                  </View>
+                  : <></>
+                }
               </View>
-              : <></>
-            }
-          </View>
+            </View>
+            : <></>
+          }
 
           {/* Audios */}
           {/* {
@@ -160,11 +169,11 @@ const Note = ({route, navigation, ...props}) => {
 
           {
             /* Location */
-            /* n.myAddress ?
-            <View style={{ paddingTop: 30 }}>
-              <LocationPlace myAddress={n.myAddress} text="Note written in:" />
+            n.address ?
+            <View style={[stylesNote.containerLighter, {marginTop: 8}]}>
+                <LocationPlace myAddress={n.address} text="Note written in:" />
             </View>
-            : <></> */
+            : <></>
           }
           </ScrollView>
 
@@ -197,7 +206,7 @@ const stylesNote = StyleSheet.create({
   },
   noteWrapper : {
     paddingVertical: 35,
-    paddingHorizontal: 25,
+    paddingHorizontal: 30,
     borderRadius: Style.borderRadius,
     minHeight: "90%",
     position: "relative",
@@ -210,14 +219,13 @@ const stylesNote = StyleSheet.create({
     fontFamily: "Poppins_600SemiBold"
   },
   noteDate: {
-    fontSize: 14,
-    lineHeight: 30,
+    fontSize: 13,
     marginBottom: 15,
     fontFamily: "Poppins_300Light"
   },
   noteBody: {
     fontSize: 17,
-    marginBottom: 40,
+    marginBottom: 20,
     fontFamily: "Poppins_400Regular"
   },
   buttonEdit: {
@@ -243,16 +251,23 @@ const stylesNote = StyleSheet.create({
     fontSize: 14,
     marginBottom: 5,
     fontFamily: "Poppins_400Regular",
-    borderTopWidth: 1,
+    /* borderTopWidth: 1,
     borderTopColor: "#999",
     borderStyle: "dotted",
-    paddingTop: 12
+    paddingTop: 12 */
+  },
+  containerLighter: {
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 15,
+    borderRadius: Style.borderRadius,
   },
   thumbnail: {
     width: 80,
     height: 80,
     resizeMode: "contain",
-    marginBottom: 20,
+    /* marginBottom: 20, */
     marginRight: 10,
     borderWidth: 2,
     borderColor: "white",

@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import Device from 'expo-device';
+import NoteContext from "../context/NoteContext";
 import * as Location from 'expo-location';
 import LocationPlace from "./LocationPlace"
 import MapViewer from "./MapViewer"
 
-export default function GetLocation({...props}) {  
+export default function GetLocation() {
   const [errorMsg, setErrorMsg] = useState("Loading Location...");
+
+  const { note, setNote } = useContext(NoteContext)
 
   useEffect(() => {
     (async () => {
@@ -23,31 +26,26 @@ export default function GetLocation({...props}) {
       }
 
       let currLocation = await Location.getCurrentPositionAsync({});
-      let address = await Location.reverseGeocodeAsync(currLocation.coords)
-      props.setLocation(currLocation)
-      props.setMyAddress(address)
-      console.log(props.location)
+      let currAddress = await Location.reverseGeocodeAsync(currLocation.coords)
+      setNote({ ...note, location: currLocation, address: currAddress })
+      /* console.log(note) */
     })();
   }, []);
 
 
-  if (props.location !== undefined) {
+  if (note.location) {
     return (
       <View style={styles.container}>
-        { props.location ?
         <View>
-          <LocationPlace myAddress={props.myAddress} text="Your location is:"  />
-          <MapViewer location={props.location} />
+          <LocationPlace myAddress={note.address} text="Your location is:"  />
+          <MapViewer location={note.location} />
         </View>
-        : <Text>{errorMsg}</Text>
-        }
       </View>
-
     );
   }
 
   return (
-    <></>
+    <Text>{errorMsg}</Text>
   )
 }
 
@@ -57,6 +55,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20, */
+    marginBottom: 20
   },
   paragraph: {
     /* fontSize: 18,

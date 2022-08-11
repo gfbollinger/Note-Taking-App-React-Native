@@ -17,7 +17,7 @@ export default function MapViewer({ ...props }) {
   return (
     <View style={styles.container}>
       { props.location &&
-      <MapView 
+      <MapView
         style={styles.map}
         initialRegion={{
           latitude: props.location.coords.latitude,
@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get('window').width,
-    height: 100,
+    height: 125,
   },
 });

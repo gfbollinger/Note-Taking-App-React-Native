@@ -55,7 +55,7 @@ const AddNote = ({navigation, ...props}) => {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       <ScrollView>
           <View style={{padding: 20, justifyContent: "space-around"}}>
 
@@ -100,10 +100,11 @@ const AddNote = ({navigation, ...props}) => {
               {/* <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
                 <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
               </TouchableOpacity>
+              */}
 
-              <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowLocation(!showLocation)}>
-                <Icon name="navigation-2-outline" fill="white" style={{width: 30, height: 30 }} />
-              </TouchableOpacity> */}
+              <TouchableOpacity onPress={ () => setShowLocation(!showLocation)} style={Style.buttonIcon}>
+                <Icon name="navigation-2-outline" fill="white" style={{width: 36, height: 36 }} />
+              </TouchableOpacity>
             </View>
 
             <ImagePicked />
@@ -113,16 +114,12 @@ const AddNote = ({navigation, ...props}) => {
               showAudioRecorder &&
                 <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
             }
+            */}
 
             {
               showLocation &&
-                <GetLocation
-                  location={props.location}
-                  setLocation={props.setLocation}
-                  myAddress={props.myAddress}
-                  setMyAddress={props.setMyAddress}
-                />
-            } */}
+                <GetLocation />
+            }
 
 
 
@@ -149,11 +146,14 @@ const AddNote = ({navigation, ...props}) => {
 
           </View>
       </ScrollView>
-    </>
+    </View>
   )
 }
 
 export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff"
+  },
   textInputTitle: {
     height: 46,
     paddingTop: 6,
@@ -232,12 +232,12 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     fontFamily: "Poppins_400Regular"
   },
-  buttonIcon: {
+  /* buttonIcon: {
     padding: 10,
     borderRadius: 50,
     backgroundColor: "#8F9BB3",
     marginLeft: 5
-  }
+  } */
 })
 
 export default AddNote

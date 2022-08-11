@@ -13,3 +13,10 @@ export const shadow = {
   elevation: 6,
 }
 export const borderRadius = 11
+export const buttonIcon = {
+  padding: 8,
+  borderRadius: borderRadius,
+  backgroundColor: color,
+  ...shadow,
+  marginLeft: 5
+}

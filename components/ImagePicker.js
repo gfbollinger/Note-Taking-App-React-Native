@@ -54,7 +54,7 @@ export default function ImagePickerComp({...props}) {
   /* Button to select image  */
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={openImagePickerAsync} style={styles.buttonIcon}>
+      <TouchableOpacity onPress={openImagePickerAsync} style={Style.buttonIcon}>
         <Icon name="image-outline" fill="#fff" style={{width: 36, height: 36 }} />
       </TouchableOpacity>
     </View>
@@ -79,10 +79,10 @@ const styles = StyleSheet.create({
   thumbnailText: {
     marginTop: 10,
   },
-  buttonIcon: {
+  /* buttonIcon: {
     padding: 8,
     borderRadius: Style.borderRadius,
     backgroundColor: Style.color,
     ...Style.shadow,
-  }
+  } */
 })
