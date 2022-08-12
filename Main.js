@@ -19,11 +19,11 @@ const Stack = createStackNavigator();
 
 export default function Main() {
 
-  const [recordings, setRecordings] = useState([]);
+  /* const [recordings, setRecordings] = useState([]); */
   const [archived, setArchived] = useState([])
 
   /* From context */
-  const { note, setNote, notes, setNotes } = useContext(NoteContext)
+  const { note, setNote, notes, setNotes, noteNewId } = useContext(NoteContext)
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   function handleNote() {
@@ -40,9 +40,21 @@ export default function Main() {
       selectedCameraImgUri = note.cameraImage.localUri
     }
 
-    let newNotes = [{ title: note.title, body: note.body, date: note.date, color: note.color, image: selectedImgUri, cameraImage: selectedCameraImgUri, audios: recordings, location: note.location, address: note.address }, ...notes]
+    let newNotes = [{
+      id: note.id,
+      title: note.title,
+      body: note.body,
+      date: note.date,
+      color: note.color,
+      image: selectedImgUri,
+      cameraImage: selectedCameraImgUri,
+      audios: note.audios,
+      location: note.location,
+      address: note.address
+    }, ...notes]
+
     setNotes(newNotes)
-    setNote({title: '', body: '', color:'', date:'', image: '', cameraImage:'', location:'', address: ''})
+    setNote({id: noteNewId, title: '', body: '', color:'', date:'', image: '', cameraImage:'', location:'', address: '', audios: ''})
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {
@@ -158,8 +170,8 @@ export default function Main() {
           >
             {props => <AddNote {...props}
               handleNote={handleNote}
-              recordings={recordings}
-              setRecordings={setRecordings}
+              /* recordings={recordings}
+              setRecordings={setRecordings} */
             />}
           </Stack.Screen>
 

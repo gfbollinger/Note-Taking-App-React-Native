@@ -15,12 +15,12 @@ import { styles } from "./Notes";
 
 const Note = ({route, navigation, ...props}) => {
 
-  const { i, n } = route.params
+  const { i, n, id } = route.params
+  console.log(id)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalCamVisible, setIsModalCamVisible] = useState(false)
 
-  const {notes} = useContext(NoteContext)
-  const {setNotes} = useContext(NoteContext)
+  const {notes, setNotes} = useContext(NoteContext)
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -40,6 +40,7 @@ const Note = ({route, navigation, ...props}) => {
     /* console.log(archivedNote) */
     let bin = [
       {
+        id: archivedNote[0].id,
         title: archivedNote[0].title,
         body: archivedNote[0].body,
         color: archivedNote[0].color,

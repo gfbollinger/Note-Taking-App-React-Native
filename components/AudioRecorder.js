@@ -1,14 +1,17 @@
-import React from "react"
+import React, { useState, useContext } from "react"
 import { TouchableOpacity, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Audio } from 'expo-av';
 import AudioRecordingsPlayer from "./AudioRecordingsPlayer"
+import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
 
-export default function AudioRecorder({...props}) {
+export default function AudioRecorder() {
 
-  const [recording, setRecording] = React.useState();
-  const [message, setMessage] = React.useState("");
+  const [recording, setRecording] = useState();
+  const [message, setMessage] = useState("");
+
+  const { note, setNote } = useContext(NoteContext)
 
   async function startRecording() {
     try {
@@ -41,7 +44,7 @@ export default function AudioRecorder({...props}) {
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
 
-    let updatedRecordings = [...props.recordings];
+    let updatedRecordings = [...note.audios];
     const { sound, status } = await recording.createNewLoadedSoundAsync();
     updatedRecordings.push({
       sound: sound,
@@ -49,7 +52,7 @@ export default function AudioRecorder({...props}) {
       file: recording.getURI()
     });
 
-    props.setRecordings(updatedRecordings);
+    setNote({...note, audios: updatedRecordings});
   }
 
   /* function playRecording(recordingLine) {
@@ -91,7 +94,10 @@ export default function AudioRecorder({...props}) {
         <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular" }}>{recording ? 'Stop Recording Audio' : 'Start Recording Audio'}</Text>
       </TouchableOpacity>
       {/* {getRecordingLines()} */}
-      <AudioRecordingsPlayer recordings={props.recordings} />
+      { note.audios ?
+        <AudioRecordingsPlayer recordings={note.audios} />
+      : <></>
+      }
       <StatusBar style="auto" />
     </View>
   );

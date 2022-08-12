@@ -7,19 +7,17 @@ import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
 
 
-const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
+const AudioRecordingsPlayer = ({recordings}) => {
 
-  const {notes} = useContext(NoteContext)
-
+  const {note} = useContext(NoteContext)
 
   async function playRecording(recordingLine) {
     console.log(recordingLine.sound)
     recordingLine.sound.replayAsync({ volume: 1, isLooping : false})
   }
 
-
   function getRecordingLines() {
-    return recordings.map((recordingLine, index) => {
+    return note.audios.map((recordingLine, index) => {
       return (
         <View key={index} style={styles.recordingsContainer}>
           <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
@@ -31,8 +29,8 @@ const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
     });
   }
 
-  function getSavedRecordingLines() {
-    return notes[noteIndex].audios.map((recordingLine, index) => {
+  /* function getSavedRecordingLines() {
+    return notes[noteIndex].recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={styles.recordingsContainer}>
           <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
@@ -42,7 +40,7 @@ const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
         </View>
       );
     });
-  }
+  } */
 
   let [fontsLoaded] = useFonts({ Poppins_400Regular });
 
@@ -50,20 +48,21 @@ const AudioRecordingsPlayer = ({recordings, noteIndex}) => {
     return <Loading />
   }
 
-  if (noteIndex) {
-    console.log(notes[noteIndex].audios)
+  /* if (noteIndex) {
+    console.log(notes[noteIndex].recordings)
     return (
       <>
         {getSavedRecordingLines()}
       </>
     )
+  } */
+  if (note.audios){
+    return (
+      <>
+        {getRecordingLines()}
+      </>
+    )
   }
-
-  return (
-    <>
-      {getRecordingLines()}
-    </>
-  )
 
 }
 

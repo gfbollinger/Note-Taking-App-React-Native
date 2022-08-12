@@ -97,10 +97,9 @@ const AddNote = ({navigation, ...props}) => {
               <ImagePicker />
               <CameraImagePicker />
 
-              {/* <TouchableOpacity style={styles.buttonIcon} onPress={ () => setShowAudioRecorder(!showAudioRecorder)}>
-                <Icon name="mic-outline" fill="white" style={{width: 30, height: 30 }} />
+              <TouchableOpacity onPress={ () => setShowAudioRecorder(!showAudioRecorder)} style={Style.buttonIcon}>
+                <Icon name="mic-outline" fill="white" style={{width: 36, height: 36 }} />
               </TouchableOpacity>
-              */}
 
               <TouchableOpacity onPress={ () => setShowLocation(!showLocation)} style={Style.buttonIcon}>
                 <Icon name="navigation-2-outline" fill="white" style={{width: 36, height: 36 }} />
@@ -110,18 +109,15 @@ const AddNote = ({navigation, ...props}) => {
             <ImagePicked />
             <CameraImagePicked />
 
-            {/* {
+            {
               showAudioRecorder &&
-                <AudioRecorder recordings={props.recordings} setRecordings={props.setRecordings} />
+                <AudioRecorder /* recordings={props.recordings} setRecordings={props.setRecordings} */ />
             }
-            */}
 
             {
               showLocation &&
                 <GetLocation />
             }
-
-
 
             <TouchableOpacity
               style={styles.button}

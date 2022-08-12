@@ -11,7 +11,7 @@ export default function AudioPlayer({ noteIndex }) {
 
   async function playSound() {
     /* console.log('Loading Sound'); */
-    const { sound } = await Audio.Sound.createAsync(notes[noteIndex].audios[0].sound);
+    const { sound } = await Audio.Sound.createAsync(notes[noteIndex].recordings[0].sound);
     setSound(sound);
 
     /* console.log('Playing Sound'); */
