@@ -7,7 +7,7 @@ import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
 
 
-const AudioRecordingsPlayer = ({recordings}) => {
+const AudioRecordingsPlayer = ({savedAudios}) => {
 
   const {note} = useContext(NoteContext)
 
@@ -29,8 +29,8 @@ const AudioRecordingsPlayer = ({recordings}) => {
     });
   }
 
-  /* function getSavedRecordingLines() {
-    return notes[noteIndex].recordings.map((recordingLine, index) => {
+  function getSavedRecordingLines(savedAudios) {
+    return savedAudios.map((recordingLine, index) => {
       return (
         <View key={index} style={styles.recordingsContainer}>
           <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
@@ -40,7 +40,7 @@ const AudioRecordingsPlayer = ({recordings}) => {
         </View>
       );
     });
-  } */
+  }
 
   let [fontsLoaded] = useFonts({ Poppins_400Regular });
 
@@ -48,14 +48,14 @@ const AudioRecordingsPlayer = ({recordings}) => {
     return <Loading />
   }
 
-  /* if (noteIndex) {
-    console.log(notes[noteIndex].recordings)
+  if (savedAudios) {
     return (
       <>
-        {getSavedRecordingLines()}
+        {getSavedRecordingLines(savedAudios)}
       </>
     )
-  } */
+  }
+
   if (note.audios){
     return (
       <>

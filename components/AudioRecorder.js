@@ -4,12 +4,14 @@ import { Audio } from 'expo-av';
 import AudioRecordingsPlayer from "./AudioRecordingsPlayer"
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
+import { Icon } from '@ui-kitten/components';
 import Loading from "./UI/Loading";
 
 export default function AudioRecorder() {
 
   const [recording, setRecording] = useState();
   const [message, setMessage] = useState("");
+  const [isRecording, setIsRecording] = useState(false)
 
   const { note, setNote } = useContext(NoteContext)
 
@@ -18,6 +20,7 @@ export default function AudioRecorder() {
       const permission = await Audio.requestPermissionsAsync();
 
       if (permission.status === "granted") {
+        setIsRecording(true)
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: false,
           playsInSilentModeIOS: true,
@@ -41,6 +44,7 @@ export default function AudioRecorder() {
   }
 
   async function stopRecording() {
+    setIsRecording(false)
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
 
@@ -88,12 +92,22 @@ export default function AudioRecorder() {
     <View style={styles.container}>
       <Text>{message}</Text>
       <TouchableOpacity
-        style={styles.buttonToggleRecord}
-        onPress={recording ? stopRecording : startRecording} 
+        style={[styles.buttonToggleRecord, isRecording ? {backgroundColor: "red" } : "" ]}
+        onPress={recording ? stopRecording : startRecording}
       >
-        <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular" }}>{recording ? 'Stop Recording Audio' : 'Start Recording Audio'}</Text>
+        { recording
+          ?
+            <View style={styles.buttonRecord}>
+              <Icon name="stop-circle-outline" fill="white" style={{width: 36, height: 36 }} />
+              <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular", marginLeft: 5 }}>Stop Recording Audio</Text>
+            </View>
+          :
+            <View style={styles.buttonRecord}>
+              <Icon name="play-circle-outline" fill="white" style={{width: 36, height: 36 }} />
+              <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular", marginLeft: 5 }}>Start Recording Audio</Text>
+            </View>
+        }
       </TouchableOpacity>
-      {/* {getRecordingLines()} */}
       { note.audios ?
         <AudioRecordingsPlayer recordings={note.audios} />
       : <></>
@@ -127,5 +141,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     color: "#fff",
+  },
+  buttonRecord: {
+    flexDirection: "row",
+    alignItems: "center"
   }
 });

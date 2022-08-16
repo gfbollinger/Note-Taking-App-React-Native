@@ -23,7 +23,7 @@ export default function Main() {
   const [archived, setArchived] = useState([])
 
   /* From context */
-  const { note, setNote, notes, setNotes, noteNewId } = useContext(NoteContext)
+  const { note, setNote, notes, setNotes } = useContext(NoteContext)
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
 
   function handleNote() {
@@ -40,8 +40,12 @@ export default function Main() {
       selectedCameraImgUri = note.cameraImage.localUri
     }
 
+    /* TODO improve ID setting (currently using timestamp) */
+    /* const noteNewId = notes.length ;
+    console.log( typeof(noteNewId)) */
+
     let newNotes = [{
-      id: note.id,
+      noteId: note.noteId,
       title: note.title,
       body: note.body,
       date: note.date,
@@ -54,7 +58,7 @@ export default function Main() {
     }, ...notes]
 
     setNotes(newNotes)
-    setNote({id: noteNewId, title: '', body: '', color:'', date:'', image: '', cameraImage:'', location:'', address: '', audios: ''})
+    setNote({noteId: '', title: '', body: '', color:'', date:'', image: '', cameraImage:'', location:'', address: '', audios: ''})
 
     AsyncStorage.setItem("storedNotes", JSON.stringify(newNotes))
       .then( () => {

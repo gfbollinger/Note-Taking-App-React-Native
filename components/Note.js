@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Modal, Button } from "react-native"
 import * as Style from "./../assets/styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,16 +11,21 @@ import LocationPlace from "./LocationPlace";
 
 import NoteContext from "../context/NoteContext";
 import Loading from "./UI/Loading";
-import { styles } from "./Notes";
+/* import AudioRecordingsPlayer from "./AudioRecordingsPlayer"; */
 
 const Note = ({route, navigation, ...props}) => {
 
-  const { i, n, id } = route.params
-  console.log(id)
+  const { i, noteId } = route.params
+  const {notes, setNotes} = useContext(NoteContext)
+
+  const [currentNote, setCurrentNote] = useState(notes.find( x => x.noteId === noteId))
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalCamVisible, setIsModalCamVisible] = useState(false)
-
-  const {notes, setNotes} = useContext(NoteContext)
+  console.log(currentNote)
+  
+  useEffect( () => {
+    setCurrentNote(notes.find( x => x.noteId === noteId))
+  }, [])
 
   let [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -72,7 +77,7 @@ const Note = ({route, navigation, ...props}) => {
 
   const images = [{
     // Simplest usage.
-    url: n.image,
+    url: currentNote.image,
 
     // width: number
     // height: number
@@ -85,26 +90,26 @@ const Note = ({route, navigation, ...props}) => {
   }]
 
   const camImages =[{
-    url: n.cameraImage
+    url: currentNote.cameraImage
   }]
 
   if (!fontsLoaded) {
     return <Loading />
   }
 
-  console.log(n)
+  /* console.log(n) */
 
   return (
     <View style={stylesNote.noteContainer}>
-      <View style={[ stylesNote.noteWrapper, { backgroundColor: n.color }]}>
+      <View style={[ stylesNote.noteWrapper, { backgroundColor: currentNote.color }]}>
         <ScrollView  showsVerticalScrollIndicator ={false}>
-          <Text style={stylesNote.noteTitle}>{n.title}</Text>
-          <Text style={stylesNote.noteDate}>Created: {n.date}</Text>
-          { n.body ?
-            <Text style={stylesNote.noteBody}>{n.body}</Text>
+          <Text style={stylesNote.noteTitle}>{currentNote.title}</Text>
+          <Text style={stylesNote.noteDate}>Created: {currentNote.date}</Text>
+          { currentNote.body ?
+            <Text style={stylesNote.noteBody}>{currentNote.body}</Text>
             : <></>
           }
-          { n.image || n.cameraImage ?
+          { currentNote.image || currentNote.cameraImage ?
             <View style={stylesNote.containerLighter}>
               <View style={{ flexDirection: "row" }}>
                 <Icon name="image-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
@@ -114,11 +119,11 @@ const Note = ({route, navigation, ...props}) => {
               <View style={{ flexDirection: "row"}}>
                 {
                   /* Img from Camera roll */
-                  n.image ?
+                  currentNote.image ?
                   <View>
                     <TouchableOpacity onPress={ () => setIsModalVisible(true)}>
                       <Image
-                        source={{ uri: n.image }}
+                        source={{ uri: currentNote.image }}
                         style={stylesNote.thumbnail}
                       />
                     </TouchableOpacity>
@@ -136,11 +141,11 @@ const Note = ({route, navigation, ...props}) => {
                 }
                 {
                   /* Img from Camera */
-                  n.cameraImage ?
+                  currentNote.cameraImage ?
                   <View>
                     <TouchableOpacity onPress={ () => setIsModalCamVisible(true)}>
                       <Image
-                        source={{ uri: n.cameraImage }}
+                        source={{ uri: currentNote.cameraImage }}
                         style={stylesNote.thumbnail}
                       />
                     </TouchableOpacity>
@@ -162,17 +167,19 @@ const Note = ({route, navigation, ...props}) => {
           }
 
           {/* Audios */}
-          {/* {
-            n.audios ?
-            <AudioPlayer noteIndex={i} recordings={n.audios} />
+          {
+            currentNote.audios ?
+            <View style={[stylesNote.containerLighter, {marginTop: 8}]}>
+              <AudioPlayer savedAudios={currentNote.audios} />
+            </View>
             : <></>
-          } */}
+          }
 
           {
             /* Location */
-            n.address ?
+            currentNote.address ?
             <View style={[stylesNote.containerLighter, {marginTop: 8}]}>
-                <LocationPlace myAddress={n.address} text="Note written in:" />
+                <LocationPlace myAddress={currentNote.address} text="Note written in:" />
             </View>
             : <></>
           }
@@ -182,7 +189,7 @@ const Note = ({route, navigation, ...props}) => {
 
         <TouchableOpacity style={stylesNote.buttonEdit} onPress={ () => navigation.navigate("EditNote", {
           i: i,
-          n: n
+          noteId: noteId
         }
         )}>
             <Icon name="edit-outline" fill="white" style={{width: 40, height: 40 }} />

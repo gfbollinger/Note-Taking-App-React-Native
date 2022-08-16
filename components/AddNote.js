@@ -13,10 +13,9 @@ import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Po
 import Loading from "./UI/Loading";
 
 const AddNote = ({navigation, ...props}) => {
-  
+
   /* State from Context */
-  const { note, setNote } = useContext(NoteContext)
-  console.log(note)
+  const { note, setNote, notes } = useContext(NoteContext)
 
   const [showAudioRecorder, setShowAudioRecorder] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
@@ -43,12 +42,15 @@ const AddNote = ({navigation, ...props}) => {
     let mins = (newDate.getMinutes() < 10) ? `0${newDate.getMinutes()}` : newDate.getMinutes();
 
     newDate = `${dd}/${mm}/${yyyy}, ${hh}:${mins}hs.`;
-    setNote({ ...note, date: newDate })
+    /* TODO replace noteId currently created with date */
+    setNote({ ...note, date: newDate, noteId: new Date().getTime() })
   }
 
   useEffect( () => {
     formatDate();
   }, [])
+
+  console.log(note)
 
   if (!fontsLoaded) {
     return <Loading />
@@ -111,7 +113,7 @@ const AddNote = ({navigation, ...props}) => {
 
             {
               showAudioRecorder &&
-                <AudioRecorder /* recordings={props.recordings} setRecordings={props.setRecordings} */ />
+                <AudioRecorder />
             }
 
             {
@@ -153,7 +155,7 @@ export const styles = StyleSheet.create({
   textInputTitle: {
     height: 46,
     paddingTop: 6,
-    paddingLeft: 10,
+    paddingLeft: 0,
     borderBottomWidth: 2,
     borderBottomColor: Style.color,
     fontSize: 20,

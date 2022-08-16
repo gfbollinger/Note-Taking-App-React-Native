@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView, TextInput } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+/* import AsyncStorage from '@react-native-async-storage/async-storage'; */
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
@@ -13,6 +13,7 @@ const Notes = ({navigation, ...props}) => {
 
   const {notes} = useContext(NoteContext)
   const [searchQuery, setSearchQuery] = useState("")
+  console.log(notes)
 
   function handleSearch(inputText) {
     setSearchQuery(inputText)
@@ -59,9 +60,9 @@ const Notes = ({navigation, ...props}) => {
                 style={[styles.note,  {backgroundColor: item.color} ]}
                 onPress={ () => navigation.navigate("Note", {
                   i: index,
-                  n: item,
-                  id: item.id
-                })}
+                  noteId: item.noteId
+                }
+                )}
               >
                 <View>
                   <Text style={{ fontSize: 20, marginBottom: 15, fontFamily: 'Poppins_600SemiBold', lineHeight: 25 }}>{item.title}</Text>

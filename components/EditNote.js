@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react"
-import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Text  } from "react-native"
+import React, { useState, useContext, useEffect } from "react"
+import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Text, Alert  } from "react-native"
 import * as Style from "./../assets/styles"
 import { Icon } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,35 +8,45 @@ import CameraImagePicker from "./CameraImagePicker";
 import ImagePicked from "./ImagePicked";
 import CameraImagePicked from "./CameraImagePicked";
 import GetLocation from "./GetLocation";
+import AudioRecorder from "./AudioRecorder";
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
 
 const EditNote = ({route, navigation, ...props}) => {
 
-  const { i, n } = route.params
+  const { i, noteId } = route.params
 
   const {notes, setNotes} = useContext(NoteContext)
 
-  const [newEdit, setNewEdit]  = useState(n)
-  const [newEditImg, setNewEditImg] = useState(n.image)
-  const [newEditCameraImg, setNewEditCameraImg] = useState(n.cameraImage)
+  const [newEdit, setNewEdit] = useState(notes.find( x => x.noteId === noteId))
+  console.log(newEdit)
+
+  const [newEditImg, setNewEditImg] = useState(newEdit.image)
+  const [newEditCameraImg, setNewEditCameraImg] = useState(newEdit.cameraImage)
+  const [showAudios, setShowAudios] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
+
+  useEffect( () => {
+    setNewEdit(notes.find( x => x.noteId === noteId))
+  }, [])
 
   const notesColors = ["#FFCE3A", "#FFA348", "#EF785E", "#7ECCFF", "#1ECDC4", "#BB8EFF"]
 
+  /* TODO change editedNote (variable named wrong)  */
   let editedNote = [...notes]
   let thisNoteImg = editedNote[i].image
   let thisNoteCameraImg = editedNote[i].cameraImage
 
+  /* TODO change the use of editedNote[i] */
   function updateNote() {
     editedNote[i] = newEdit
     editedNote[i].title = newEdit.title
     editedNote[i].body = newEdit.body
     editedNote[i].color = newEdit.color
     editedNote[i].date = newEdit.date
-    editedNote[i].image = newEditImg
-    editedNote[i].cameraImage = newEditCameraImg
+    editedNote[i].image = newEdit.image
+    editedNote[i].cameraImage = newEdit.cameraImage
     editedNote[i].audios = newEdit.audios
     editedNote[i].location = newEdit.location
     editedNote[i].address = newEdit.address
@@ -50,6 +60,26 @@ const EditNote = ({route, navigation, ...props}) => {
       })
       .catch( error => console.log(error) )
 
+  }
+
+  function deleteAudios(){
+    Alert.alert(
+      "Delete",
+      "Are you sure that you want to delete this note's audios?",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Pressed: NO"),
+          style: "cancel"
+        },
+        {
+          text: " Yes",
+          onPress: () => {
+            setNewEdit({ ...newEdit, audios: ''})
+          }
+        }
+      ]
+    )
   }
 
   let [fontsLoaded] = useFonts({ Poppins_300Light, Poppins_400Regular, Poppins_700Bold });
@@ -116,9 +146,14 @@ const EditNote = ({route, navigation, ...props}) => {
                   setNewEditCameraImg={setNewEditCameraImg}
                 />
 
-              <TouchableOpacity onPress={ () => setShowLocation(!showLocation)} style={Style.buttonIcon}>
-                <Icon name="navigation-2-outline" fill="white" style={{width: 36, height: 36 }} />
-              </TouchableOpacity>
+                {/* TODO: Add the Audio recorder to add new audios to the note */}
+                {/* <TouchableOpacity onPress={ () => setShowAudios(!showAudios)} style={Style.buttonIcon}>
+                  <Icon name="mic-outline" fill="white" style={{width: 36, height: 36 }} />
+                </TouchableOpacity> */}
+
+                <TouchableOpacity onPress={ () => setShowLocation(!showLocation)} style={Style.buttonIcon}>
+                  <Icon name="navigation-2-outline" fill="white" style={{width: 36, height: 36 }} />
+                </TouchableOpacity>
 
               </View>
 
@@ -128,17 +163,25 @@ const EditNote = ({route, navigation, ...props}) => {
                 setNewEditImg={setNewEditImg}
               />
 
-              <CameraImagePicked 
+              <CameraImagePicked
                 isEdit={true}
                 newEditCameraImg={newEditCameraImg}
                 setNewEditCameraImg={setNewEditCameraImg}
               />
 
+              {/* TODO Add confirmation to remove audios */}
+              { newEdit.audios ?
+                <TouchableOpacity style={styles.btnDeleteAudios} onPress= { () => deleteAudios() }>
+                  <Icon name="trash-2-outline" fill="white" style={{width: 30, height: 30 }} />
+                  <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular", marginLeft: 5 }}>Delete Audios</Text>
+                </TouchableOpacity>
+                : <></>
+              }
+
               { showLocation &&
                 <GetLocation />
               }
 
-              {/* TODO: Add button to remove audios if it has, setting setRecordings to empty array */}
 
               <TouchableOpacity
                 style={styles.button}
@@ -168,7 +211,7 @@ export const styles = StyleSheet.create({
   },
   textInputTitle: {
     height: 46,
-    paddingLeft: 10,
+    paddingLeft: 0,
     borderBottomWidth: 2,
     borderBottomColor: Style.color,
     fontSize: 20,
@@ -177,7 +220,7 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     height: 200,
-    padding: 10,
+    padding: 0,
     /* borderWidth: 2,
     borderColor: Style.color,
     borderRadius: 8, */
@@ -249,6 +292,14 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 30
   },
+  btnDeleteAudios: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Style.color,
+    padding: 10,
+    borderRadius: 8,
+    color: "#fff",
+  }
 })
 
 export default EditNote
