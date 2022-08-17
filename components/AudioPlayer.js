@@ -80,11 +80,13 @@ const styles = StyleSheet.create({
   },
   fill: {
     flex: 1,
-    margin: 16,
+    marginVertical: 8,
+    marginHorizontal: 0,
     fontFamily: "Poppins_400Regular"
   },
   button: {
-    margin: 16,
+    margin: 8,
+    marginRight: 0,
     backgroundColor: "#8F9BB3",
     borderRadius: 50,
     padding: 5

@@ -7,7 +7,7 @@ import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import { Icon } from '@ui-kitten/components';
 import Loading from "./UI/Loading";
 
-export default function AudioRecorder() {
+export default function AudioRecorder(props) {
 
   const [recording, setRecording] = useState();
   const [message, setMessage] = useState("");
@@ -48,20 +48,24 @@ export default function AudioRecorder() {
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
 
-    let updatedRecordings = [...note.audios];
+    let updatedRecordings = [];
+
+    if(props.isEdit){
+      updatedRecordings = [...props.newEdit.audios];
+    } else {
+      updatedRecordings = [...note.audios];
+    }
     const { sound, status } = await recording.createNewLoadedSoundAsync();
     updatedRecordings.push({
       sound: sound,
       duration: getDurationFormatted(status.durationMillis),
       file: recording.getURI()
     });
-
-    setNote({...note, audios: updatedRecordings});
+    if(props.isEdit){
+      return props.setNewEdit({ ...props.newEdit, audios: updatedRecordings})
+    }
+    return setNote({...note, audios: updatedRecordings});
   }
-
-  /* function playRecording(recordingLine) {
-    recordingLine.sound.replayAsync({ volume: 1, isLooping : false})
-  } */
 
   function getDurationFormatted(millis) {
     const minutes = millis / 1000 / 60;
@@ -71,21 +75,40 @@ export default function AudioRecorder() {
     return `${minutesDisplay}:${secondsDisplay}`;
   }
 
-  /* function getRecordingLines() {
-    return props.recordings.map((recordingLine, index) => {
-      return (
-        <View key={index} style={styles.row}>
-          <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
-          <Button style={styles.button} onPress={() => playRecording(recordingLine)} title="Play"></Button>
-        </View>
-      );
-    });
-  } */
-
   let [fontsLoaded] = useFonts({ Poppins_400Regular  });
 
   if (!fontsLoaded) {
     return <Loading />
+  }
+
+  if (props.isEdit){
+    return (
+      <View style={styles.container}>
+        <Text>{message}</Text>
+        <TouchableOpacity
+          style={[styles.buttonToggleRecord, isRecording ? {backgroundColor: "red" } : "" ]}
+          onPress={recording ? stopRecording : startRecording}
+        >
+          { recording
+            ?
+              <View style={styles.buttonRecord}>
+                <Icon name="stop-circle-outline" fill="white" style={{width: 36, height: 36 }} />
+                <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular", marginLeft: 5 }}>Stop Recording Audio</Text>
+              </View>
+            :
+              <View style={styles.buttonRecord}>
+                <Icon name="play-circle-outline" fill="white" style={{width: 36, height: 36 }} />
+                <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular", marginLeft: 5 }}>Start Recording Audio</Text>
+              </View>
+          }
+        </TouchableOpacity>
+        { props.newEdit && props.newEdit.audios ?
+          <AudioRecordingsPlayer recordings={props.newEdit.audios} />
+        : <></>
+        }
+        <StatusBar style="auto" />
+      </View>
+    )
   }
 
   return (

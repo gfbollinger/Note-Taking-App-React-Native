@@ -170,6 +170,10 @@ const Note = ({route, navigation, ...props}) => {
           {
             currentNote.audios ?
             <View style={[stylesNote.containerLighter, {marginTop: 8}]}>
+              <View style={{ flexDirection: "row" }}>
+                <Icon name="mic-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+                <Text style={stylesNote.imagesTitle}>Attached Audios:</Text>
+              </View>
               <AudioPlayer savedAudios={currentNote.audios} />
             </View>
             : <></>

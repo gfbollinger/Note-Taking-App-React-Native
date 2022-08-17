@@ -12,6 +12,7 @@ import AudioRecorder from "./AudioRecorder";
 import NoteContext from "../context/NoteContext";
 import { useFonts, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import Loading from "./UI/Loading";
+import AudioPlayer from "./AudioPlayer";
 
 const EditNote = ({route, navigation, ...props}) => {
 
@@ -24,11 +25,18 @@ const EditNote = ({route, navigation, ...props}) => {
 
   const [newEditImg, setNewEditImg] = useState(newEdit.image)
   const [newEditCameraImg, setNewEditCameraImg] = useState(newEdit.cameraImage)
-  const [showAudios, setShowAudios] = useState(false)
+  const [showAudioRecorder, setShowAudioRecorder] = useState(false)
   const [showLocation, setShowLocation] = useState(false)
+  const [allowAudioRecorder, setAllowAudioRecorder] = useState(false)
 
   useEffect( () => {
     setNewEdit(notes.find( x => x.noteId === noteId))
+  }, [])
+
+  useEffect( () => {
+    if (!newEdit.audios){
+      setAllowAudioRecorder(true)
+    }
   }, [])
 
   const notesColors = ["#FFCE3A", "#FFA348", "#EF785E", "#7ECCFF", "#1ECDC4", "#BB8EFF"]
@@ -45,8 +53,8 @@ const EditNote = ({route, navigation, ...props}) => {
     editedNote[i].body = newEdit.body
     editedNote[i].color = newEdit.color
     editedNote[i].date = newEdit.date
-    editedNote[i].image = newEdit.image
-    editedNote[i].cameraImage = newEdit.cameraImage
+    editedNote[i].image = newEditImg
+    editedNote[i].cameraImage = newEditCameraImg
     editedNote[i].audios = newEdit.audios
     editedNote[i].location = newEdit.location
     editedNote[i].address = newEdit.address
@@ -76,6 +84,7 @@ const EditNote = ({route, navigation, ...props}) => {
           text: " Yes",
           onPress: () => {
             setNewEdit({ ...newEdit, audios: ''})
+            setAllowAudioRecorder(true)
           }
         }
       ]
@@ -147,9 +156,9 @@ const EditNote = ({route, navigation, ...props}) => {
                 />
 
                 {/* TODO: Add the Audio recorder to add new audios to the note */}
-                {/* <TouchableOpacity onPress={ () => setShowAudios(!showAudios)} style={Style.buttonIcon}>
+                <TouchableOpacity onPress={ () => setShowAudioRecorder(!showAudioRecorder)} style={Style.buttonIcon}>
                   <Icon name="mic-outline" fill="white" style={{width: 36, height: 36 }} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
 
                 <TouchableOpacity onPress={ () => setShowLocation(!showLocation)} style={Style.buttonIcon}>
                   <Icon name="navigation-2-outline" fill="white" style={{width: 36, height: 36 }} />
@@ -169,19 +178,41 @@ const EditNote = ({route, navigation, ...props}) => {
                 setNewEditCameraImg={setNewEditCameraImg}
               />
 
-              {/* TODO Add confirmation to remove audios */}
-              { newEdit.audios ?
-                <TouchableOpacity style={styles.btnDeleteAudios} onPress= { () => deleteAudios() }>
-                  <Icon name="trash-2-outline" fill="white" style={{width: 30, height: 30 }} />
-                  <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular", marginLeft: 5 }}>Delete Audios</Text>
-                </TouchableOpacity>
+              {/* { showAudioRecorder && newEdit.audios ?
+                  <Text>To add audios, first remove the saved ones.</Text>
+                : <></>
+              } */}
+
+              { showAudioRecorder && allowAudioRecorder ?
+                  <AudioRecorder
+                    isEdit={true}
+                    newEdit={newEdit}
+                    setNewEdit={setNewEdit}
+                  />
+                : <></>
+              }
+
+              { newEdit.audios && !allowAudioRecorder
+                ?
+                <>
+                  <AudioPlayer
+                    savedAudios={newEdit.audios}
+                  />
+                  <TouchableOpacity style={styles.btnDeleteAudios} onPress= { () => deleteAudios() }>
+                    <Icon name="trash-2-outline" fill="white" style={{width: 30, height: 30 }} />
+                    <Text style={{ color: "#fff", fontFamily: "Poppins_400Regular", marginLeft: 5 }}>Delete Audios</Text>
+                  </TouchableOpacity>
+                </>
                 : <></>
               }
 
               { showLocation &&
-                <GetLocation />
+                <GetLocation 
+                  isEdit={true}
+                  newEdit={newEdit}
+                  setNewEdit={setNewEdit}
+                />
               }
-
 
               <TouchableOpacity
                 style={styles.button}

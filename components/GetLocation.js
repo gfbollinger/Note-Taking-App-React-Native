@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 import LocationPlace from "./LocationPlace"
 import MapViewer from "./MapViewer"
 
-export default function GetLocation() {
+export default function GetLocation(props) {
   const [errorMsg, setErrorMsg] = useState("Loading Location...");
 
   const { note, setNote } = useContext(NoteContext)
@@ -27,8 +27,11 @@ export default function GetLocation() {
 
       let currLocation = await Location.getCurrentPositionAsync({});
       let currAddress = await Location.reverseGeocodeAsync(currLocation.coords)
-      setNote({ ...note, location: currLocation, address: currAddress })
-      /* console.log(note) */
+
+      if (props.isEdit) {
+        return props.setNewEdit({ ...props.newEdit, location: currLocation, address: currAddress })
+      }
+      return setNote({ ...note, location: currLocation, address: currAddress })
     })();
   }, []);
 
@@ -39,6 +42,17 @@ export default function GetLocation() {
         <View>
           <LocationPlace myAddress={note.address} text="Your location is:"  />
           <MapViewer location={note.location} />
+        </View>
+      </View>
+    );
+  }
+
+  if (props.isEdit && props.newEdit.location) {
+    return (
+      <View style={styles.container}>
+        <View>
+          <LocationPlace myAddress={props.newEdit.address} text="Your location is:"  />
+          <MapViewer location={props.newEdit.location} />
         </View>
       </View>
     );
@@ -55,7 +69,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20, */
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 20
   },
   paragraph: {
     /* fontSize: 18,
