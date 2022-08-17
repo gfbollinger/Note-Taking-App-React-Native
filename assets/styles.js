@@ -20,3 +20,8 @@ export const buttonIcon = {
   ...shadow,
   marginLeft: 5
 }
+export const smallTitle = {
+  fontSize: 14,
+  marginBottom: 5,
+  fontFamily: "Poppins_600SemiBold",
+}

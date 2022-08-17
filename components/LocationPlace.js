@@ -21,7 +21,7 @@ const LocationPlace = (props) => {
       <View style={{ }}>
         <View style={{ flexDirection: "row" }}>
           <Icon name="navigation-2-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
-          <Text style={styles.preparagraph}>{props.text}</Text>
+          <Text style={[Style.smallTitle, {marginBottom: 0}]}>{props.text}</Text>
         </View>
         <Text style={styles.paragraph}>{props.myAddress[0].city}, {props.myAddress[0].region}. {props.myAddress[0].country}.</Text>
       </View>

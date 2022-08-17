@@ -166,17 +166,28 @@ const EditNote = ({route, navigation, ...props}) => {
 
               </View>
 
-              <ImagePicked
-                isEdit={true}
-                newEditImg={newEditImg}
-                setNewEditImg={setNewEditImg}
-              />
+              <View style={{ flexDirection: "row", marginBottom: 15, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 15 }}>
+                <Icon name="image-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+                <Text style={Style.smallTitle}>Attached Images:</Text>
+              </View>
 
-              <CameraImagePicked
-                isEdit={true}
-                newEditCameraImg={newEditCameraImg}
-                setNewEditCameraImg={setNewEditCameraImg}
-              />
+              <View style={{ flexDirection: "row" }}>
+                <View>
+                  <ImagePicked
+                    isEdit={true}
+                    newEditImg={newEditImg}
+                    setNewEditImg={setNewEditImg}
+                  />
+                </View>
+
+                <View style={{ marginLeft: 20 }}>
+                  <CameraImagePicked
+                    isEdit={true}
+                    newEditCameraImg={newEditCameraImg}
+                    setNewEditCameraImg={setNewEditCameraImg}
+                  />
+                </View>
+              </View>
 
               {/* { showAudioRecorder && newEdit.audios ?
                   <Text>To add audios, first remove the saved ones.</Text>
@@ -195,6 +206,11 @@ const EditNote = ({route, navigation, ...props}) => {
               { newEdit.audios && !allowAudioRecorder
                 ?
                 <>
+                  <View style={{ flexDirection: "row", marginTop: 20, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 15 }}>
+                    <Icon name="mic-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+                    <Text style={Style.smallTitle}>Attached Audios:</Text>
+                  </View>
+
                   <AudioPlayer
                     savedAudios={newEdit.audios}
                   />
@@ -207,11 +223,13 @@ const EditNote = ({route, navigation, ...props}) => {
               }
 
               { showLocation &&
-                <GetLocation 
-                  isEdit={true}
-                  newEdit={newEdit}
-                  setNewEdit={setNewEdit}
-                />
+                <View style={{ marginTop: 20, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 0 }}>
+                  <GetLocation
+                    isEdit={true}
+                    newEdit={newEdit}
+                    setNewEdit={setNewEdit}
+                  />
+                </View>
               }
 
               <TouchableOpacity

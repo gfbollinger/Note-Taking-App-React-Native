@@ -113,7 +113,7 @@ const Note = ({route, navigation, ...props}) => {
             <View style={stylesNote.containerLighter}>
               <View style={{ flexDirection: "row" }}>
                 <Icon name="image-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
-                <Text style={stylesNote.imagesTitle}>Attached images:</Text>
+                <Text style={Style.smallTitle}>Attached images:</Text>
               </View>
 
               <View style={{ flexDirection: "row"}}>
@@ -172,7 +172,7 @@ const Note = ({route, navigation, ...props}) => {
             <View style={[stylesNote.containerLighter, {marginTop: 8}]}>
               <View style={{ flexDirection: "row" }}>
                 <Icon name="mic-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
-                <Text style={stylesNote.imagesTitle}>Attached Audios:</Text>
+                <Text style={Style.smallTitle}>Attached Audios:</Text>
               </View>
               <AudioPlayer savedAudios={currentNote.audios} />
             </View>

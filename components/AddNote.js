@@ -108,17 +108,37 @@ const AddNote = ({navigation, ...props}) => {
               </TouchableOpacity>
             </View>
 
-            <ImagePicked />
-            <CameraImagePicked />
+            <View style={{ flexDirection: "row", marginBottom: 15, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 15 }}>
+              <Icon name="image-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+              <Text style={Style.smallTitle}>Attached Images:</Text>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <View>
+                <ImagePicked />
+              </View>
+
+              <View style={{ marginLeft: 20 }}>
+                <CameraImagePicked />
+              </View>
+            </View>
 
             {
               showAudioRecorder &&
-                <AudioRecorder />
+                <>
+                  <View style={{ flexDirection: "row", marginTop: 20, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 15 }}>
+                    <Icon name="mic-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+                    <Text style={Style.smallTitle}>Attached Audios:</Text>
+                  </View>
+                  <AudioRecorder />
+                </>
             }
 
             {
               showLocation &&
-                <GetLocation />
+                <View style={{ marginTop: 20, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 0 }}>
+                  <GetLocation />
+                </View>
             }
 
             <TouchableOpacity
