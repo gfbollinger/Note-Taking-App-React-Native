@@ -108,10 +108,13 @@ const AddNote = ({navigation, ...props}) => {
               </TouchableOpacity>
             </View>
 
-            <View style={{ flexDirection: "row", marginBottom: 15, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 15 }}>
-              <Icon name="image-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
-              <Text style={Style.smallTitle}>Attached Images:</Text>
-            </View>
+            { note.image || note.cameraImage ?
+              <View style={{ flexDirection: "row", marginBottom: 15, borderTopWidth: 1, borderTopColor: Style.color, paddingTop: 15 }}>
+                <Icon name="image-outline" fill={Style.greyDarkercolor} style={{width: 20, height: 20, marginRight: 4 }} />
+                <Text style={Style.smallTitle}>Attached Images:</Text>
+              </View>
+              : <></>
+            }
 
             <View style={{ flexDirection: "row" }}>
               <View>
